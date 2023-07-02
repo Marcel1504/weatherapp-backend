@@ -1,7 +1,8 @@
-package me.marcelberger.weatherapp.core.entity;
+package me.marcelberger.weatherapp.core.entity.weather;
 
 import jakarta.persistence.*;
 import lombok.*;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,8 +1,8 @@
 package me.marcelberger.weatherapp.receiver.facade.data.impl;
 
-import me.marcelberger.weatherapp.core.entity.StationEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
-import me.marcelberger.weatherapp.core.repository.StationRepository;
+import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import me.marcelberger.weatherapp.receiver.facade.data.DataFacade;
 import me.marcelberger.weatherapp.receiver.service.data.updater.impl.ECODataUpdaterServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

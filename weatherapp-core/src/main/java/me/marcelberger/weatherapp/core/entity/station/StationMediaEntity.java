@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.core.entity;
+package me.marcelberger.weatherapp.core.entity.station;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.receiver.facade.data.impl;
 
-import me.marcelberger.weatherapp.core.entity.StationEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.receiver.data.request.WEPRequestData;
 import me.marcelberger.weatherapp.receiver.facade.data.DataFacade;
 import me.marcelberger.weatherapp.receiver.service.data.updater.impl.WEPDataUpdaterServiceImpl;

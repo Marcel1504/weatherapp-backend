@@ -1,9 +1,9 @@
 package me.marcelberger.weatherapp.receiver.service.data.updater.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import me.marcelberger.weatherapp.core.entity.StationEntity;
-import me.marcelberger.weatherapp.core.entity.StationParameterEntity;
-import me.marcelberger.weatherapp.core.repository.StationParameterRepository;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationParameterEntity;
+import me.marcelberger.weatherapp.core.repository.station.StationParameterRepository;
 import me.marcelberger.weatherapp.core.service.math.MathService;
 import me.marcelberger.weatherapp.receiver.service.data.updater.WeatherDataUpdaterService;
 import org.springframework.beans.factory.annotation.Autowired;

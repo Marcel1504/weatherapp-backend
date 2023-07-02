@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.receiver.service.data.updater.impl;
 
-import me.marcelberger.weatherapp.core.entity.StationEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.receiver.data.request.WEPRequestData;
 import me.marcelberger.weatherapp.receiver.service.data.updater.WeatherDataUpdaterService;
 import org.springframework.stereotype.Service;

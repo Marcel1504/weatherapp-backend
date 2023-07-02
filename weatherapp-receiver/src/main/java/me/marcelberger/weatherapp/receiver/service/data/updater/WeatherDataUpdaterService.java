@@ -1,8 +1,8 @@
 package me.marcelberger.weatherapp.receiver.service.data.updater;
 
-import me.marcelberger.weatherapp.core.entity.StationEntity;
-import me.marcelberger.weatherapp.core.entity.WeatherEntity;
-import me.marcelberger.weatherapp.core.repository.WeatherRepository;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
+import me.marcelberger.weatherapp.core.repository.weather.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;

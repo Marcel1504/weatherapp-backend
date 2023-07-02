@@ -2,9 +2,9 @@ package me.marcelberger.weatherapp.receiver.facade.data;
 
 import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.core.data.StatusData;
-import me.marcelberger.weatherapp.core.entity.StationEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
-import me.marcelberger.weatherapp.core.repository.StationRepository;
+import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.Principal;

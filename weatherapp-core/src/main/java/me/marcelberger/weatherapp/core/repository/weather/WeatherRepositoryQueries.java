@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.core.repository;
+package me.marcelberger.weatherapp.core.repository.weather;
 
 public final class WeatherRepositoryQueries {
     public static final String SELECT_FROM = "SELECT w.id, w.temperature, w.humidity, w.rain_delta, " +

@@ -1,8 +1,8 @@
 package me.marcelberger.weatherapp.receiver.service.data.updater;
 
 import lombok.extern.slf4j.Slf4j;
-import me.marcelberger.weatherapp.core.entity.StationEntity;
-import me.marcelberger.weatherapp.core.repository.StationRepository;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import me.marcelberger.weatherapp.receiver.service.data.validator.DataValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;

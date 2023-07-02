@@ -50,6 +50,104 @@ CREATE TABLE weatherapp.we_weather (
   station_id BIGINT NOT NULL
 );
 
+DROP TABLE IF EXISTS weatherapp.we_weather_hour;
+CREATE TABLE weatherapp.we_weather_hour (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature_avg decimal(3,1) DEFAULT NULL,
+  temperature_min decimal(3,1) DEFAULT NULL,
+  temperature_max decimal(3,1) DEFAULT NULL,
+  humidity_avg int(3) DEFAULT NULL,
+  humidity_min int(3) DEFAULT NULL,
+  humidity_max int(3) DEFAULT NULL,
+  rain_total decimal(11,1) DEFAULT NULL,
+  rain_rate_max decimal(11,1) DEFAULT NULL,
+  wind_max decimal(11,1) DEFAULT NULL,
+  wind_direction_cluster varchar(2) DEFAULT NULL,
+  pressure_avg decimal(11,1) DEFAULT NULL,
+  pressure_min decimal(11,1) DEFAULT NULL,
+  pressure_max decimal(11,1) DEFAULT NULL,
+  solar_radiation_avg decimal(11,1) DEFAULT NULL,
+  solar_radiation_min decimal(11,1) DEFAULT NULL,
+  solar_radiation_max decimal(11,1) DEFAULT NULL,
+  hour varchar(2) DEFAULT NULL,
+  day varchar(10) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
+DROP TABLE IF EXISTS weatherapp.we_weather_day;
+CREATE TABLE weatherapp.we_weather_day (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature_avg decimal(3,1) DEFAULT NULL,
+  temperature_min decimal(3,1) DEFAULT NULL,
+  temperature_max decimal(3,1) DEFAULT NULL,
+  humidity_avg int(3) DEFAULT NULL,
+  humidity_min int(3) DEFAULT NULL,
+  humidity_max int(3) DEFAULT NULL,
+  rain_total decimal(11,1) DEFAULT NULL,
+  rain_rate_max decimal(11,1) DEFAULT NULL,
+  wind_max decimal(11,1) DEFAULT NULL,
+  wind_direction_cluster varchar(2) DEFAULT NULL,
+  pressure_avg decimal(11,1) DEFAULT NULL,
+  pressure_min decimal(11,1) DEFAULT NULL,
+  pressure_max decimal(11,1) DEFAULT NULL,
+  solar_radiation_avg decimal(11,1) DEFAULT NULL,
+  solar_radiation_min decimal(11,1) DEFAULT NULL,
+  solar_radiation_max decimal(11,1) DEFAULT NULL,
+  day varchar(10) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
+DROP TABLE IF EXISTS weatherapp.we_weather_month;
+CREATE TABLE weatherapp.we_weather_month (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature_avg decimal(3,1) DEFAULT NULL,
+  temperature_min decimal(3,1) DEFAULT NULL,
+  temperature_max decimal(3,1) DEFAULT NULL,
+  humidity_avg int(3) DEFAULT NULL,
+  humidity_min int(3) DEFAULT NULL,
+  humidity_max int(3) DEFAULT NULL,
+  rain_total decimal(11,1) DEFAULT NULL,
+  rain_rate_max decimal(11,1) DEFAULT NULL,
+  wind_max decimal(11,1) DEFAULT NULL,
+  wind_direction_cluster varchar(2) DEFAULT NULL,
+  pressure_avg decimal(11,1) DEFAULT NULL,
+  pressure_min decimal(11,1) DEFAULT NULL,
+  pressure_max decimal(11,1) DEFAULT NULL,
+  solar_radiation_avg decimal(11,1) DEFAULT NULL,
+  solar_radiation_min decimal(11,1) DEFAULT NULL,
+  solar_radiation_max decimal(11,1) DEFAULT NULL,
+  month varchar(2) DEFAULT NULL,
+  year varchar(4) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
+DROP TABLE IF EXISTS weatherapp.we_weather_year;
+CREATE TABLE weatherapp.we_weather_year (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature_avg decimal(3,1) DEFAULT NULL,
+  temperature_min decimal(3,1) DEFAULT NULL,
+  temperature_max decimal(3,1) DEFAULT NULL,
+  humidity_avg int(3) DEFAULT NULL,
+  humidity_min int(3) DEFAULT NULL,
+  humidity_max int(3) DEFAULT NULL,
+  rain_total decimal(11,1) DEFAULT NULL,
+  rain_rate_max decimal(11,1) DEFAULT NULL,
+  wind_max decimal(11,1) DEFAULT NULL,
+  wind_direction_cluster varchar(2) DEFAULT NULL,
+  pressure_avg decimal(11,1) DEFAULT NULL,
+  pressure_min decimal(11,1) DEFAULT NULL,
+  pressure_max decimal(11,1) DEFAULT NULL,
+  solar_radiation_avg decimal(11,1) DEFAULT NULL,
+  solar_radiation_min decimal(11,1) DEFAULT NULL,
+  solar_radiation_max decimal(11,1) DEFAULT NULL,
+  year varchar(4) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
 DROP TABLE IF EXISTS weatherapp.so_soil;
 CREATE TABLE weatherapp.so_soil (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -57,6 +155,58 @@ CREATE TABLE weatherapp.so_soil (
   temperature50cm decimal(3,1) DEFAULT NULL,
   temperature100cm decimal(3,1) DEFAULT NULL,
   temperature200cm decimal(3,1) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
+DROP TABLE IF EXISTS weatherapp.so_soil_day;
+CREATE TABLE weatherapp.so_soil_day (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature50cm_avg decimal(3,1) DEFAULT NULL,
+  temperature50cm_min decimal(3,1) DEFAULT NULL,
+  temperature50cm_max decimal(3,1) DEFAULT NULL,
+  temperature100cm_avg decimal(3,1) DEFAULT NULL,
+  temperature100cm_min decimal(3,1) DEFAULT NULL,
+  temperature100cm_max decimal(3,1) DEFAULT NULL,
+  temperature200cm_avg decimal(3,1) DEFAULT NULL,
+  temperature200cm_min decimal(3,1) DEFAULT NULL,
+  temperature200cm_max decimal(3,1) DEFAULT NULL,
+  day varchar(10) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
+DROP TABLE IF EXISTS weatherapp.so_soil_month;
+CREATE TABLE weatherapp.so_soil_month (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature50cm_avg decimal(3,1) DEFAULT NULL,
+  temperature50cm_min decimal(3,1) DEFAULT NULL,
+  temperature50cm_max decimal(3,1) DEFAULT NULL,
+  temperature100cm_avg decimal(3,1) DEFAULT NULL,
+  temperature100cm_min decimal(3,1) DEFAULT NULL,
+  temperature100cm_max decimal(3,1) DEFAULT NULL,
+  temperature200cm_avg decimal(3,1) DEFAULT NULL,
+  temperature200cm_min decimal(3,1) DEFAULT NULL,
+  temperature200cm_max decimal(3,1) DEFAULT NULL,
+  month varchar(2) DEFAULT NULL,
+  year varchar(4) DEFAULT NULL,
+  station_id BIGINT NOT NULL
+);
+
+DROP TABLE IF EXISTS weatherapp.so_soil_year;
+CREATE TABLE weatherapp.so_soil_year (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  amount int(10) DEFAULT NULL,
+  temperature50cm_avg decimal(3,1) DEFAULT NULL,
+  temperature50cm_min decimal(3,1) DEFAULT NULL,
+  temperature50cm_max decimal(3,1) DEFAULT NULL,
+  temperature100cm_avg decimal(3,1) DEFAULT NULL,
+  temperature100cm_min decimal(3,1) DEFAULT NULL,
+  temperature100cm_max decimal(3,1) DEFAULT NULL,
+  temperature200cm_avg decimal(3,1) DEFAULT NULL,
+  temperature200cm_min decimal(3,1) DEFAULT NULL,
+  temperature200cm_max decimal(3,1) DEFAULT NULL,
+  year varchar(4) DEFAULT NULL,
   station_id BIGINT NOT NULL
 );
 
@@ -75,6 +225,34 @@ ALTER TABLE weatherapp.we_weather
   ADD CONSTRAINT c_we_weather_unique UNIQUE (timestamp, station_id),
   ADD CONSTRAINT c_we_weather_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
+ALTER TABLE weatherapp.we_weather_hour
+  ADD CONSTRAINT c_we_weather_hour_unique UNIQUE (hour, day, station_id),
+  ADD CONSTRAINT c_we_weather_hour_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE weatherapp.we_weather_day
+  ADD CONSTRAINT c_we_weather_day_unique UNIQUE (day, station_id),
+  ADD CONSTRAINT c_we_weather_day_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE weatherapp.we_weather_month
+  ADD CONSTRAINT c_we_weather_month_unique UNIQUE (month, year, station_id),
+  ADD CONSTRAINT c_we_weather_month_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE weatherapp.we_weather_year
+  ADD CONSTRAINT c_we_weather_year_unique UNIQUE (year, station_id),
+  ADD CONSTRAINT c_we_weather_year_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
 ALTER TABLE weatherapp.so_soil
   ADD CONSTRAINT c_so_soil_unique UNIQUE (timestamp, station_id),
   ADD CONSTRAINT c_so_soil_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE weatherapp.so_soil_day
+  ADD CONSTRAINT c_so_soil_day_unique UNIQUE (day, station_id),
+  ADD CONSTRAINT c_so_soil_day_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE weatherapp.so_soil_month
+  ADD CONSTRAINT c_so_soil_month_unique UNIQUE (month, year, station_id),
+  ADD CONSTRAINT c_so_soil_month_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE weatherapp.so_soil_year
+  ADD CONSTRAINT c_so_soil_year_unique UNIQUE (year, station_id),
+  ADD CONSTRAINT c_so_soil_year_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.core.repository;
+package me.marcelberger.weatherapp.core.repository.soil;
 
 public final class SoilRepositoryQueries {
     public static final String SELECT_FROM = "SELECT s.id, s.timestamp, " +

@@ -1,7 +1,7 @@
-package me.marcelberger.weatherapp.core.repository;
+package me.marcelberger.weatherapp.core.repository.weather;
 
-import me.marcelberger.weatherapp.core.entity.StationEntity;
-import me.marcelberger.weatherapp.core.entity.WeatherEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

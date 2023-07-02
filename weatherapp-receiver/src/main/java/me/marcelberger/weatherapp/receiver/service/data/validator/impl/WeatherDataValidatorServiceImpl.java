@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.receiver.service.data.validator.impl;
 
-import me.marcelberger.weatherapp.core.entity.WeatherEntity;
+import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
 import me.marcelberger.weatherapp.receiver.service.data.validator.DataValidatorService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
