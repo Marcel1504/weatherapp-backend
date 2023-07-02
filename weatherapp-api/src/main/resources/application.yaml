@@ -1,0 +1,16 @@
+logging:
+  level:
+    root: WARN
+    me:
+      marcelberger: INFO
+
+spring:
+  datasource:
+    driverClassName: 'org.mariadb.jdbc.Driver'
+    url: 'jdbc:mariadb://localhost:3306/weatherapp'
+    username: 'admin'
+    password: 'admin'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect

@@ -1,0 +1,52 @@
+logging:
+  level:
+    root: WARN
+    me:
+      marcelberger: INFO
+
+spring:
+  datasource:
+    driverClassName: 'org.mariadb.jdbc.Driver'
+    url: 'jdbc:mariadb://localhost:3306/weatherapp'
+    username: 'admin'
+    password: 'admin'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+weatherapp:
+  station:
+    parameter:
+      rainCount: RAIN_COUNT
+    vendor:
+      ecowitt:
+        passkey: PASSKEY
+        temperature: tempf
+        humidity: humidity
+        timestamp: dateutc
+        solarRadiation: solarradiation
+        wind: windgustmph
+        windDirection: winddir
+        rainTotal: totalrainin
+        rainRate: rainratein
+        pressure: baromrelin
+  validation:
+    temperature: # degrees C
+      max: 50
+      min: -50
+    humidity: # percent
+      max: 100
+      min: 0
+    pressure: # mbar
+      max: 1500
+      min: 0
+    wind: # km/h
+      max: 300
+      min: 0
+    windDirection: # degrees
+      max: 360
+      min: 0
+    solarRadiation: # w/m²
+      max: 10000
+      min: 0
