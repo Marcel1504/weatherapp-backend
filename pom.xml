@@ -21,7 +21,8 @@
 		<module>weatherapp-core</module>
 		<module>weatherapp-api</module>
 		<module>weatherapp-receiver</module>
-	</modules>
+        <module>weatherapp-syncer</module>
+    </modules>
 
 	<properties>
 		<java.version>20</java.version>
