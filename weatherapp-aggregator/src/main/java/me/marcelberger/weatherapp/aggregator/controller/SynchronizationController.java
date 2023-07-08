@@ -20,7 +20,7 @@ public class SynchronizationController {
     }
 
     @GetMapping("full")
-    public ResponseEntity<StatusData> syncFullForStationByCode(@RequestParam("stationCode") String stationCode) {
+    public ResponseEntity<StatusData> syncFullForStationByCode(@RequestParam("station") String stationCode) {
         return ResponseEntity.ok(synchronizationFacade.syncFullForStationByCode(stationCode));
     }
 
@@ -30,7 +30,7 @@ public class SynchronizationController {
     }
 
     @GetMapping("delta")
-    public ResponseEntity<StatusData> syncDeltaForStationByCode(@RequestParam("stationCode") String stationCode) {
+    public ResponseEntity<StatusData> syncDeltaForStationByCode(@RequestParam("station") String stationCode) {
         return ResponseEntity.ok(synchronizationFacade.syncDeltaForStationByCode(stationCode));
     }
 }

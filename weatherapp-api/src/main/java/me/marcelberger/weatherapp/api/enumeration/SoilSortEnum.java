@@ -1,0 +1,28 @@
+package me.marcelberger.weatherapp.api.enumeration;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum SoilSortEnum {
+    LATEST(SoilSortEnum.LATEST_VALUE),
+    OLDEST(SoilSortEnum.OLDEST_VALUE),
+    HIGHEST_TEMPERATURE50CM(SoilSortEnum.HIGHEST_TEMPERATURE50CM_VALUE),
+    LOWEST_TEMPERATURE50CM(SoilSortEnum.LOWEST_TEMPERATURE50CM_VALUE),
+    HIGHEST_TEMPERATURE100CM(SoilSortEnum.HIGHEST_TEMPERATURE100CM_VALUE),
+    LOWEST_TEMPERATURE100CM(SoilSortEnum.LOWEST_TEMPERATURE100CM_VALUE),
+    HIGHEST_TEMPERATURE200CM(SoilSortEnum.HIGHEST_TEMPERATURE200CM_VALUE),
+    LOWEST_TEMPERATURE200CM(SoilSortEnum.LOWEST_TEMPERATURE200CM_VALUE);
+
+    public static final String LATEST_VALUE = "LATEST";
+    public static final String OLDEST_VALUE = "OLDEST";
+    public static final String HIGHEST_TEMPERATURE50CM_VALUE = "HIGHEST_TEMPERATURE50CM";
+    public static final String LOWEST_TEMPERATURE50CM_VALUE = "LOWEST_TEMPERATURE50CM";
+    public static final String HIGHEST_TEMPERATURE100CM_VALUE = "HIGHEST_TEMPERATURE100CM";
+    public static final String LOWEST_TEMPERATURE100CM_VALUE = "LOWEST_TEMPERATURE100CM";
+    public static final String HIGHEST_TEMPERATURE200CM_VALUE = "HIGHEST_TEMPERATURE200CM";
+    public static final String LOWEST_TEMPERATURE200CM_VALUE = "LOWEST_TEMPERATURE200CM";
+
+    private final String value;
+}

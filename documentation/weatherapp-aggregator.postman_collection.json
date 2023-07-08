@@ -1,0 +1,152 @@
+{
+  "info": {
+    "_postman_id": "fa46cf59-8ced-4616-b180-e98f8655b7b6",
+    "name": "weatherapp-aggregator",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "/full/all",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "admin123!",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{urlAggregator}}/full/all",
+          "host": [
+            "{{urlAggregator}}"
+          ],
+          "path": [
+            "full",
+            "all"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/full",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "admin123!",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{urlAggregator}}/full?station={{stationCode1}}",
+          "host": [
+            "{{urlAggregator}}"
+          ],
+          "path": [
+            "full"
+          ],
+          "query": [
+            {
+              "key": "station",
+              "value": "{{stationCode1}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/delta/all",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "admin123!",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{urlAggregator}}/delta/all",
+          "host": [
+            "{{urlAggregator}}"
+          ],
+          "path": [
+            "delta",
+            "all"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/delta",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "admin123!",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{urlAggregator}}/delta/all?station={{stationCode1}}",
+          "host": [
+            "{{urlAggregator}}"
+          ],
+          "path": [
+            "delta",
+            "all"
+          ],
+          "query": [
+            {
+              "key": "station",
+              "value": "{{stationCode1}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
