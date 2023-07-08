@@ -14,3 +14,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+weatherapp:
+  station:
+    parameter:
+      lastSyncedEntityTimestamp: LAST_SYNCED_ENTITY_TIMESTAMP
+  synchronization:
+    startFromYear: 2023

@@ -1,5 +1,6 @@
 package me.marcelberger.weatherapp.receiver.facade.data.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class ECODataFacadeImpl extends DataFacade<String> {
 
     @Value("${weatherapp.station.vendor.ecowitt.passkey}")

@@ -60,7 +60,7 @@ public class WeatherSummaryEntity {
     protected Double pressureMin;
 
     @Column(name = "pressure_max")
-    protected Double pressure_max;
+    protected Double pressureMax;
 
     @Column(name = "solar_radiation_avg")
     protected Double solarRadiationAvg;

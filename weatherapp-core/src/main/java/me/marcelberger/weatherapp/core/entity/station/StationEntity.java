@@ -2,9 +2,10 @@ package me.marcelberger.weatherapp.core.entity.station;
 
 import jakarta.persistence.*;
 import lombok.*;
+import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -30,6 +31,10 @@ public class StationEntity implements Serializable {
     @Column(name = "api_key")
     private String apiKey;
 
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private StationTypeEnum type;
+
     @Column(name = "latitude")
     private Double latitude;
 
@@ -52,5 +57,5 @@ public class StationEntity implements Serializable {
     private String responsibleEmail;
 
     @Column(name = "last_activity")
-    private Timestamp lastActivity;
+    private LocalDateTime lastActivity;
 }

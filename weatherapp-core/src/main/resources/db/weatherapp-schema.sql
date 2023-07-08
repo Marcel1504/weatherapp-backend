@@ -8,6 +8,7 @@ CREATE TABLE weatherapp.cn_station (
   code varchar(50) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
   api_key varchar(500) DEFAULT NULL,
+  type varchar(50) DEFAULT NULL,
   latitude decimal(17,15) DEFAULT NULL,
   longitude decimal(18,15) DEFAULT NULL,
   altitude int(5) DEFAULT NULL,
