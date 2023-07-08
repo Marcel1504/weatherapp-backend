@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WeatherApp Aggregator" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="me.marcelberger.weatherapp.aggregator.WeatherAppAggregatorApplication" />
+    <module name="weatherapp-aggregator" />
+    <option name="VM_PARAMETERS" value="-Dserver.port=8081" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

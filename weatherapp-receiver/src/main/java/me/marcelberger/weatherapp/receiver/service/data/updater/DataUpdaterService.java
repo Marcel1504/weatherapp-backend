@@ -7,7 +7,6 @@ import me.marcelberger.weatherapp.receiver.service.data.validator.DataValidatorS
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -44,7 +43,7 @@ public abstract class DataUpdaterService<FROM, TO> {
             log.warn("Update for station '{}' failed: data is invalid", station.getCode());
         }
 
-        station.setLastActivity(Timestamp.valueOf(LocalDateTime.now()));
+        station.setLastActivity(LocalDateTime.now());
         stationRepository.save(station);
     }
 

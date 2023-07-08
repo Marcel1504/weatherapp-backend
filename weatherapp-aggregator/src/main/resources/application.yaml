@@ -21,3 +21,6 @@ weatherapp:
       lastSyncedEntityTimestamp: LAST_SYNCED_ENTITY_TIMESTAMP
   synchronization:
     startFromYear: 2023
+  authentication:
+    username: admin
+    password: admin123!
