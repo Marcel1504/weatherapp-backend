@@ -21,7 +21,7 @@
 		<module>weatherapp-core</module>
 		<module>weatherapp-api</module>
 		<module>weatherapp-receiver</module>
-        <module>weatherapp-syncer</module>
+        <module>weatherapp-aggregator</module>
     </modules>
 
 	<properties>
