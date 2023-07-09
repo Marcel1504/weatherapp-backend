@@ -4,9 +4,9 @@ import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.builder.weather.impl.WeatherYearTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.weather.WeatherAggregationService;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.year.WeatherYearDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
-import me.marcelberger.weatherapp.core.entity.weather.summary.WeatherYearEntity;
 import me.marcelberger.weatherapp.core.repository.weather.summary.WeatherYearRepository;
 import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class WeatherYearAggregationServiceImpl extends WeatherAggregationService<WeatherYearEntity> {
+public class WeatherYearAggregationServiceImpl extends WeatherAggregationService<WeatherYearDataEntity> {
 
     @Autowired
     private WeatherWindService weatherWindService;
@@ -36,7 +36,7 @@ public class WeatherYearAggregationServiceImpl extends WeatherAggregationService
     }
 
     @Override
-    protected TargetBuilder<WeatherEntity, WeatherYearEntity> createTargetBuilder() {
+    protected TargetBuilder<WeatherDataEntity, WeatherYearDataEntity> createTargetBuilder() {
         return new WeatherYearTargetBuilderImpl(weatherWindService);
     }
 
@@ -53,11 +53,11 @@ public class WeatherYearAggregationServiceImpl extends WeatherAggregationService
     }
 
     @Override
-    protected WeatherYearEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected WeatherYearDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String year = timestampBase.getValue(CalendarParameter.Item.YEAR);
-        WeatherYearEntity entity = weatherYearRepository.findByStationAndYear(station, year);
+        WeatherYearDataEntity entity = weatherYearRepository.findByStationAndYear(station, year);
         if (entity == null) {
-            entity = WeatherYearEntity.builder()
+            entity = WeatherYearDataEntity.builder()
                     .year(year)
                     .station(station)
                     .build();
@@ -66,7 +66,7 @@ public class WeatherYearAggregationServiceImpl extends WeatherAggregationService
     }
 
     @Override
-    protected void saveTarget(WeatherYearEntity entity) {
+    protected void saveTarget(WeatherYearDataEntity entity) {
         this.weatherYearRepository.save(entity);
     }
 }

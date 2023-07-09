@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.facade.station.media;
 
-import me.marcelberger.weatherapp.api.data.station.StationMediaData;
-import me.marcelberger.weatherapp.api.mapper.DataMapper;
+import me.marcelberger.weatherapp.api.dto.station.StationMediaData;
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationMediaEntity;
@@ -25,7 +25,7 @@ public class StationMediaFacadeImpl implements StationMediaFacade {
     private StationMediaRepository stationMediaRepository;
 
     @Autowired
-    private DataMapper<StationMediaEntity, StationMediaData> stationMediaDataMapper;
+    private Mapper<StationMediaEntity, StationMediaData> stationMediaDataMapper;
 
     @Override
     public StationMediaData getStationMedia(String name, String stationCode) {

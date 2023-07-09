@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.controller.station;
 
-import me.marcelberger.weatherapp.api.data.PageData;
-import me.marcelberger.weatherapp.api.data.station.StationData;
+import me.marcelberger.weatherapp.api.dto.PageData;
+import me.marcelberger.weatherapp.api.dto.station.StationData;
 import me.marcelberger.weatherapp.api.facade.station.StationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

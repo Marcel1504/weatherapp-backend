@@ -1,10 +1,11 @@
 package me.marcelberger.weatherapp.api.controller.weather;
 
-import me.marcelberger.weatherapp.api.data.PageData;
-import me.marcelberger.weatherapp.api.data.weather.WeatherSummaryData;
+import me.marcelberger.weatherapp.api.dto.PageData;
+import me.marcelberger.weatherapp.api.dto.response.data.year.WeatherYearDataResponseDto;
 import me.marcelberger.weatherapp.api.enumeration.WeatherSortEnum;
-import me.marcelberger.weatherapp.api.facade.weather.year.WeatherYearFacade;
+import me.marcelberger.weatherapp.api.facade.data.year.YearDataFacade;
 import me.marcelberger.weatherapp.api.validator.year.YearString;
+import me.marcelberger.weatherapp.core.entity.data.year.WeatherYearDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,21 +20,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherYearController {
 
     @Autowired
-    private WeatherYearFacade weatherYearFacade;
+    private YearDataFacade<WeatherYearDataEntity, WeatherYearDataResponseDto, WeatherSortEnum> yearDataFacade;
 
     @GetMapping("year")
-    public ResponseEntity<WeatherSummaryData> getWeatherYear(
+    public ResponseEntity<WeatherYearDataResponseDto> getWeatherYear(
             @RequestParam(value = "year") @YearString String year,
             @RequestParam(value = "station") String stationCode) {
-        return ResponseEntity.ok(weatherYearFacade.getYearForStation(stationCode, year));
+        return ResponseEntity.ok(yearDataFacade.getYearForStation(stationCode, year));
     }
 
     @GetMapping("years/all")
-    public ResponseEntity<PageData<WeatherSummaryData>> getAllYears(
+    public ResponseEntity<PageData<WeatherYearDataResponseDto>> getAllYears(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "sort", defaultValue = WeatherSortEnum.LATEST_VALUE) WeatherSortEnum sort,
             @RequestParam(value = "station") String stationCode) {
-        return ResponseEntity.ok(weatherYearFacade.getAllYearsForStation(stationCode, page, size, sort));
+        return ResponseEntity.ok(yearDataFacade.getAllYearsForStation(stationCode, page, size, sort));
     }
 }

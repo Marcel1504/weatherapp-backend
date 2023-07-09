@@ -1,30 +1,30 @@
 package me.marcelberger.weatherapp.receiver.service.data.updater;
 
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
 import me.marcelberger.weatherapp.core.repository.weather.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService<FROM, WeatherEntity> {
+public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService<FROM, WeatherDataEntity> {
 
     @Autowired
     private WeatherRepository weatherRepository;
 
     @Override
-    protected WeatherEntity getLatestExistingEntityForStation(StationEntity station) {
+    protected WeatherDataEntity getLatestExistingEntityForStation(StationEntity station) {
         return weatherRepository.findLatestForStationId(station.getId());
     }
 
     @Override
-    protected LocalDateTime getTimestampOfEntity(WeatherEntity entity) {
+    protected LocalDateTime getTimestampOfEntity(WeatherDataEntity entity) {
         return entity != null ? entity.getTimestamp() : null;
     }
 
     @Override
-    protected WeatherEntity createNewEntity(FROM data, StationEntity station) {
-        return WeatherEntity.builder()
+    protected WeatherDataEntity createNewEntity(FROM data, StationEntity station) {
+        return WeatherDataEntity.builder()
                 .station(station)
                 .timestamp(getTimestamp(data))
                 .temperature(getTemperature(data))
@@ -39,7 +39,7 @@ public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService
     }
 
     @Override
-    protected void saveEntity(WeatherEntity entity) {
+    protected void saveEntity(WeatherDataEntity entity) {
         weatherRepository.save(entity);
     }
 

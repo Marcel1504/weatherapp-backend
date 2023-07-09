@@ -1,10 +1,11 @@
 package me.marcelberger.weatherapp.api.controller.weather;
 
-import me.marcelberger.weatherapp.api.data.PageData;
-import me.marcelberger.weatherapp.api.data.weather.WeatherSummaryData;
+import me.marcelberger.weatherapp.api.dto.PageData;
+import me.marcelberger.weatherapp.api.dto.response.data.hour.WeatherHourDataResponseDto;
 import me.marcelberger.weatherapp.api.enumeration.WeatherSortEnum;
-import me.marcelberger.weatherapp.api.facade.weather.hour.WeatherHourFacade;
+import me.marcelberger.weatherapp.api.facade.data.hour.HourDataFacade;
 import me.marcelberger.weatherapp.api.validator.day.DayString;
+import me.marcelberger.weatherapp.core.entity.data.hour.WeatherHourDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherHourController {
 
     @Autowired
-    private WeatherHourFacade weatherHourFacade;
+    private HourDataFacade<WeatherHourDataEntity, WeatherHourDataResponseDto, WeatherSortEnum> hourDataFacade;
 
     @GetMapping
-    public ResponseEntity<PageData<WeatherSummaryData>> getHoursOfDayForStation(
+    public ResponseEntity<PageData<WeatherHourDataResponseDto>> getHoursOfDayForStation(
             @RequestParam(value = "day") @DayString String day,
             @RequestParam(name = "sort", defaultValue = WeatherSortEnum.LATEST_VALUE) WeatherSortEnum sort,
             @RequestParam(value = "station") String stationCode) {
-        return ResponseEntity.ok(weatherHourFacade.getHoursOfDayForStation(stationCode, day, sort));
+        return ResponseEntity.ok(hourDataFacade.getHoursOfDayForStation(stationCode, day, sort));
     }
 }

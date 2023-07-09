@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.controller.weather;
 
 import jakarta.validation.Valid;
-import me.marcelberger.weatherapp.api.data.MailRequestData;
+import me.marcelberger.weatherapp.api.dto.MailRequestData;
 import me.marcelberger.weatherapp.api.validator.day.DayString;
 import me.marcelberger.weatherapp.core.data.StatusData;
 import org.springframework.http.ResponseEntity;

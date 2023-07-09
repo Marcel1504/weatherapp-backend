@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.api.controller.station;
 
-import me.marcelberger.weatherapp.api.data.station.StationMediaData;
+import me.marcelberger.weatherapp.api.dto.station.StationMediaData;
 import me.marcelberger.weatherapp.api.facade.station.media.StationMediaFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;

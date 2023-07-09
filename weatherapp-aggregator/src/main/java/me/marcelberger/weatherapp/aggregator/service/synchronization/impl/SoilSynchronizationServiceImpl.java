@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.aggregator.service.synchronization.impl;
 
 import me.marcelberger.weatherapp.aggregator.service.synchronization.SynchronizationService;
-import me.marcelberger.weatherapp.core.entity.soil.SoilEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
 import me.marcelberger.weatherapp.core.repository.soil.SoilRepository;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class SoilSynchronizationServiceImpl extends SynchronizationService<SoilEntity> {
+public class SoilSynchronizationServiceImpl extends SynchronizationService<SoilDataEntity> {
 
     @Autowired
     private SoilRepository soilRepository;

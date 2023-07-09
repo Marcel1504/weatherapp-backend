@@ -4,9 +4,9 @@ import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.builder.weather.impl.WeatherHourTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.weather.WeatherAggregationService;
+import me.marcelberger.weatherapp.core.entity.data.hour.WeatherHourDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
-import me.marcelberger.weatherapp.core.entity.weather.summary.WeatherHourEntity;
 import me.marcelberger.weatherapp.core.repository.weather.summary.WeatherHourRepository;
 import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class WeatherHourAggregationServiceImpl extends WeatherAggregationService<WeatherHourEntity> {
+public class WeatherHourAggregationServiceImpl extends WeatherAggregationService<WeatherHourDataEntity> {
 
     @Autowired
     private WeatherWindService weatherWindService;
@@ -36,7 +36,7 @@ public class WeatherHourAggregationServiceImpl extends WeatherAggregationService
     }
 
     @Override
-    protected TargetBuilder<WeatherEntity, WeatherHourEntity> createTargetBuilder() {
+    protected TargetBuilder<WeatherDataEntity, WeatherHourDataEntity> createTargetBuilder() {
         return new WeatherHourTargetBuilderImpl(weatherWindService);
     }
 
@@ -59,12 +59,12 @@ public class WeatherHourAggregationServiceImpl extends WeatherAggregationService
     }
 
     @Override
-    protected WeatherHourEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected WeatherHourDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String day = timestampBase.getValue(CalendarParameter.Item.DAY);
         String hour = timestampBase.getValue(CalendarParameter.Item.HOUR);
-        WeatherHourEntity entity = weatherHourRepository.findByStationAndDayAndHour(station, day, hour);
+        WeatherHourDataEntity entity = weatherHourRepository.findByStationAndDayAndHour(station, day, hour);
         if (entity == null) {
-            entity = WeatherHourEntity.builder()
+            entity = WeatherHourDataEntity.builder()
                     .day(day)
                     .hour(hour)
                     .station(station)
@@ -74,7 +74,7 @@ public class WeatherHourAggregationServiceImpl extends WeatherAggregationService
     }
 
     @Override
-    protected void saveTarget(WeatherHourEntity entity) {
+    protected void saveTarget(WeatherHourDataEntity entity) {
         this.weatherHourRepository.save(entity);
     }
 }

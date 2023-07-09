@@ -1,8 +1,8 @@
 package me.marcelberger.weatherapp.api.facade.station;
 
-import me.marcelberger.weatherapp.api.data.PageData;
-import me.marcelberger.weatherapp.api.data.station.StationData;
-import me.marcelberger.weatherapp.api.mapper.DataMapper;
+import me.marcelberger.weatherapp.api.dto.PageData;
+import me.marcelberger.weatherapp.api.dto.station.StationData;
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
@@ -20,7 +20,7 @@ public class StationFacadeImpl implements StationFacade {
     private StationRepository stationRepository;
 
     @Autowired
-    private DataMapper<StationEntity, StationData> stationDataMapper;
+    private Mapper<StationEntity, StationData> stationDataMapper;
 
     @Override
     public PageData<StationData> getAll() {

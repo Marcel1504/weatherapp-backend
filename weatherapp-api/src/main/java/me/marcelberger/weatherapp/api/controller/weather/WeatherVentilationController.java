@@ -1,8 +1,8 @@
 package me.marcelberger.weatherapp.api.controller.weather;
 
 import jakarta.validation.Valid;
-import me.marcelberger.weatherapp.api.data.weather.WeatherVentilationRequestData;
-import me.marcelberger.weatherapp.api.data.weather.WeatherVentilationResultData;
+import me.marcelberger.weatherapp.api.dto.weather.WeatherVentilationRequestData;
+import me.marcelberger.weatherapp.api.dto.weather.WeatherVentilationResultData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;

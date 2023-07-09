@@ -1,7 +1,8 @@
 package me.marcelberger.weatherapp.api.controller.weather;
 
-import me.marcelberger.weatherapp.api.data.weather.WeatherData;
-import me.marcelberger.weatherapp.api.facade.weather.WeatherFacade;
+import me.marcelberger.weatherapp.api.dto.response.data.single.WeatherSingleDataResponseDto;
+import me.marcelberger.weatherapp.api.facade.data.single.SingleDataFacade;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherController {
 
     @Autowired
-    private WeatherFacade weatherFacade;
+    private SingleDataFacade<WeatherDataEntity, WeatherSingleDataResponseDto> singleDataFacade;
 
     @GetMapping("/latest")
-    public ResponseEntity<WeatherData> getLatest(@RequestParam("station") String stationCode) {
-        return ResponseEntity.ok(weatherFacade.getLatest(stationCode));
+    public ResponseEntity<WeatherSingleDataResponseDto> getLatest(@RequestParam("station") String stationCode) {
+        return ResponseEntity.ok(singleDataFacade.getLatest(stationCode));
     }
 }

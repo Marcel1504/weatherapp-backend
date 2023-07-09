@@ -4,8 +4,8 @@ import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.builder.soil.impl.SoilDayTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.soil.SoilAggregationService;
-import me.marcelberger.weatherapp.core.entity.soil.SoilEntity;
-import me.marcelberger.weatherapp.core.entity.soil.summary.SoilDayEntity;
+import me.marcelberger.weatherapp.core.entity.data.day.SoilDayDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.soil.summary.SoilDayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDayEntity> {
+public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDayDataEntity> {
 
     @Autowired
     private SoilDayRepository soilDayRepository;
@@ -32,7 +32,7 @@ public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDa
     }
 
     @Override
-    protected TargetBuilder<SoilEntity, SoilDayEntity> createTargetBuilder() {
+    protected TargetBuilder<SoilDataEntity, SoilDayDataEntity> createTargetBuilder() {
         return new SoilDayTargetBuilderImpl();
     }
 
@@ -49,11 +49,11 @@ public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDa
     }
 
     @Override
-    protected SoilDayEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected SoilDayDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String day = timestampBase.getValue(CalendarParameter.Item.DAY);
-        SoilDayEntity entity = soilDayRepository.findByStationAndDay(station, day);
+        SoilDayDataEntity entity = soilDayRepository.findByStationAndDay(station, day);
         if (entity == null) {
-            entity = SoilDayEntity.builder()
+            entity = SoilDayDataEntity.builder()
                     .day(day)
                     .station(station)
                     .build();
@@ -62,7 +62,7 @@ public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDa
     }
 
     @Override
-    protected void saveTarget(SoilDayEntity entity) {
+    protected void saveTarget(SoilDayDataEntity entity) {
         soilDayRepository.save(entity);
     }
 }

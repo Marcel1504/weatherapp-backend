@@ -4,8 +4,8 @@ import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.builder.soil.impl.SoilYearTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.soil.SoilAggregationService;
-import me.marcelberger.weatherapp.core.entity.soil.SoilEntity;
-import me.marcelberger.weatherapp.core.entity.soil.summary.SoilYearEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.year.SoilYearDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.soil.summary.SoilYearRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class SoilYearAggregationServiceImpl extends SoilAggregationService<SoilYearEntity> {
+public class SoilYearAggregationServiceImpl extends SoilAggregationService<SoilYearDataEntity> {
 
     @Autowired
     private SoilYearRepository soilYearRepository;
@@ -32,7 +32,7 @@ public class SoilYearAggregationServiceImpl extends SoilAggregationService<SoilY
     }
 
     @Override
-    protected TargetBuilder<SoilEntity, SoilYearEntity> createTargetBuilder() {
+    protected TargetBuilder<SoilDataEntity, SoilYearDataEntity> createTargetBuilder() {
         return new SoilYearTargetBuilderImpl();
     }
 
@@ -49,11 +49,11 @@ public class SoilYearAggregationServiceImpl extends SoilAggregationService<SoilY
     }
 
     @Override
-    protected SoilYearEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected SoilYearDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String year = timestampBase.getValue(CalendarParameter.Item.YEAR);
-        SoilYearEntity entity = soilYearRepository.findByStationAndYear(station, year);
+        SoilYearDataEntity entity = soilYearRepository.findByStationAndYear(station, year);
         if (entity == null) {
-            entity = SoilYearEntity.builder()
+            entity = SoilYearDataEntity.builder()
                     .year(year)
                     .station(station)
                     .build();
@@ -62,7 +62,7 @@ public class SoilYearAggregationServiceImpl extends SoilAggregationService<SoilY
     }
 
     @Override
-    protected void saveTarget(SoilYearEntity entity) {
+    protected void saveTarget(SoilYearDataEntity entity) {
         this.soilYearRepository.save(entity);
     }
 }
