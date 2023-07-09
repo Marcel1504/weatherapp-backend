@@ -3,9 +3,11 @@ package me.marcelberger.weatherapp.api.controller.weather;
 import me.marcelberger.weatherapp.api.data.PageData;
 import me.marcelberger.weatherapp.api.data.weather.WeatherSummaryData;
 import me.marcelberger.weatherapp.api.enumeration.WeatherSortEnum;
+import me.marcelberger.weatherapp.api.facade.weather.month.WeatherMonthFacade;
 import me.marcelberger.weatherapp.api.validator.month.MonthString;
 import me.marcelberger.weatherapp.api.validator.year.NullableYearString;
 import me.marcelberger.weatherapp.api.validator.year.YearString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,23 +20,24 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class WeatherMonthController {
 
+    @Autowired
+    private WeatherMonthFacade weatherMonthFacade;
+
     @GetMapping("month")
-    public ResponseEntity<WeatherSummaryData> getWeatherMonth(
+    public ResponseEntity<WeatherSummaryData> getMonthForStation(
             @RequestParam(value = "year") @YearString String year,
             @RequestParam(value = "month") @MonthString String month,
             @RequestParam(value = "station") String stationCode) {
-        // TODO: connect
-        return null;
+        return ResponseEntity.ok(weatherMonthFacade.getMonthForStation(stationCode, month, year));
     }
 
     @GetMapping("months/all")
-    public ResponseEntity<PageData<WeatherSummaryData>> getAllMonths(
+    public ResponseEntity<PageData<WeatherSummaryData>> getMonthsOfYearForStation(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "sort", defaultValue = WeatherSortEnum.LATEST_VALUE) WeatherSortEnum sort,
             @RequestParam(value = "year", required = false) @NullableYearString String year,
             @RequestParam(value = "station") String stationCode) {
-        // TODO: connect
-        return null;
+        return ResponseEntity.ok(weatherMonthFacade.getMonthsOfYearForStation(stationCode, page, size, year, sort));
     }
 }

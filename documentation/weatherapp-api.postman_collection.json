@@ -586,7 +586,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/hours?day=2022-08-12&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/hours?day=2022-08-12&station={{stationCode1}}&sort=OLDEST",
           "host": [
             "{{urlApi}}"
           ],
@@ -602,6 +602,10 @@
             {
               "key": "station",
               "value": "{{stationCode1}}"
+            },
+            {
+              "key": "sort",
+              "value": "OLDEST"
             }
           ]
         }
@@ -644,7 +648,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/month?year=2022&month=08&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/month?year=2023&month=05&station={{stationCode1}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -655,11 +659,11 @@
           "query": [
             {
               "key": "year",
-              "value": "2022"
+              "value": "2023"
             },
             {
               "key": "month",
-              "value": "08"
+              "value": "05"
             },
             {
               "key": "station",
@@ -682,7 +686,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/months/all?page=0&sort=OLDEST&size=5&station={{stationCode1}}&year=2022",
+          "raw": "{{urlApi}}/weather/months/all?page=0&sort=LATEST&size=5&station={{stationCode1}}&year=2023",
           "host": [
             "{{urlApi}}"
           ],
@@ -698,7 +702,7 @@
             },
             {
               "key": "sort",
-              "value": "OLDEST"
+              "value": "LATEST"
             },
             {
               "key": "size",
@@ -710,7 +714,7 @@
             },
             {
               "key": "year",
-              "value": "2022"
+              "value": "2023"
             }
           ]
         }
@@ -762,7 +766,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/year?year=2022&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/year?year=2023&station={{stationCode1}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -773,7 +777,7 @@
           "query": [
             {
               "key": "year",
-              "value": "2022"
+              "value": "2023"
             },
             {
               "key": "station",

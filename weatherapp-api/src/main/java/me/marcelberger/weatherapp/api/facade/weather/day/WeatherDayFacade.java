@@ -5,14 +5,14 @@ import me.marcelberger.weatherapp.api.data.weather.WeatherSummaryData;
 import me.marcelberger.weatherapp.api.enumeration.WeatherSortEnum;
 
 public interface WeatherDayFacade {
-    PageData<WeatherSummaryData> getDaysOfMonth(String stationCode, String month, String year);
+    PageData<WeatherSummaryData> getDaysOfMonthForStation(String stationCode, String month, String year);
 
-    PageData<WeatherSummaryData> getAllDays(String stationCode,
-                                            Integer page,
-                                            Integer size,
-                                            String startDay,
-                                            String endDay,
-                                            WeatherSortEnum sort);
+    PageData<WeatherSummaryData> getAllDaysForStation(String stationCode,
+                                                      Integer page,
+                                                      Integer size,
+                                                      String startDay,
+                                                      String endDay,
+                                                      WeatherSortEnum sort);
 
-    WeatherSummaryData getDay(String stationCode, String day);
+    WeatherSummaryData getDayForStation(String stationCode, String day);
 }

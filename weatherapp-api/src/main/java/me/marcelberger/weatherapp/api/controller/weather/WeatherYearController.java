@@ -3,7 +3,9 @@ package me.marcelberger.weatherapp.api.controller.weather;
 import me.marcelberger.weatherapp.api.data.PageData;
 import me.marcelberger.weatherapp.api.data.weather.WeatherSummaryData;
 import me.marcelberger.weatherapp.api.enumeration.WeatherSortEnum;
+import me.marcelberger.weatherapp.api.facade.weather.year.WeatherYearFacade;
 import me.marcelberger.weatherapp.api.validator.year.YearString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("weather")
 @Validated
 public class WeatherYearController {
+
+    @Autowired
+    private WeatherYearFacade weatherYearFacade;
+
     @GetMapping("year")
     public ResponseEntity<WeatherSummaryData> getWeatherYear(
             @RequestParam(value = "year") @YearString String year,
             @RequestParam(value = "station") String stationCode) {
-        // TODO: connect
-        return null;
+        return ResponseEntity.ok(weatherYearFacade.getYearForStation(stationCode, year));
     }
 
     @GetMapping("years/all")
@@ -29,7 +34,6 @@ public class WeatherYearController {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "sort", defaultValue = WeatherSortEnum.LATEST_VALUE) WeatherSortEnum sort,
             @RequestParam(value = "station") String stationCode) {
-        // TODO: connect
-        return null;
+        return ResponseEntity.ok(weatherYearFacade.getAllYearsForStation(stationCode, page, size, sort));
     }
 }

@@ -36,7 +36,7 @@ public class WeatherDayFacadeImpl implements WeatherDayFacade {
     private WeatherSortService weatherSortService;
 
     @Override
-    public PageData<WeatherSummaryData> getDaysOfMonth(String stationCode, String month, String year) {
+    public PageData<WeatherSummaryData> getDaysOfMonthForStation(String stationCode, String month, String year) {
         StationEntity station = getStation(stationCode);
         Page<WeatherDayEntity> data = weatherDayRepository.findAllDaysOfMonthForStation(
                 Pageable.unpaged(),
@@ -46,12 +46,12 @@ public class WeatherDayFacadeImpl implements WeatherDayFacade {
     }
 
     @Override
-    public PageData<WeatherSummaryData> getAllDays(String stationCode,
-                                                   Integer page,
-                                                   Integer size,
-                                                   String startDay,
-                                                   String endDay,
-                                                   WeatherSortEnum sort) {
+    public PageData<WeatherSummaryData> getAllDaysForStation(String stationCode,
+                                                             Integer page,
+                                                             Integer size,
+                                                             String startDay,
+                                                             String endDay,
+                                                             WeatherSortEnum sort) {
         StationEntity station = getStation(stationCode);
         Page<WeatherDayEntity> data;
         if (startDay != null && endDay != null) {
@@ -79,11 +79,11 @@ public class WeatherDayFacadeImpl implements WeatherDayFacade {
     }
 
     @Override
-    public WeatherSummaryData getDay(String stationCode, String day) {
+    public WeatherSummaryData getDayForStation(String stationCode, String day) {
         StationEntity station = getStation(stationCode);
         WeatherDayEntity dayEntity = weatherDayRepository.findByStationAndDay(station, day);
         if (dayEntity == null) {
-            throw new ServiceException(msg.get("weather.notFound", stationCode));
+            throw new ServiceException(msg.get("weather.notFound"));
         }
         return weatherDayDataMapper.map(dayEntity);
     }

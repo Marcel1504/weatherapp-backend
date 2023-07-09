@@ -25,28 +25,28 @@ public class WeatherDayController {
     private WeatherDayFacade weatherDayFacade;
 
     @GetMapping("days")
-    public ResponseEntity<PageData<WeatherSummaryData>> getDaysOfMonth(
+    public ResponseEntity<PageData<WeatherSummaryData>> getDaysOfMonthForStation(
             @RequestParam(name = "year") @YearString String year,
             @RequestParam(name = "month") @MonthString String month,
             @RequestParam(name = "station") String stationCode) {
-        return ResponseEntity.ok(weatherDayFacade.getDaysOfMonth(stationCode, month, year));
+        return ResponseEntity.ok(weatherDayFacade.getDaysOfMonthForStation(stationCode, month, year));
     }
 
     @GetMapping("days/all")
-    public ResponseEntity<PageData<WeatherSummaryData>> getAllDays(
+    public ResponseEntity<PageData<WeatherSummaryData>> getAllDaysForStation(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer size,
             @RequestParam(name = "sort", defaultValue = WeatherSortEnum.LATEST_VALUE) WeatherSortEnum sort,
             @RequestParam(name = "startDay", required = false) @NullableDayString String startDay,
             @RequestParam(name = "endDay", required = false) @NullableDayString String endDay,
             @RequestParam(name = "station") String stationCode) {
-        return ResponseEntity.ok(weatherDayFacade.getAllDays(stationCode, page, size, startDay, endDay, sort));
+        return ResponseEntity.ok(weatherDayFacade.getAllDaysForStation(stationCode, page, size, startDay, endDay, sort));
     }
 
     @GetMapping("day")
-    public ResponseEntity<WeatherSummaryData> getWeatherDay(
+    public ResponseEntity<WeatherSummaryData> getDayForStation(
             @RequestParam(name = "day") @DayString String day,
             @RequestParam(name = "station") String stationCode) {
-        return ResponseEntity.ok(weatherDayFacade.getDay(stationCode, day));
+        return ResponseEntity.ok(weatherDayFacade.getDayForStation(stationCode, day));
     }
 }
