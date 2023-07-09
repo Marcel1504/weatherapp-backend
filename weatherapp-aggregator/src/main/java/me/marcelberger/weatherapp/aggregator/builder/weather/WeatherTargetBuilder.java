@@ -3,6 +3,7 @@ package me.marcelberger.weatherapp.aggregator.builder.weather;
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.core.entity.weather.WeatherEntity;
 import me.marcelberger.weatherapp.core.entity.weather.summary.WeatherSummaryEntity;
+import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
 import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ import java.util.Map;
 public abstract class WeatherTargetBuilder<T extends WeatherSummaryEntity> implements TargetBuilder<WeatherEntity, T> {
 
     private final WeatherWindService weatherWindService;
-    private final Map<String, Integer> windDirectionCountMap = new HashMap<>();
+    private final Map<WeatherWindDirectionEnum, Integer> windDirectionCountMap = new HashMap<>();
     private BigDecimal temperatureAvgBase = new BigDecimal("0.0");
     private Integer temperatureCount = 0;
     private Double temperatureMax;
@@ -129,12 +130,12 @@ public abstract class WeatherTargetBuilder<T extends WeatherSummaryEntity> imple
     }
 
     private void pushWindDirection(Integer windDirection) {
-        String directionSymbol = weatherWindService.degreeToWindDirectionSymbol(windDirection);
-        if (directionSymbol == null) return;
-        if (!windDirectionCountMap.containsKey(directionSymbol)) {
-            windDirectionCountMap.put(directionSymbol, 1);
+        WeatherWindDirectionEnum direction = weatherWindService.degreeToWindDirectionEnum(windDirection);
+        if (direction == null) return;
+        if (!windDirectionCountMap.containsKey(direction)) {
+            windDirectionCountMap.put(direction, 1);
         } else {
-            windDirectionCountMap.put(directionSymbol, windDirectionCountMap.get(directionSymbol) + 1);
+            windDirectionCountMap.put(direction, windDirectionCountMap.get(direction) + 1);
         }
     }
 
@@ -165,10 +166,10 @@ public abstract class WeatherTargetBuilder<T extends WeatherSummaryEntity> imple
                 : null;
     }
 
-    private String getWindDirectionCluster() {
-        String mostCommonCluster = null;
+    private WeatherWindDirectionEnum getWindDirectionCluster() {
+        WeatherWindDirectionEnum mostCommonCluster = null;
         Integer currentClusterCountMax = 0;
-        for (Map.Entry<String, Integer> entry : windDirectionCountMap.entrySet()) {
+        for (Map.Entry<WeatherWindDirectionEnum, Integer> entry : windDirectionCountMap.entrySet()) {
             if (entry.getValue() > currentClusterCountMax) {
                 currentClusterCountMax = entry.getValue();
                 mostCommonCluster = entry.getKey();

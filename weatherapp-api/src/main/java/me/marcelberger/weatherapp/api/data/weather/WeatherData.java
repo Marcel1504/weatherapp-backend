@@ -10,13 +10,11 @@ import java.time.LocalDateTime;
 @Builder
 public class WeatherData {
     private Double temperature;
-    private String temperatureColor;
     private Integer humidity;
     private Double rainSinceLast;
     private Double rainRate;
     private Double wind;
     private Integer windDirection;
-    private String windDirectionCluster;
     private Double pressure;
     private Double solarRadiation;
     private Long secondsSinceLast;

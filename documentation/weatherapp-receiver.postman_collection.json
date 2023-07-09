@@ -49,12 +49,12 @@
           "basic": [
             {
               "key": "password",
-              "value": "test123!",
+              "value": "test",
               "type": "string"
             },
             {
               "key": "username",
-              "value": "test1",
+              "value": "{{stationCode2}}",
               "type": "string"
             }
           ]
@@ -69,7 +69,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "\r\n",
+          "raw": "{\r\n    \"temperature\": 12.0,\r\n    \"humidity\": 99,\r\n    \"rainfall\": 12.0,\r\n    \"rainRate\": 0.0,\r\n    \"wind\": 123.0,\r\n    \"windDirection\": 212,\r\n    \"pressure\": 1042.2,\r\n    \"timestamp\": \"2020-10-11T10:00:00\"\r\n}\r\n",
           "options": {
             "raw": {
               "language": "json"
@@ -96,13 +96,13 @@
           "type": "basic",
           "basic": [
             {
-              "key": "username",
-              "value": "test1",
+              "key": "password",
+              "value": "test",
               "type": "string"
             },
             {
-              "key": "password",
-              "value": "test123!",
+              "key": "username",
+              "value": "{{stationCode2}}",
               "type": "string"
             }
           ]
@@ -117,7 +117,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "\r\n",
+          "raw": "{\r\n    \"temperature1\": 12,\r\n    \"temperature2\": 13,\r\n    \"temperature3\": 14,\r\n    \"timestamp\": \"2020-01-01T10:00:00\"\r\n}\r\n",
           "options": {
             "raw": {
               "language": "json"

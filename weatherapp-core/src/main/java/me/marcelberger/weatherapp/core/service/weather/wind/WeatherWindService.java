@@ -1,5 +1,7 @@
 package me.marcelberger.weatherapp.core.service.weather.wind;
 
+import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
+
 public interface WeatherWindService {
-    String degreeToWindDirectionSymbol(Integer degree);
+    WeatherWindDirectionEnum degreeToWindDirectionEnum(Integer degree);
 }

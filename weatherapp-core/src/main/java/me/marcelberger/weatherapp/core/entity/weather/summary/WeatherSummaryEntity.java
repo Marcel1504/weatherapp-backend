@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
 
 @MappedSuperclass
 @Getter
@@ -51,7 +52,8 @@ public class WeatherSummaryEntity {
     protected Double windMax;
 
     @Column(name = "wind_direction_cluster")
-    protected String windDirectionCluster;
+    @Enumerated(EnumType.STRING)
+    private WeatherWindDirectionEnum windDirectionCluster;
 
     @Column(name = "pressure_avg")
     protected Double pressureAvg;

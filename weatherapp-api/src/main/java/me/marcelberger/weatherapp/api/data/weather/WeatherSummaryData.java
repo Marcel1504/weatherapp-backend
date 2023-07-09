@@ -10,15 +10,13 @@ public class WeatherSummaryData {
     private Double temperatureAvg;
     private Double temperatureMax;
     private Double temperatureMin;
-    private String temperatureAvgColor;
-    private String temperatureMaxColor;
-    private String temperatureMinColor;
     private Integer humidityAvg;
     private Integer humidityMax;
     private Integer humidityMin;
     private Double rainTotal;
     private Double rainRateMax;
     private Double windMax;
+    private String windDirectionCluster;
     private Double pressureAvg;
     private Double pressureMax;
     private Double pressureMin;

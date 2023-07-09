@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.data;
+package me.marcelberger.weatherapp.api.data.station;
 
 import lombok.Builder;
 import lombok.Data;

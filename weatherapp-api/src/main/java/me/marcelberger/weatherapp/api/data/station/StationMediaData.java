@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.data;
+package me.marcelberger.weatherapp.api.data.station;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.io.File;
 
 @Data
 @Builder
-public class MediaFileData {
+public class StationMediaData {
     private File file;
     private MediaType mediaType;
 }

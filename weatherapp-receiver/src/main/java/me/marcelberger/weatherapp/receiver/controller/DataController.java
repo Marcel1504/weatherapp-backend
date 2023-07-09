@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.receiver.controller.data;
+package me.marcelberger.weatherapp.receiver.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.core.data.StatusData;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("data")

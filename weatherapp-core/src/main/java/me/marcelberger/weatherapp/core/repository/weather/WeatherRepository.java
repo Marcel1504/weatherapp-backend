@@ -20,6 +20,17 @@ public interface WeatherRepository extends JpaRepository<WeatherEntity, Long> {
     WeatherEntity findLatestForStationId(@Param("station_id") Long stationId);
 
     @Query(value = WeatherRepositoryQueries.SELECT_FROM +
+            "WHERE w.station_id = :station_id " +
+            "AND w.timestamp < :timestamp " +
+            "ORDER BY w.timestamp DESC " +
+            "LIMIT 1",
+            nativeQuery = true
+    )
+    WeatherEntity findFirstBeforeTimestampForStationId(
+            @Param("station_id") Long stationId,
+            @Param("timestamp") String timestamp);
+
+    @Query(value = WeatherRepositoryQueries.SELECT_FROM +
             "WHERE w.timestamp >= :timestamp_start " +
             "AND w.timestamp <= :timestamp_end " +
             "AND w.station_id = :station_id " +
