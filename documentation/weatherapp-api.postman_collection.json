@@ -422,7 +422,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/day?day=2022-08-12&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/day?day=2023-02-12&station={{stationCode1}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -433,7 +433,7 @@
           "query": [
             {
               "key": "day",
-              "value": "2022-08-12"
+              "value": "2023-02-12"
             },
             {
               "key": "station",
@@ -456,7 +456,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/days?year=2020&month=04&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/days?year=2023&month=04&station={{stationCode1}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -467,7 +467,7 @@
           "query": [
             {
               "key": "year",
-              "value": "2020"
+              "value": "2023"
             },
             {
               "key": "month",
@@ -488,7 +488,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{urlApi}}/weather/days/all?page=0&size=5&sort=HIGHEST_TEMPERATURE&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/days/all?page=0&size=5&sort=LATEST&station={{stationCode1}}&startDay=2023-02-01&endDay=2023-02-20",
           "host": [
             "{{urlApi}}"
           ],
@@ -508,11 +508,19 @@
             },
             {
               "key": "sort",
-              "value": "HIGHEST_TEMPERATURE"
+              "value": "LATEST"
             },
             {
               "key": "station",
               "value": "{{stationCode1}}"
+            },
+            {
+              "key": "startDay",
+              "value": "2023-02-01"
+            },
+            {
+              "key": "endDay",
+              "value": "2023-02-20"
             }
           ]
         }

@@ -10,7 +10,7 @@ public class WeatherSummaryData {
     private Double temperatureAvg;
     private Double temperatureMax;
     private Double temperatureMin;
-    private Integer humidityAvg;
+    private Double humidityAvg;
     private Integer humidityMax;
     private Integer humidityMin;
     private Double rainTotal;
