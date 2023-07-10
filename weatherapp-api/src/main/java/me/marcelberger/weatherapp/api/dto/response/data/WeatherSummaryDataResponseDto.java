@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public abstract class WeatherSummaryDataResponseDto {
     private Double rainTotal;
     private Double rainRateMax;
     private Double windMax;
-    private String windDirectionCluster;
+    private WeatherWindDirectionEnum windDirectionCluster;
     private Double pressureAvg;
     private Double pressureMax;
     private Double pressureMin;

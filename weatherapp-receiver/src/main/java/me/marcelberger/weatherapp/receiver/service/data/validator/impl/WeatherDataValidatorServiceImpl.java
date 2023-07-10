@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.receiver.service.data.validator.impl;
 
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherSingleDataEntity;
 import me.marcelberger.weatherapp.receiver.service.data.validator.DataValidatorService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WeatherDataValidatorServiceImpl implements DataValidatorService<WeatherDataEntity> {
+public class WeatherDataValidatorServiceImpl implements DataValidatorService<WeatherSingleDataEntity> {
 
     @Value("${weatherapp.validation.temperature.max}")
     private double temperatureMax;
@@ -45,7 +45,7 @@ public class WeatherDataValidatorServiceImpl implements DataValidatorService<Wea
     private double solarRadiationMin;
 
     @Override
-    public boolean isValid(WeatherDataEntity element) {
+    public boolean isValid(WeatherSingleDataEntity element) {
         return element.getTimestamp() != null
                 && isValidTemperature(element)
                 && isValidHumidity(element)
@@ -57,40 +57,40 @@ public class WeatherDataValidatorServiceImpl implements DataValidatorService<Wea
                 && isValidSolarRadiation(element);
     }
 
-    private boolean isValidTemperature(WeatherDataEntity w) {
+    private boolean isValidTemperature(WeatherSingleDataEntity w) {
         return w.getTemperature() == null
                 || (w.getTemperature() <= temperatureMax && w.getTemperature() >= temperatureMin);
     }
 
-    private boolean isValidHumidity(WeatherDataEntity w) {
+    private boolean isValidHumidity(WeatherSingleDataEntity w) {
         return w.getHumidity() == null
                 || (w.getHumidity() <= humidityMax && w.getHumidity() >= humidityMin);
     }
 
-    private boolean isValidPressure(WeatherDataEntity w) {
+    private boolean isValidPressure(WeatherSingleDataEntity w) {
         return w.getPressure() == null
                 || (w.getPressure() <= pressureMax && w.getPressure() >= pressureMin);
     }
 
-    private boolean isValidWind(WeatherDataEntity w) {
+    private boolean isValidWind(WeatherSingleDataEntity w) {
         return w.getWind() == null
                 || (w.getWind() <= windMax && w.getWind() >= windMin);
     }
 
-    private boolean isValidWindDirection(WeatherDataEntity w) {
+    private boolean isValidWindDirection(WeatherSingleDataEntity w) {
         return w.getWindDirection() == null
                 || (w.getWindDirection() <= windDirectionMax && w.getWind() >= windDirectionMin);
     }
 
-    private boolean isValidRainDelta(WeatherDataEntity w) {
+    private boolean isValidRainDelta(WeatherSingleDataEntity w) {
         return w.getRainDelta() == null || w.getRainDelta() >= 0;
     }
 
-    private boolean isValidRainRate(WeatherDataEntity w) {
+    private boolean isValidRainRate(WeatherSingleDataEntity w) {
         return w.getRainRate() == null || w.getRainRate() >= 0;
     }
 
-    private boolean isValidSolarRadiation(WeatherDataEntity w) {
+    private boolean isValidSolarRadiation(WeatherSingleDataEntity w) {
         return w.getSolarRadiation() == null
                 || (w.getSolarRadiation() <= solarRadiationMax && w.getSolarRadiation() >= solarRadiationMin);
     }

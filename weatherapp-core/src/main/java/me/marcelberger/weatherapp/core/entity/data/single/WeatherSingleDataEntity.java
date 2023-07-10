@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SuperBuilder
 @Table(name = "we_weather")
-public class WeatherDataEntity {
+public class WeatherSingleDataEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

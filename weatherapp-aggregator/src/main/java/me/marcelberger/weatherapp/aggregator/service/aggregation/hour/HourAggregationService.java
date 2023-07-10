@@ -1,29 +1,19 @@
-package me.marcelberger.weatherapp.aggregator.service.aggregation.weather;
+package me.marcelberger.weatherapp.aggregator.service.aggregation.hour;
 
-import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
-import me.marcelberger.weatherapp.aggregator.builder.weather.impl.WeatherHourTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
-import me.marcelberger.weatherapp.core.entity.data.hour.WeatherHourDataEntity;
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.data.hour.HourDataRepository;
-import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.function.Function;
 
-@Service
-public class WeatherHourAggregationServiceImpl extends AggregationService<WeatherDataEntity, WeatherHourDataEntity> {
+public abstract class HourAggregationService<SOURCE, TARGET> extends AggregationService<SOURCE, TARGET> {
 
     @Autowired
-    private WeatherWindService weatherWindService;
-
-    @Autowired
-    private HourDataRepository<WeatherHourDataEntity> hourDataRepository;
+    private HourDataRepository<TARGET> hourDataRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -33,11 +23,6 @@ public class WeatherHourAggregationServiceImpl extends AggregationService<Weathe
     @Override
     public Function<LocalDateTime, LocalDateTime> incrementTimestampBase() {
         return base -> base.plusHours(1);
-    }
-
-    @Override
-    protected TargetBuilder<WeatherDataEntity, WeatherHourDataEntity> createTargetBuilder() {
-        return new WeatherHourTargetBuilderImpl(weatherWindService);
     }
 
     @Override
@@ -59,22 +44,20 @@ public class WeatherHourAggregationServiceImpl extends AggregationService<Weathe
     }
 
     @Override
-    protected WeatherHourDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected TARGET getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String day = timestampBase.getValue(CalendarParameter.Item.DAY);
         String hour = timestampBase.getValue(CalendarParameter.Item.HOUR);
-        WeatherHourDataEntity entity = hourDataRepository.findByStationAndDayAndHour(station, day, hour);
+        TARGET entity = hourDataRepository.findByStationAndDayAndHour(station, day, hour);
         if (entity == null) {
-            entity = WeatherHourDataEntity.builder()
-                    .day(day)
-                    .hour(hour)
-                    .station(station)
-                    .build();
+            entity = createBaseTarget(station, day, hour);
         }
         return entity;
     }
 
     @Override
-    protected void saveTarget(WeatherHourDataEntity entity) {
+    protected void saveTarget(TARGET entity) {
         this.hourDataRepository.save(entity);
     }
+
+    protected abstract TARGET createBaseTarget(StationEntity station, String day, String hour);
 }

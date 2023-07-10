@@ -21,6 +21,7 @@ public class WeatherMonthDataMapperImpl implements Mapper<WeatherMonthDataEntity
                 .rainTotal(object.getRainTotal())
                 .rainRateMax(object.getRainRateMax())
                 .windMax(object.getWindMax())
+                .windDirectionCluster(object.getWindDirectionCluster())
                 .pressureAvg(object.getPressureAvg())
                 .pressureMax(object.getPressureMax())
                 .pressureMin(object.getPressureMin())

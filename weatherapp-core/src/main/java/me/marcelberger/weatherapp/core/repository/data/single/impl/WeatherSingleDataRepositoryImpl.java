@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.core.repository.data.single.impl;
 
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherSingleDataEntity;
 import me.marcelberger.weatherapp.core.repository.data.DataRepositoryQueries;
 import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import org.springframework.data.domain.Page;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WeatherSingleDataRepositoryImpl extends SingleDataRepository<WeatherDataEntity>, JpaRepository<WeatherDataEntity, Long> {
+public interface WeatherSingleDataRepositoryImpl extends SingleDataRepository<WeatherSingleDataEntity>, JpaRepository<WeatherSingleDataEntity, Long> {
 
     @Override
     @Query(value = DataRepositoryQueries.SELECT_FROM_WEATHER +
@@ -20,7 +20,7 @@ public interface WeatherSingleDataRepositoryImpl extends SingleDataRepository<We
             "LIMIT 1",
             nativeQuery = true
     )
-    WeatherDataEntity findLatestByStationId(@Param("station_id") Long stationId);
+    WeatherSingleDataEntity findLatestByStationId(@Param("station_id") Long stationId);
 
     @Override
     @Query(value = DataRepositoryQueries.SELECT_FROM_WEATHER +
@@ -35,7 +35,7 @@ public interface WeatherSingleDataRepositoryImpl extends SingleDataRepository<We
                     "ORDER BY w.timestamp ASC ",
             nativeQuery = true
     )
-    Page<WeatherDataEntity> findAllInTimestampRangeByStationId(
+    Page<WeatherSingleDataEntity> findAllInTimestampRangeByStationId(
             Pageable pageable,
             @Param("station_id") Long stationId,
             @Param("timestamp_start") String timestampStart,
@@ -49,7 +49,7 @@ public interface WeatherSingleDataRepositoryImpl extends SingleDataRepository<We
             "LIMIT 1",
             nativeQuery = true
     )
-    WeatherDataEntity findFirstBeforeTimestampByStationId(
+    WeatherSingleDataEntity findFirstBeforeTimestampByStationId(
             @Param("station_id") Long stationId,
             @Param("timestamp") String timestamp);
 }

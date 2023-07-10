@@ -2,8 +2,7 @@ package me.marcelberger.weatherapp.api.mapper.data.single;
 
 import me.marcelberger.weatherapp.api.dto.response.data.single.WeatherSingleDataResponseDto;
 import me.marcelberger.weatherapp.api.mapper.Mapper;
-import me.marcelberger.weatherapp.api.service.message.MessageService;
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherSingleDataEntity;
 import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,16 +11,13 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class WeatherDataMapperImpl implements Mapper<WeatherDataEntity, WeatherSingleDataResponseDto> {
+public class WeatherDataMapperImpl implements Mapper<WeatherSingleDataEntity, WeatherSingleDataResponseDto> {
 
     @Autowired
-    private SingleDataRepository<WeatherDataEntity> weatherRepository;
-
-    @Autowired
-    private MessageService msg;
+    private SingleDataRepository<WeatherSingleDataEntity> weatherSingleDataRepository;
 
     @Override
-    public WeatherSingleDataResponseDto map(WeatherDataEntity object) {
+    public WeatherSingleDataResponseDto map(WeatherSingleDataEntity object) {
         return WeatherSingleDataResponseDto.builder()
                 .temperature(object.getTemperature())
                 .humidity(object.getHumidity())
@@ -36,8 +32,8 @@ public class WeatherDataMapperImpl implements Mapper<WeatherDataEntity, WeatherS
                 .build();
     }
 
-    private Long getSecondsSinceLast(WeatherDataEntity entity) {
-        WeatherDataEntity last = weatherRepository.findFirstBeforeTimestampByStationId(
+    private Long getSecondsSinceLast(WeatherSingleDataEntity entity) {
+        WeatherSingleDataEntity last = weatherSingleDataRepository.findFirstBeforeTimestampByStationId(
                 entity.getStation().getId(),
                 entity.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         if (last != null) {

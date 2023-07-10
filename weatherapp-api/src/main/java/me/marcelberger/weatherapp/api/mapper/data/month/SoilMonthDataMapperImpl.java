@@ -10,6 +10,7 @@ public class SoilMonthDataMapperImpl implements Mapper<SoilMonthDataEntity, Soil
     @Override
     public SoilMonthDataResponseDto map(SoilMonthDataEntity object) {
         return SoilMonthDataResponseDto.builder()
+                .amount(object.getAmount())
                 .temperature50cmAvg(object.getTemperature50cmAvg())
                 .temperature50cmMax(object.getTemperature50cmMax())
                 .temperature50cmMin(object.getTemperature50cmMin())

@@ -11,7 +11,6 @@ import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 public abstract class DayDataFacade<SOURCE, TARGET, SORT> {
 
@@ -30,10 +29,10 @@ public abstract class DayDataFacade<SOURCE, TARGET, SORT> {
     @Autowired
     private DayDataRepository<SOURCE> dayRepository;
 
-    public PageData<TARGET> getDaysOfMonthForStation(String stationCode, String month, String year) {
+    public PageData<TARGET> getDaysOfMonthForStation(String stationCode, String month, String year, SORT sort) {
         StationEntity station = getStation(stationCode);
         Page<SOURCE> data = dayRepository.findAllDaysOfMonthForStation(
-                Pageable.unpaged(),
+                PageRequest.of(0, 31, sortService.forDay(sort)),
                 station,
                 String.format("%s-%s%%", year, month));
         return dataMapper.mapPage(data);

@@ -1,8 +1,8 @@
-package me.marcelberger.weatherapp.api.controller.soil;
+package me.marcelberger.weatherapp.api.controller.data.single;
 
 import me.marcelberger.weatherapp.api.dto.response.data.single.SoilSingleDataResponseDto;
 import me.marcelberger.weatherapp.api.facade.data.single.SingleDataFacade;
-import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilSingleDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("soil")
-public class SoilController {
+public class SoilSingleDataController {
 
     @Autowired
-    private SingleDataFacade<SoilDataEntity, SoilSingleDataResponseDto> singleDataFacade;
+    private SingleDataFacade<SoilSingleDataEntity, SoilSingleDataResponseDto> singleDataFacade;
 
     @GetMapping("/latest")
     public ResponseEntity<SoilSingleDataResponseDto> getLatest(@RequestParam("station") String stationCode) {

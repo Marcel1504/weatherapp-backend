@@ -2,13 +2,13 @@ package me.marcelberger.weatherapp.aggregator.builder.soil;
 
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.core.entity.data.SoilSummaryDataEntity;
-import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilSingleDataEntity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public abstract class SoilTargetBuilder<T extends SoilSummaryDataEntity> implements TargetBuilder<SoilDataEntity, T> {
+public abstract class SoilTargetBuilder<T extends SoilSummaryDataEntity> implements TargetBuilder<SoilSingleDataEntity, T> {
 
     private BigDecimal temperature50cmAvgBase = new BigDecimal("0.0");
     private Integer temperature50cmCount = 0;
@@ -25,7 +25,7 @@ public abstract class SoilTargetBuilder<T extends SoilSummaryDataEntity> impleme
     private Integer amount = 0;
 
     @Override
-    public void pushSourceEntities(List<SoilDataEntity> entities) {
+    public void pushSourceEntities(List<SoilSingleDataEntity> entities) {
         entities.forEach(s -> {
             pushTemperature50cm(s.getTemperature50cm());
             pushTemperature100cm(s.getTemperature100cm());

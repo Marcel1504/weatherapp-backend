@@ -1,30 +1,30 @@
 package me.marcelberger.weatherapp.receiver.service.data.updater;
 
-import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilSingleDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-public abstract class SoilDataUpdaterService<FROM> extends DataUpdaterService<FROM, SoilDataEntity> {
+public abstract class SoilDataUpdaterService<FROM> extends DataUpdaterService<FROM, SoilSingleDataEntity> {
 
     @Autowired
-    private SingleDataRepository<SoilDataEntity> soilRepository;
+    private SingleDataRepository<SoilSingleDataEntity> soilRepository;
 
     @Override
-    protected SoilDataEntity getLatestExistingEntityForStation(StationEntity station) {
+    protected SoilSingleDataEntity getLatestExistingEntityForStation(StationEntity station) {
         return soilRepository.findLatestByStationId(station.getId());
     }
 
     @Override
-    protected LocalDateTime getTimestampOfEntity(SoilDataEntity entity) {
+    protected LocalDateTime getTimestampOfEntity(SoilSingleDataEntity entity) {
         return entity != null ? entity.getTimestamp() : null;
     }
 
     @Override
-    protected SoilDataEntity createNewEntity(FROM data, StationEntity station) {
-        return SoilDataEntity.builder()
+    protected SoilSingleDataEntity createNewEntity(FROM data, StationEntity station) {
+        return SoilSingleDataEntity.builder()
                 .station(station)
                 .timestamp(getTimestamp(data))
                 .temperature50cm(getTemperature50cm(data))
@@ -34,7 +34,7 @@ public abstract class SoilDataUpdaterService<FROM> extends DataUpdaterService<FR
     }
 
     @Override
-    protected void saveEntity(SoilDataEntity entity) {
+    protected void saveEntity(SoilSingleDataEntity entity) {
         soilRepository.save(entity);
     }
 

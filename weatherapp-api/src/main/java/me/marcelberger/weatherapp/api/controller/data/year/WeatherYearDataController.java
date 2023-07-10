@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.controller.weather;
+package me.marcelberger.weatherapp.api.controller.data.year;
 
 import me.marcelberger.weatherapp.api.dto.PageData;
 import me.marcelberger.weatherapp.api.dto.response.data.year.WeatherYearDataResponseDto;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("weather")
 @Validated
-public class WeatherYearController {
+public class WeatherYearDataController {
 
     @Autowired
     private YearDataFacade<WeatherYearDataEntity, WeatherYearDataResponseDto, WeatherSortEnum> yearDataFacade;

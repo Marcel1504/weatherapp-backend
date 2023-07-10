@@ -1,25 +1,19 @@
-package me.marcelberger.weatherapp.aggregator.service.aggregation.soil;
+package me.marcelberger.weatherapp.aggregator.service.aggregation.day;
 
-import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
-import me.marcelberger.weatherapp.aggregator.builder.soil.impl.SoilDayTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
-import me.marcelberger.weatherapp.core.entity.data.day.SoilDayDataEntity;
-import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.data.day.DayDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.function.Function;
 
-@Service
-public class SoilDayAggregationServiceImpl extends AggregationService<SoilDataEntity, SoilDayDataEntity> {
+public abstract class DayAggregationService<SOURCE, TARGET> extends AggregationService<SOURCE, TARGET> {
 
     @Autowired
-    private DayDataRepository<SoilDayDataEntity> dayDataRepository;
+    private DayDataRepository<TARGET> dayDataRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -29,11 +23,6 @@ public class SoilDayAggregationServiceImpl extends AggregationService<SoilDataEn
     @Override
     public Function<LocalDateTime, LocalDateTime> incrementTimestampBase() {
         return base -> base.plusDays(1);
-    }
-
-    @Override
-    protected TargetBuilder<SoilDataEntity, SoilDayDataEntity> createTargetBuilder() {
-        return new SoilDayTargetBuilderImpl();
     }
 
     @Override
@@ -49,20 +38,19 @@ public class SoilDayAggregationServiceImpl extends AggregationService<SoilDataEn
     }
 
     @Override
-    protected SoilDayDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected TARGET getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String day = timestampBase.getValue(CalendarParameter.Item.DAY);
-        SoilDayDataEntity entity = dayDataRepository.findByStationAndDay(station, day);
+        TARGET entity = dayDataRepository.findByStationAndDay(station, day);
         if (entity == null) {
-            entity = SoilDayDataEntity.builder()
-                    .day(day)
-                    .station(station)
-                    .build();
+            entity = createBaseTarget(station, day);
         }
         return entity;
     }
 
     @Override
-    protected void saveTarget(SoilDayDataEntity entity) {
+    protected void saveTarget(TARGET entity) {
         dayDataRepository.save(entity);
     }
+
+    protected abstract TARGET createBaseTarget(StationEntity station, String day);
 }

@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.core.repository.data.single.impl;
 
-import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.SoilSingleDataEntity;
 import me.marcelberger.weatherapp.core.repository.data.DataRepositoryQueries;
 import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import org.springframework.data.domain.Page;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SoilSingleDataRepositoryImpl extends SingleDataRepository<SoilDataEntity>, JpaRepository<SoilDataEntity, Long> {
+public interface SoilSingleDataRepositoryImpl extends SingleDataRepository<SoilSingleDataEntity>, JpaRepository<SoilSingleDataEntity, Long> {
 
     @Override
     @Query(value = DataRepositoryQueries.SELECT_FROM_SOIL +
@@ -20,7 +20,7 @@ public interface SoilSingleDataRepositoryImpl extends SingleDataRepository<SoilD
             "LIMIT 1",
             nativeQuery = true
     )
-    SoilDataEntity findLatestByStationId(@Param("station_id") Long stationId);
+    SoilSingleDataEntity findLatestByStationId(@Param("station_id") Long stationId);
 
     @Override
     @Query(value = DataRepositoryQueries.SELECT_FROM_SOIL +
@@ -35,7 +35,7 @@ public interface SoilSingleDataRepositoryImpl extends SingleDataRepository<SoilD
                     "ORDER BY s.timestamp ASC ",
             nativeQuery = true
     )
-    Page<SoilDataEntity> findAllInTimestampRangeByStationId(
+    Page<SoilSingleDataEntity> findAllInTimestampRangeByStationId(
             Pageable pageable,
             @Param("station_id") Long stationId,
             @Param("timestamp_start") String timestampStart,
@@ -49,7 +49,7 @@ public interface SoilSingleDataRepositoryImpl extends SingleDataRepository<SoilD
             "LIMIT 1",
             nativeQuery = true
     )
-    SoilDataEntity findFirstBeforeTimestampByStationId(
+    SoilSingleDataEntity findFirstBeforeTimestampByStationId(
             @Param("station_id") Long stationId,
             @Param("timestamp") String timestamp);
 }

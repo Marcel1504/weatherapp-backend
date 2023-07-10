@@ -1,16 +1,10 @@
-package me.marcelberger.weatherapp.aggregator.service.aggregation.weather;
+package me.marcelberger.weatherapp.aggregator.service.aggregation.month;
 
-import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
-import me.marcelberger.weatherapp.aggregator.builder.weather.impl.WeatherMonthTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
-import me.marcelberger.weatherapp.core.entity.data.month.WeatherMonthDataEntity;
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.data.month.MonthDataRepository;
-import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -18,14 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.function.Function;
 
-@Service
-public class WeatherMonthAggregationServiceImpl extends AggregationService<WeatherDataEntity, WeatherMonthDataEntity> {
-
+public abstract class MonthAggregationService<SOURCE, TARGET> extends AggregationService<SOURCE, TARGET> {
     @Autowired
-    private WeatherWindService weatherWindService;
-
-    @Autowired
-    private MonthDataRepository<WeatherMonthDataEntity> monthDataRepository;
+    private MonthDataRepository<TARGET> monthDataRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -35,11 +24,6 @@ public class WeatherMonthAggregationServiceImpl extends AggregationService<Weath
     @Override
     public Function<LocalDateTime, LocalDateTime> incrementTimestampBase() {
         return base -> base.plusMonths(1);
-    }
-
-    @Override
-    protected TargetBuilder<WeatherDataEntity, WeatherMonthDataEntity> createTargetBuilder() {
-        return new WeatherMonthTargetBuilderImpl(weatherWindService);
     }
 
     @Override
@@ -60,22 +44,20 @@ public class WeatherMonthAggregationServiceImpl extends AggregationService<Weath
     }
 
     @Override
-    protected WeatherMonthDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected TARGET getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String year = timestampBase.getValue(CalendarParameter.Item.YEAR);
         String month = timestampBase.getValue(CalendarParameter.Item.MONTH);
-        WeatherMonthDataEntity entity = monthDataRepository.findByStationAndMonthAndYear(station, month, year);
+        TARGET entity = monthDataRepository.findByStationAndMonthAndYear(station, month, year);
         if (entity == null) {
-            entity = WeatherMonthDataEntity.builder()
-                    .month(month)
-                    .year(year)
-                    .station(station)
-                    .build();
+            entity = createBaseTarget(station, month, year);
         }
         return entity;
     }
 
     @Override
-    protected void saveTarget(WeatherMonthDataEntity entity) {
+    protected void saveTarget(TARGET entity) {
         this.monthDataRepository.save(entity);
     }
+
+    protected abstract TARGET createBaseTarget(StationEntity station, String month, String year);
 }

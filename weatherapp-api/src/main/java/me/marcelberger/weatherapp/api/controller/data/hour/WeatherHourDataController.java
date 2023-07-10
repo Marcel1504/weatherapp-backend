@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.controller.weather;
+package me.marcelberger.weatherapp.api.controller.data.hour;
 
 import me.marcelberger.weatherapp.api.dto.PageData;
 import me.marcelberger.weatherapp.api.dto.response.data.hour.WeatherHourDataResponseDto;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("weather/hours")
 @Validated
-public class WeatherHourController {
+public class WeatherHourDataController {
 
     @Autowired
     private HourDataFacade<WeatherHourDataEntity, WeatherHourDataResponseDto, WeatherSortEnum> hourDataFacade;

@@ -86,7 +86,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/soil/day?day=2021-10-20&station={{stationCode1}}",
+          "raw": "{{urlApi}}/soil/day?day=2022-10-20&station={{stationCode3}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -97,11 +97,11 @@
           "query": [
             {
               "key": "day",
-              "value": "2021-10-20"
+              "value": "2022-10-20"
             },
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             }
           ]
         }
@@ -120,7 +120,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/soil/days?station={{stationCode1}}&year=2021&month=10",
+          "raw": "{{urlApi}}/soil/days?station={{stationCode3}}&year=2022&month=10&sort=OLDEST",
           "host": [
             "{{urlApi}}"
           ],
@@ -131,15 +131,19 @@
           "query": [
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             },
             {
               "key": "year",
-              "value": "2021"
+              "value": "2022"
             },
             {
               "key": "month",
               "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "OLDEST"
             }
           ]
         }
@@ -152,7 +156,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{urlApi}}/soil/days/all?page=0&size=5&sort=HIGHEST_TEMPERATURE200CM&station={{stationCode1}}",
+          "raw": "{{urlApi}}/soil/days/all?page=0&size=5&sort=LATEST&station={{stationCode3}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -172,11 +176,11 @@
             },
             {
               "key": "sort",
-              "value": "HIGHEST_TEMPERATURE200CM"
+              "value": "LATEST"
             },
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             }
           ]
         }
@@ -236,7 +240,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{urlApi}}/soil/latest?station={{stationCode1}}",
+          "raw": "{{urlApi}}/soil/latest?station={{stationCode3}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -247,7 +251,7 @@
           "query": [
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             }
           ]
         }
@@ -266,7 +270,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/soil/month?year=2021&month=10&station={{stationCode1}}",
+          "raw": "{{urlApi}}/soil/month?year=2022&month=10&station={{stationCode3}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -277,7 +281,7 @@
           "query": [
             {
               "key": "year",
-              "value": "2021"
+              "value": "2022"
             },
             {
               "key": "month",
@@ -285,7 +289,7 @@
             },
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             }
           ]
         }
@@ -304,7 +308,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/soil/months/all?page=0&sort=LATEST&size=5&station={{stationCode1}}&year=2021",
+          "raw": "{{urlApi}}/soil/months/all?page=0&sort=OLDEST&size=5&station={{stationCode3}}&year=2022",
           "host": [
             "{{urlApi}}"
           ],
@@ -320,7 +324,7 @@
             },
             {
               "key": "sort",
-              "value": "LATEST"
+              "value": "OLDEST"
             },
             {
               "key": "size",
@@ -328,11 +332,11 @@
             },
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             },
             {
               "key": "year",
-              "value": "2021"
+              "value": "2022"
             }
           ]
         }
@@ -351,7 +355,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/soil/year?year=2021&station={{stationCode1}}",
+          "raw": "{{urlApi}}/soil/year?year=2022&station={{stationCode3}}",
           "host": [
             "{{urlApi}}"
           ],
@@ -362,11 +366,11 @@
           "query": [
             {
               "key": "year",
-              "value": "2021"
+              "value": "2022"
             },
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             }
           ]
         }
@@ -379,7 +383,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{urlApi}}/soil/years/all?station={{stationCode1}}&sort=HIGHEST_TEMPERATURE50CM&page=0&size=2",
+          "raw": "{{urlApi}}/soil/years/all?station={{stationCode3}}&sort=HIGHEST_TEMPERATURE50CM&page=0&size=1",
           "host": [
             "{{urlApi}}"
           ],
@@ -391,7 +395,7 @@
           "query": [
             {
               "key": "station",
-              "value": "{{stationCode1}}"
+              "value": "{{stationCode3}}"
             },
             {
               "key": "sort",
@@ -403,7 +407,7 @@
             },
             {
               "key": "size",
-              "value": "2"
+              "value": "1"
             }
           ]
         }
@@ -456,7 +460,7 @@
           }
         ],
         "url": {
-          "raw": "{{urlApi}}/weather/days?year=2023&month=04&station={{stationCode1}}",
+          "raw": "{{urlApi}}/weather/days?year=2023&month=04&station={{stationCode1}}&sort=OLDEST",
           "host": [
             "{{urlApi}}"
           ],
@@ -476,6 +480,10 @@
             {
               "key": "station",
               "value": "{{stationCode1}}"
+            },
+            {
+              "key": "sort",
+              "value": "OLDEST"
             }
           ]
         }

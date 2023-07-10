@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.controller.weather;
+package me.marcelberger.weatherapp.api.controller.data.export;
 
 import jakarta.validation.Valid;
 import me.marcelberger.weatherapp.api.dto.MailRequestData;
@@ -9,9 +9,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("weather/export")
+@RequestMapping("soil/export")
 @Validated
-public class WeatherExportController {
+public class SoilExportDataController {
 
     @PostMapping
     public ResponseEntity<StatusData> export(
