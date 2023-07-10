@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.core.entity.data;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 
 @MappedSuperclass
 @Getter
@@ -14,7 +14,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class SoilSummaryDataEntity extends DataEntity {
+public abstract class SoilSummaryDataEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected Long id;
+
     @Column(name = "amount")
     protected Integer amount;
 
@@ -44,4 +49,8 @@ public class SoilSummaryDataEntity extends DataEntity {
 
     @Column(name = "temperature200cm_max")
     protected Double temperature200cmMax;
+
+    @ManyToOne
+    @JoinColumn(name = "station_id")
+    protected StationEntity station;
 }

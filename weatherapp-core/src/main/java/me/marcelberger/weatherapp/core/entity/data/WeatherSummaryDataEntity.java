@@ -1,14 +1,12 @@
 package me.marcelberger.weatherapp.core.entity.data;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
 
 @MappedSuperclass
@@ -17,7 +15,12 @@ import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class WeatherSummaryDataEntity extends DataEntity {
+public abstract class WeatherSummaryDataEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected Long id;
+
     @Column(name = "amount")
     protected Integer amount;
 
@@ -69,4 +72,8 @@ public class WeatherSummaryDataEntity extends DataEntity {
 
     @Column(name = "solar_radiation_max")
     protected Double solarRadiationMax;
+
+    @ManyToOne
+    @JoinColumn(name = "station_id")
+    protected StationEntity station;
 }

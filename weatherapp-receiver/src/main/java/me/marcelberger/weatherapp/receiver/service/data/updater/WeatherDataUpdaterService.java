@@ -2,7 +2,7 @@ package me.marcelberger.weatherapp.receiver.service.data.updater;
 
 import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.weather.WeatherRepository;
+import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService<FROM, WeatherDataEntity> {
 
     @Autowired
-    private WeatherRepository weatherRepository;
+    private SingleDataRepository<WeatherDataEntity> weatherRepository;
 
     @Override
     protected WeatherDataEntity getLatestExistingEntityForStation(StationEntity station) {
-        return weatherRepository.findLatestForStationId(station.getId());
+        return weatherRepository.findLatestByStationId(station.getId());
     }
 
     @Override

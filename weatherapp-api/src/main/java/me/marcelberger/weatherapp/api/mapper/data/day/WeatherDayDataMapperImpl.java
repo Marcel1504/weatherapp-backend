@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.api.mapper.data.day;
 
 import me.marcelberger.weatherapp.api.dto.response.data.day.WeatherDayDataResponseDto;
-import me.marcelberger.weatherapp.api.mapper.data.DataMapper;
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.core.entity.data.day.WeatherDayDataEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WeatherDayDataMapperImpl implements DataMapper<WeatherDayDataEntity, WeatherDayDataResponseDto> {
+public class WeatherDayDataMapperImpl implements Mapper<WeatherDayDataEntity, WeatherDayDataResponseDto> {
 
     @Override
     public WeatherDayDataResponseDto map(WeatherDayDataEntity object) {

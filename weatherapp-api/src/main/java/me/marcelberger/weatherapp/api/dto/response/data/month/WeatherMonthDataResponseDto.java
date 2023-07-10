@@ -1,35 +1,18 @@
 package me.marcelberger.weatherapp.api.dto.response.data.month;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import me.marcelberger.weatherapp.api.dto.response.data.DataResponseDto;
+import me.marcelberger.weatherapp.api.dto.response.data.WeatherSummaryDataResponseDto;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class WeatherMonthDataResponseDto implements DataResponseDto {
-    private Integer amount;
-    private Double temperatureAvg;
-    private Double temperatureMax;
-    private Double temperatureMin;
-    private Double humidityAvg;
-    private Integer humidityMax;
-    private Integer humidityMin;
-    private Double rainTotal;
-    private Double rainRateMax;
-    private Double windMax;
-    private String windDirectionCluster;
-    private Double pressureAvg;
-    private Double pressureMax;
-    private Double pressureMin;
-    private Double solarRadiationAvg;
-    private Double solarRadiationMax;
-    private Double solarRadiationMin;
+@EqualsAndHashCode(callSuper = true)
+public class WeatherMonthDataResponseDto extends WeatherSummaryDataResponseDto {
     private String year;
     private String month;
 }

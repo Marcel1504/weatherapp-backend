@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.api.mapper.data.hour;
 
 import me.marcelberger.weatherapp.api.dto.response.data.hour.WeatherHourDataResponseDto;
-import me.marcelberger.weatherapp.api.mapper.data.DataMapper;
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.core.entity.data.hour.WeatherHourDataEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WeatherHourDataMapperImpl implements DataMapper<WeatherHourDataEntity, WeatherHourDataResponseDto> {
+public class WeatherHourDataMapperImpl implements Mapper<WeatherHourDataEntity, WeatherHourDataResponseDto> {
 
     @Override
     public WeatherHourDataResponseDto map(WeatherHourDataEntity object) {

@@ -1,11 +1,9 @@
 package me.marcelberger.weatherapp.core.entity.data.single;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import me.marcelberger.weatherapp.core.entity.data.DataEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SuperBuilder
 @Table(name = "so_soil")
-public class SoilDataEntity extends DataEntity {
+public class SoilDataEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected Long id;
 
     @Column(name = "temperature50cm")
     private Double temperature50cm;
@@ -30,4 +32,8 @@ public class SoilDataEntity extends DataEntity {
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+
+    @ManyToOne
+    @JoinColumn(name = "station_id")
+    protected StationEntity station;
 }

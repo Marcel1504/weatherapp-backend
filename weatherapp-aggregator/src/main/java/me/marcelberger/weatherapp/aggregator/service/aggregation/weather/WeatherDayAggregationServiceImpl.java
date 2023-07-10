@@ -1,13 +1,14 @@
-package me.marcelberger.weatherapp.aggregator.service.aggregation.soil.impl;
+package me.marcelberger.weatherapp.aggregator.service.aggregation.weather;
 
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
-import me.marcelberger.weatherapp.aggregator.builder.soil.impl.SoilDayTargetBuilderImpl;
+import me.marcelberger.weatherapp.aggregator.builder.weather.impl.WeatherDayTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
-import me.marcelberger.weatherapp.aggregator.service.aggregation.soil.SoilAggregationService;
-import me.marcelberger.weatherapp.core.entity.data.day.SoilDayDataEntity;
-import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
+import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
+import me.marcelberger.weatherapp.core.entity.data.day.WeatherDayDataEntity;
+import me.marcelberger.weatherapp.core.entity.data.single.WeatherDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.soil.summary.SoilDayRepository;
+import me.marcelberger.weatherapp.core.repository.data.day.DayDataRepository;
+import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,13 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDayDataEntity> {
+public class WeatherDayAggregationServiceImpl extends AggregationService<WeatherDataEntity, WeatherDayDataEntity> {
 
     @Autowired
-    private SoilDayRepository soilDayRepository;
+    private WeatherWindService weatherWindService;
+
+    @Autowired
+    private DayDataRepository<WeatherDayDataEntity> weatherDayRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -32,8 +36,8 @@ public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDa
     }
 
     @Override
-    protected TargetBuilder<SoilDataEntity, SoilDayDataEntity> createTargetBuilder() {
-        return new SoilDayTargetBuilderImpl();
+    protected TargetBuilder<WeatherDataEntity, WeatherDayDataEntity> createTargetBuilder() {
+        return new WeatherDayTargetBuilderImpl(weatherWindService);
     }
 
     @Override
@@ -49,11 +53,11 @@ public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDa
     }
 
     @Override
-    protected SoilDayDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
+    protected WeatherDayDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String day = timestampBase.getValue(CalendarParameter.Item.DAY);
-        SoilDayDataEntity entity = soilDayRepository.findByStationAndDay(station, day);
+        WeatherDayDataEntity entity = weatherDayRepository.findByStationAndDay(station, day);
         if (entity == null) {
-            entity = SoilDayDataEntity.builder()
+            entity = WeatherDayDataEntity.builder()
                     .day(day)
                     .station(station)
                     .build();
@@ -62,7 +66,7 @@ public class SoilDayAggregationServiceImpl extends SoilAggregationService<SoilDa
     }
 
     @Override
-    protected void saveTarget(SoilDayDataEntity entity) {
-        soilDayRepository.save(entity);
+    protected void saveTarget(WeatherDayDataEntity entity) {
+        this.weatherDayRepository.save(entity);
     }
 }

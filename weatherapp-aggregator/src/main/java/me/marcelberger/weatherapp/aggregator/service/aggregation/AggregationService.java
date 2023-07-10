@@ -3,6 +3,8 @@ package me.marcelberger.weatherapp.aggregator.service.aggregation;
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -12,6 +14,9 @@ import java.util.Set;
 import java.util.function.Function;
 
 public abstract class AggregationService<SOURCE, TARGET> {
+
+    @Autowired
+    private SingleDataRepository<SOURCE> dataRepository;
 
     protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -52,9 +57,14 @@ public abstract class AggregationService<SOURCE, TARGET> {
 
     protected abstract void saveTarget(TARGET entity);
 
-    protected abstract Page<SOURCE> loadSourceEntities(
-            PageRequest request,
-            StationEntity station,
-            String startTimestamp,
-            String endTimestamp);
+    private Page<SOURCE> loadSourceEntities(PageRequest request,
+                                            StationEntity station,
+                                            String startTimestamp,
+                                            String endTimestamp) {
+        return dataRepository.findAllInTimestampRangeByStationId(
+                request,
+                station.getId(),
+                startTimestamp,
+                endTimestamp);
+    }
 }

@@ -3,13 +3,12 @@ package me.marcelberger.weatherapp.api.dto.response.data.single;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
-import me.marcelberger.weatherapp.api.dto.response.data.DataResponseDto;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class SoilSingleDataResponseDto implements DataResponseDto {
+public class SoilSingleDataResponseDto {
     private Double temperature50cm;
     private Double temperature100cm;
     private Double temperature200cm;

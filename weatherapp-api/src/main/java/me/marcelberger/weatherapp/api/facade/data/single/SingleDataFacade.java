@@ -1,16 +1,15 @@
 package me.marcelberger.weatherapp.api.facade.data.single;
 
-import me.marcelberger.weatherapp.api.dto.response.data.DataResponseDto;
-import me.marcelberger.weatherapp.api.mapper.data.DataMapper;
+
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
-import me.marcelberger.weatherapp.core.entity.data.DataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
 import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class SingleDataFacade<SOURCE extends DataEntity, TARGET extends DataResponseDto> {
+public abstract class SingleDataFacade<SOURCE, TARGET> {
 
     @Autowired
     private StationRepository stationRepository;
@@ -19,7 +18,7 @@ public abstract class SingleDataFacade<SOURCE extends DataEntity, TARGET extends
     private MessageService msg;
 
     @Autowired
-    private DataMapper<SOURCE, TARGET> dataMapper;
+    private Mapper<SOURCE, TARGET> dataMapper;
 
     @Autowired
     private SingleDataRepository<SOURCE> singleDataRepository;

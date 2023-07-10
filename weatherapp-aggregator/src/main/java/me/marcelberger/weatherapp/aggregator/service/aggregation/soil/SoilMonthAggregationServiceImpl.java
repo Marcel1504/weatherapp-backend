@@ -1,13 +1,13 @@
-package me.marcelberger.weatherapp.aggregator.service.aggregation.soil.impl;
+package me.marcelberger.weatherapp.aggregator.service.aggregation.soil;
 
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.builder.soil.impl.SoilMonthTargetBuilderImpl;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
-import me.marcelberger.weatherapp.aggregator.service.aggregation.soil.SoilAggregationService;
+import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
 import me.marcelberger.weatherapp.core.entity.data.month.SoilMonthDataEntity;
 import me.marcelberger.weatherapp.core.entity.data.single.SoilDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.soil.summary.SoilMonthRepository;
+import me.marcelberger.weatherapp.core.repository.data.month.MonthDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,10 @@ import java.util.Set;
 import java.util.function.Function;
 
 @Service
-public class SoilMonthAggregationServiceImpl extends SoilAggregationService<SoilMonthDataEntity> {
+public class SoilMonthAggregationServiceImpl extends AggregationService<SoilDataEntity, SoilMonthDataEntity> {
 
     @Autowired
-    private SoilMonthRepository soilMonthRepository;
+    private MonthDataRepository<SoilMonthDataEntity> monthDataRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -59,7 +59,7 @@ public class SoilMonthAggregationServiceImpl extends SoilAggregationService<Soil
     protected SoilMonthDataEntity getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String year = timestampBase.getValue(CalendarParameter.Item.YEAR);
         String month = timestampBase.getValue(CalendarParameter.Item.MONTH);
-        SoilMonthDataEntity entity = soilMonthRepository.findByStationAndMonthAndYear(station, month, year);
+        SoilMonthDataEntity entity = monthDataRepository.findByStationAndMonthAndYear(station, month, year);
         if (entity == null) {
             entity = SoilMonthDataEntity.builder()
                     .month(month)
@@ -72,6 +72,6 @@ public class SoilMonthAggregationServiceImpl extends SoilAggregationService<Soil
 
     @Override
     protected void saveTarget(SoilMonthDataEntity entity) {
-        this.soilMonthRepository.save(entity);
+        this.monthDataRepository.save(entity);
     }
 }

@@ -6,6 +6,7 @@ import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationServ
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationParameterEntity;
 import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
+import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
 import me.marcelberger.weatherapp.core.repository.station.StationParameterRepository;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public abstract class SynchronizationService<SOURCE> {
     @Autowired
     private List<AggregationService<SOURCE, ?>> aggregationServices;
 
+    @Autowired
+    private SingleDataRepository<SOURCE> singleDataRepository;
+
     @Value("${weatherapp.station.parameter.lastSyncedEntityTimestamp}")
     private String lastSyncedEntityTimestampParameter;
 
@@ -43,7 +47,11 @@ public abstract class SynchronizationService<SOURCE> {
 
     public abstract StationTypeEnum getStationType();
 
-    protected abstract LocalDateTime getLatestSourceTimestamp(StationEntity station);
+    protected abstract LocalDateTime getTimestampOfSourceEntity(SOURCE entity);
+
+    private LocalDateTime getLatestSourceTimestamp(StationEntity station) {
+        return getTimestampOfSourceEntity(singleDataRepository.findLatestByStationId(station.getId()));
+    }
 
     private void sync(StationEntity station,
                       LocalDateTime start,

@@ -1,11 +1,9 @@
 package me.marcelberger.weatherapp.core.entity.data.single;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import me.marcelberger.weatherapp.core.entity.data.DataEntity;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +15,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @SuperBuilder
 @Table(name = "we_weather")
-public class WeatherDataEntity extends DataEntity {
+public class WeatherDataEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    protected Long id;
 
     @Column(name = "temperature")
     private Double temperature;
@@ -45,4 +48,8 @@ public class WeatherDataEntity extends DataEntity {
 
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+
+    @ManyToOne
+    @JoinColumn(name = "station_id")
+    protected StationEntity station;
 }

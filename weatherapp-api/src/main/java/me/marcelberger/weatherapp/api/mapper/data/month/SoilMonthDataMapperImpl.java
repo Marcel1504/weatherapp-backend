@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.api.mapper.data.month;
 
 import me.marcelberger.weatherapp.api.dto.response.data.month.SoilMonthDataResponseDto;
-import me.marcelberger.weatherapp.api.mapper.data.DataMapper;
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.core.entity.data.month.SoilMonthDataEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SoilMonthDataMapperImpl implements DataMapper<SoilMonthDataEntity, SoilMonthDataResponseDto> {
+public class SoilMonthDataMapperImpl implements Mapper<SoilMonthDataEntity, SoilMonthDataResponseDto> {
     @Override
     public SoilMonthDataResponseDto map(SoilMonthDataEntity object) {
         return SoilMonthDataResponseDto.builder()

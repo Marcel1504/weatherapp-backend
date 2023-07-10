@@ -1,11 +1,9 @@
 package me.marcelberger.weatherapp.api.facade.data.day;
 
 import me.marcelberger.weatherapp.api.dto.PageData;
-import me.marcelberger.weatherapp.api.dto.response.data.DataResponseDto;
-import me.marcelberger.weatherapp.api.mapper.data.DataMapper;
+import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.api.service.sort.SortService;
-import me.marcelberger.weatherapp.core.entity.data.DataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
 import me.marcelberger.weatherapp.core.repository.data.day.DayDataRepository;
@@ -15,13 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-public abstract class DayDataFacade<SOURCE extends DataEntity, TARGET extends DataResponseDto, SORT> {
+public abstract class DayDataFacade<SOURCE, TARGET, SORT> {
 
     @Autowired
     private StationRepository stationRepository;
 
     @Autowired
-    private DataMapper<SOURCE, TARGET> dataMapper;
+    private Mapper<SOURCE, TARGET> dataMapper;
 
     @Autowired
     private MessageService msg;
