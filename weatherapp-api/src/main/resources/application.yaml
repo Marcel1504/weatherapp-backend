@@ -20,4 +20,5 @@ spring:
 weatherapp:
   station:
     media:
+      baseUrl: "http://localhost:8080/station/media?station={station}&name={name}"
       directory: S:/weatherapp/media

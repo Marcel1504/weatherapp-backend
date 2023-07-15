@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.api.facade.station.media;
 
-import me.marcelberger.weatherapp.api.dto.station.StationMediaData;
+import me.marcelberger.weatherapp.api.dto.station.StationMediaFileData;
 import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
@@ -10,7 +10,6 @@ import me.marcelberger.weatherapp.core.repository.station.StationMediaRepository
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class StationMediaFacadeImpl implements StationMediaFacade {
@@ -25,10 +24,10 @@ public class StationMediaFacadeImpl implements StationMediaFacade {
     private StationMediaRepository stationMediaRepository;
 
     @Autowired
-    private Mapper<StationMediaEntity, StationMediaData> stationMediaDataMapper;
+    private Mapper<StationMediaEntity, StationMediaFileData> stationMediaFileDataMapper;
 
     @Override
-    public StationMediaData getStationMedia(String name, String stationCode) {
+    public StationMediaFileData getStationMediaFile(String name, String stationCode) {
         StationEntity station = stationRepository.findByCode(stationCode);
         if (station == null) {
             throw new ServiceException(msg.get("station.notFound", stationCode));
@@ -37,6 +36,6 @@ public class StationMediaFacadeImpl implements StationMediaFacade {
         if (stationMedia == null) {
             throw new ServiceException(msg.get("station.media.notFound", name));
         }
-        return stationMediaDataMapper.map(stationMedia);
+        return stationMediaFileDataMapper.map(stationMedia);
     }
 }

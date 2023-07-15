@@ -1,14 +1,15 @@
 package me.marcelberger.weatherapp.api.dto.station;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.http.MediaType;
 
-import java.io.File;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class StationMediaData {
-    private File file;
-    private MediaType mediaType;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime created;
+    private String url;
 }
