@@ -10,8 +10,5 @@ public interface SingleDataRepository<ENTITY> {
                                                     Long stationId,
                                                     String timestampStart,
                                                     String timestampEnd);
-
-    ENTITY findFirstBeforeTimestampByStationId(Long stationId, String timestamp);
-
     ENTITY save(ENTITY s);
 }

@@ -40,16 +40,4 @@ public interface SoilSingleDataRepositoryImpl extends SingleDataRepository<SoilS
             @Param("station_id") Long stationId,
             @Param("timestamp_start") String timestampStart,
             @Param("timestamp_end") String timestampEnd);
-
-    @Override
-    @Query(value = DataRepositoryQueries.SELECT_FROM_SOIL +
-            "WHERE s.station_id = :station_id " +
-            "AND s.timestamp < :timestamp " +
-            "ORDER BY s.timestamp DESC " +
-            "LIMIT 1",
-            nativeQuery = true
-    )
-    SoilSingleDataEntity findFirstBeforeTimestampByStationId(
-            @Param("station_id") Long stationId,
-            @Param("timestamp") String timestamp);
 }

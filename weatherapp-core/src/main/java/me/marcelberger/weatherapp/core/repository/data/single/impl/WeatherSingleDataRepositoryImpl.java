@@ -41,15 +41,12 @@ public interface WeatherSingleDataRepositoryImpl extends SingleDataRepository<We
             @Param("timestamp_start") String timestampStart,
             @Param("timestamp_end") String timestampEnd);
 
-    @Override
     @Query(value = DataRepositoryQueries.SELECT_FROM_WEATHER +
             "WHERE w.station_id = :station_id " +
-            "AND w.timestamp < :timestamp " +
+            "AND w.rain_delta != 0 " +
             "ORDER BY w.timestamp DESC " +
             "LIMIT 1",
             nativeQuery = true
     )
-    WeatherSingleDataEntity findFirstBeforeTimestampByStationId(
-            @Param("station_id") Long stationId,
-            @Param("timestamp") String timestamp);
+    WeatherSingleDataEntity findLatestWithRain(@Param("station_id") Long stationId);
 }
