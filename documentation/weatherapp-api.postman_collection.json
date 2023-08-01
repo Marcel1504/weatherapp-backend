@@ -742,7 +742,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"temperatureIn\": 20.0,\r\n    \"temperatureOut\": 10.0,\r\n    \"humidityIn\": 68,\r\n    \"humidityOut\": 98\r\n}",
+          "raw": "{\r\n    \"temperatureIn\": 20.0,\r\n    \"temperatureOut\": 20.1,\r\n    \"humidityIn\": 68,\r\n    \"humidityOut\": 67\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -750,12 +750,11 @@
           }
         },
         "url": {
-          "raw": "{{urlApi}}/weather/ventilation",
+          "raw": "{{urlApi}}/ventilation",
           "host": [
             "{{urlApi}}"
           ],
           "path": [
-            "weather",
             "ventilation"
           ]
         }

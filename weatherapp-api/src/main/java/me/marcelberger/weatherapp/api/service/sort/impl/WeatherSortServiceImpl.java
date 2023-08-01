@@ -49,6 +49,10 @@ public class WeatherSortServiceImpl implements SortService<WeatherSortEnum> {
                     Sort.Order.desc("temperatureMax"));
             case LOWEST_TEMPERATURE -> Sort.by(
                     Sort.Order.asc("temperatureMin"));
+            case HIGHEST_HUMIDITY -> Sort.by(
+                    Sort.Order.desc("humidityMax"));
+            case LOWEST_HUMIDITY -> Sort.by(
+                    Sort.Order.asc("humidityMin"));
             case MOST_RAIN -> Sort.by(
                     Sort.Order.desc("rainTotal"));
             case STRONGEST_WIND -> Sort.by(
