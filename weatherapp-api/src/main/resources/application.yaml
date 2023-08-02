@@ -16,9 +16,24 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         order_by:
           default_null_ordering: last
+  mail:
+    host: 'localhost'
+    port: 1025
+    username: 'test@mail'
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 weatherapp:
+  export:
+    directory: ${weatherapp.media.directory}/export
+  media:
+    directory: S:/weatherapp/media
   station:
     media:
       baseUrl: "http://localhost:8080/station/media?station={station}&name={name}"
-      directory: S:/weatherapp/media
+      directory: ${weatherapp.media.directory}/station

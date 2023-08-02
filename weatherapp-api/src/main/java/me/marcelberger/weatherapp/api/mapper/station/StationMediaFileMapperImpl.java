@@ -18,11 +18,11 @@ public class StationMediaFileMapperImpl implements Mapper<StationMediaEntity, St
     private FileService fileService;
 
     @Value("${weatherapp.station.media.directory}")
-    private String stationMediaDirectory;
+    private String mediaDirectory;
 
     @Override
     public StationMediaFileData map(StationMediaEntity object) {
-        File file = fileService.getFile(String.format("%s/%s", stationMediaDirectory, object.getPath()));
+        File file = fileService.getFile(String.format("%s/%s", mediaDirectory, object.getPath()));
         return StationMediaFileData.builder()
                 .mediaType(MediaType.parseMediaType(fileService.getContentType(file)))
                 .file(file)
