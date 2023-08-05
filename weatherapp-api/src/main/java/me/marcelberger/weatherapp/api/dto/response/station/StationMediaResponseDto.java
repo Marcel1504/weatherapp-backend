@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.dto.station;
+package me.marcelberger.weatherapp.api.dto.response.station;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class StationMediaData {
+public class StationMediaResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime created;
     private String url;

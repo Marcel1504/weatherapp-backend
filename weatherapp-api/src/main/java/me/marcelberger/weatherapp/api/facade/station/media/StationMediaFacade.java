@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.facade.station.media;
 
-import me.marcelberger.weatherapp.api.dto.station.StationMediaFileData;
+import me.marcelberger.weatherapp.api.dto.response.station.StationMediaFileResponseDto;
 
 public interface StationMediaFacade {
-    StationMediaFileData getStationMediaFile(String mediaName, String stationCode);
+    StationMediaFileResponseDto getStationMediaFile(String mediaName, String stationCode);
 }

@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.facade.station;
 
 import me.marcelberger.weatherapp.api.dto.PageData;
-import me.marcelberger.weatherapp.api.dto.station.StationData;
+import me.marcelberger.weatherapp.api.dto.response.station.StationResponseDto;
 import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
@@ -20,19 +20,19 @@ public class StationFacadeImpl implements StationFacade {
     private StationRepository stationRepository;
 
     @Autowired
-    private Mapper<StationEntity, StationData> stationDataMapper;
+    private Mapper<StationEntity, StationResponseDto> stationMapper;
 
     @Override
-    public PageData<StationData> getAll() {
-        return stationDataMapper.mapList(stationRepository.findAll());
+    public PageData<StationResponseDto> getAll() {
+        return stationMapper.mapList(stationRepository.findAll());
     }
 
     @Override
-    public StationData getByStationCode(String stationCode) {
+    public StationResponseDto getByStationCode(String stationCode) {
         StationEntity station = stationRepository.findByCode(stationCode);
         if (station == null) {
             throw new ServiceException(msg.get("station.notFound", stationCode));
         }
-        return stationDataMapper.map(station);
+        return stationMapper.map(station);
     }
 }

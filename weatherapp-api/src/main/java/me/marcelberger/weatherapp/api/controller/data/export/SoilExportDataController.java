@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.controller.data.export;
 
 import jakarta.validation.Valid;
-import me.marcelberger.weatherapp.api.dto.MailRequestData;
+import me.marcelberger.weatherapp.api.dto.request.data.export.ExportDataRequestDto;
 import me.marcelberger.weatherapp.api.facade.data.export.ExportDataFacade;
 import me.marcelberger.weatherapp.api.validator.day.DayString;
 import me.marcelberger.weatherapp.core.data.StatusData;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("soil/export")
 @Validated
+@CrossOrigin
 public class SoilExportDataController {
 
     @Autowired
@@ -24,7 +25,7 @@ public class SoilExportDataController {
             @RequestParam("startDay") @DayString String startDay,
             @RequestParam("endDay") @DayString String endDay,
             @RequestParam("station") String stationCode,
-            @RequestBody @Valid MailRequestData mail) {
+            @RequestBody @Valid ExportDataRequestDto mail) {
         return ResponseEntity.ok(
                 exportDataFacade.exportWithTimeRangeInfo(mail.getEmail(), startDay, endDay, stationCode));
     }

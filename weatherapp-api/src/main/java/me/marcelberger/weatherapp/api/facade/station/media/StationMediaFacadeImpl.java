@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.api.facade.station.media;
 
-import me.marcelberger.weatherapp.api.dto.station.StationMediaFileData;
+import me.marcelberger.weatherapp.api.dto.response.station.StationMediaFileResponseDto;
 import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
@@ -24,10 +24,10 @@ public class StationMediaFacadeImpl implements StationMediaFacade {
     private StationMediaRepository stationMediaRepository;
 
     @Autowired
-    private Mapper<StationMediaEntity, StationMediaFileData> stationMediaFileDataMapper;
+    private Mapper<StationMediaEntity, StationMediaFileResponseDto> stationMediaFileMapper;
 
     @Override
-    public StationMediaFileData getStationMediaFile(String name, String stationCode) {
+    public StationMediaFileResponseDto getStationMediaFile(String name, String stationCode) {
         StationEntity station = stationRepository.findByCode(stationCode);
         if (station == null) {
             throw new ServiceException(msg.get("station.notFound", stationCode));
@@ -36,6 +36,6 @@ public class StationMediaFacadeImpl implements StationMediaFacade {
         if (stationMedia == null) {
             throw new ServiceException(msg.get("station.media.notFound", name));
         }
-        return stationMediaFileDataMapper.map(stationMedia);
+        return stationMediaFileMapper.map(stationMedia);
     }
 }

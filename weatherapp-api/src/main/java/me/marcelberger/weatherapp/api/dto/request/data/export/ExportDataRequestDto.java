@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.dto;
+package me.marcelberger.weatherapp.api.dto.request.data.export;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailRequestData {
+public class ExportDataRequestDto {
     @NotEmpty(message = "{mail.empty}")
     @Email(message = "{mail.invalid}")
     private String email;

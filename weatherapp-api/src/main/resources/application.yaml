@@ -35,5 +35,6 @@ weatherapp:
     directory: S:/weatherapp/media
   station:
     media:
+      latestKey: LATEST
       baseUrl: "http://localhost:8080/station/media?station={station}&name={name}"
       directory: ${weatherapp.media.directory}/station

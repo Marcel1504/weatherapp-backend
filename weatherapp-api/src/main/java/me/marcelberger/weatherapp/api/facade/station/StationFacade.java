@@ -1,10 +1,10 @@
 package me.marcelberger.weatherapp.api.facade.station;
 
 import me.marcelberger.weatherapp.api.dto.PageData;
-import me.marcelberger.weatherapp.api.dto.station.StationData;
+import me.marcelberger.weatherapp.api.dto.response.station.StationResponseDto;
 
 public interface StationFacade {
-    PageData<StationData> getAll();
+    PageData<StationResponseDto> getAll();
 
-    StationData getByStationCode(String stationCode);
+    StationResponseDto getByStationCode(String stationCode);
 }

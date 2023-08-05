@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.api.mapper.station;
 
-import me.marcelberger.weatherapp.api.dto.station.StationMediaFileData;
+import me.marcelberger.weatherapp.api.dto.response.station.StationMediaFileResponseDto;
 import me.marcelberger.weatherapp.api.mapper.Mapper;
 import me.marcelberger.weatherapp.api.service.file.FileService;
 import me.marcelberger.weatherapp.core.entity.station.StationMediaEntity;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 @Component
-public class StationMediaFileMapperImpl implements Mapper<StationMediaEntity, StationMediaFileData> {
+public class StationMediaFileMapperImpl implements Mapper<StationMediaEntity, StationMediaFileResponseDto> {
 
     @Autowired
     private FileService fileService;
@@ -21,9 +21,9 @@ public class StationMediaFileMapperImpl implements Mapper<StationMediaEntity, St
     private String mediaDirectory;
 
     @Override
-    public StationMediaFileData map(StationMediaEntity object) {
+    public StationMediaFileResponseDto map(StationMediaEntity object) {
         File file = fileService.getFile(String.format("%s/%s", mediaDirectory, object.getPath()));
-        return StationMediaFileData.builder()
+        return StationMediaFileResponseDto.builder()
                 .mediaType(MediaType.parseMediaType(fileService.getContentType(file)))
                 .file(file)
                 .build();
