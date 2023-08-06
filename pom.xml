@@ -20,7 +20,7 @@
 	<modules>
 		<module>weatherapp-core</module>
 		<module>weatherapp-api</module>
-		<module>weatherapp-receiver</module>
+		<module>weatherapp-consumer</module>
         <module>weatherapp-aggregator</module>
     </modules>
 

@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="WeatherApp Consumer" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="me.marcelberger.weatherapp.consumer.WeatherAppConsumerApplication" />
+    <module name="weatherapp-consumer" />
+    <option name="VM_PARAMETERS" value="-Dserver.port=8082" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
