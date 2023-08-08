@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
-@RequestMapping("data")
 @Slf4j
 public class DataController {
 
@@ -30,22 +30,30 @@ public class DataController {
     @Autowired
     private SOPDataFacadeImpl sopDataFacade;
 
-    @PostMapping("eco")
+    @PostMapping("data/eco")
     public ResponseEntity<StatusData> updateFromEcowitt(@RequestBody String message) {
         return ResponseEntity.ok(ecoDataFacade.updateWithStationFromData(message));
     }
 
-    @PostMapping("wep")
+    @PostMapping("data/wep")
     public ResponseEntity<StatusData> updateFromWeatherProducer(
             Principal principal,
             @RequestBody WEPRequestData data) {
         return ResponseEntity.ok(wepDataFacade.updateWithStationCodeFromPrincipalName(principal, data));
     }
 
-    @PostMapping("sop")
+    @PostMapping("data/sop")
     public ResponseEntity<StatusData> updateFromSoilProducer(
             Principal principal,
             @RequestBody SOPRequestData data) {
         return ResponseEntity.ok(sopDataFacade.updateWithStationCodeFromPrincipalName(principal, data));
+    }
+
+    @Deprecated
+    @PutMapping("soil/synchronize")
+    public ResponseEntity<StatusData> updateFromSoilProducerOld(
+            Principal principal,
+            @RequestBody List<SOPRequestData> data) {
+        return ResponseEntity.ok(sopDataFacade.updateWithStationCodeFromPrincipalName(principal, data.get(0)));
     }
 }

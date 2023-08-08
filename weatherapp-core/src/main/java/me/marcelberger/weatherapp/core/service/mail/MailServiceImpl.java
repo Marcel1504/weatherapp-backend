@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.api.service.mail;
+package me.marcelberger.weatherapp.core.service.mail;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;

@@ -67,7 +67,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
                     .withZoneSameInstant(ZoneId.systemDefault())
                     .toLocalDateTime();
         } catch (Exception e) {
-            logWarning(timestampKey, data.get(timestampKey));
+            log(timestampKey, data.get(timestampKey));
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
             return mathService
                     .round((Double.parseDouble(temperatureFahrenheit) - 32) * (5.0 / 9.0), 1);
         } catch (Exception e) {
-            logWarning(temperatureKey, data.get(temperatureKey));
+            log(temperatureKey, data.get(temperatureKey));
             return null;
         }
     }
@@ -89,7 +89,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
         try {
             return Integer.parseInt(data.get(humidityKey));
         } catch (Exception e) {
-            logWarning(humidityKey, data.get(humidityKey));
+            log(humidityKey, data.get(humidityKey));
             return null;
         }
     }
@@ -125,7 +125,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
             String rainRate = data.get(rainRateKey);
             return Double.parseDouble(rainRate) * 25.4;
         } catch (Exception e) {
-            logWarning(rainRateKey, data.get(rainRateKey));
+            log(rainRateKey, data.get(rainRateKey));
             return null;
         }
     }
@@ -136,7 +136,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
             String wind = data.get(windKey);
             return Double.parseDouble(wind) * 1.609344;
         } catch (Exception e) {
-            logWarning(windKey, data.get(windKey));
+            log(windKey, data.get(windKey));
             return null;
         }
     }
@@ -146,7 +146,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
         try {
             return Integer.parseInt(data.get(windDirectionKey));
         } catch (Exception e) {
-            logWarning(windDirectionKey, data.get(windDirectionKey));
+            log(windDirectionKey, data.get(windDirectionKey));
             return null;
         }
     }
@@ -157,7 +157,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
             String pressureInHg = data.get(pressureKey);
             return Double.parseDouble(pressureInHg) * 33.863889532610884;
         } catch (Exception e) {
-            logWarning(pressureKey, data.get(pressureKey));
+            log(pressureKey, data.get(pressureKey));
             return null;
         }
     }
@@ -167,7 +167,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
         try {
             return Double.parseDouble(data.get(solarRadiationKey));
         } catch (Exception e) {
-            logWarning(solarRadiationKey, data.get(solarRadiationKey));
+            log(solarRadiationKey, data.get(solarRadiationKey));
             return null;
         }
     }
@@ -176,7 +176,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
         try {
             return Double.parseDouble(parameter.getValue());
         } catch (Exception e) {
-            logWarning(rainCountParameter, parameter.getValue());
+            log(rainCountParameter, parameter.getValue());
         }
         return null;
     }
@@ -187,7 +187,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
             String rain = data.get(rainTotalKey);
             return Double.parseDouble(rain) * 25.4;
         } catch (Exception e) {
-            logWarning(rainTotalKey, data.get(rainTotalKey));
+            log(rainTotalKey, data.get(rainTotalKey));
         }
         return null;
     }
@@ -204,7 +204,7 @@ public class ECODataUpdaterServiceImpl extends WeatherDataUpdaterService<Map<Str
         return parameter;
     }
 
-    private void logWarning(String key, String value) {
-        log.warn("Could not parse {} from string {}", key, value);
+    private void log(String key, String value) {
+        log.debug("Could not parse {} from string {}", key, value);
     }
 }

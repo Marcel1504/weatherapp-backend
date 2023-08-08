@@ -3,7 +3,6 @@ logging:
     root: WARN
     me:
       marcelberger: INFO
-
 spring:
   datasource:
     driverClassName: 'org.mariadb.jdbc.Driver'
@@ -14,12 +13,23 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-
+  mail:
+    host: 'localhost'
+    port: 1025
+    username: 'test@mail'
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 weatherapp:
   station:
     parameter:
       lastSyncedEntityTimestamp: LAST_SYNCED_ENTITY_TIMESTAMP
   synchronization:
+    deltaSyncCronjob: '0 0/1 * * * *'
     startFromYear: 2022
   authentication:
     username: admin

@@ -13,7 +13,7 @@ public class DeltaSyncCronJob {
     @Autowired
     private SynchronizationFacade synchronizationFacade;
 
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "${weatherapp.synchronization.deltaSyncCronjob}")
     public void run() {
         synchronizationFacade.syncDeltaForAllStations();
     }

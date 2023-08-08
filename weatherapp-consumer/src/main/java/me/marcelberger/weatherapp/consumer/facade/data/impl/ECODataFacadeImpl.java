@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.consumer.facade.data.DataFacade;
 import me.marcelberger.weatherapp.consumer.service.data.updater.impl.ECODataUpdaterServiceImpl;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
 import me.marcelberger.weatherapp.core.exception.ServiceException;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,13 @@ public class ECODataFacadeImpl extends DataFacade<String> {
 
     @Override
     protected void update(StationEntity station, String data) {
+        log.debug("ECOWITT message for {}: {}", station.getCode(), data);
         dataUpdaterService.update(station, getDataMapFromString(data));
+    }
+
+    @Override
+    protected StationTypeEnum stationType() {
+        return StationTypeEnum.WEATHER;
     }
 
     private Map<String, String> getDataMapFromString(String data) {

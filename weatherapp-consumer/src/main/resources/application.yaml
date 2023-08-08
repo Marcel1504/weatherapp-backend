@@ -3,7 +3,6 @@ logging:
     root: WARN
     me:
       marcelberger: INFO
-
 spring:
   datasource:
     driverClassName: 'org.mariadb.jdbc.Driver'
@@ -14,9 +13,32 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  mail:
+    host: 'localhost'
+    port: 1025
+    username: 'test@mail'
+    password: ''
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 weatherapp:
   station:
+    diagnosis:
+      adminMail: 'admin@test'
+      fixedDelayMillis: 60000
+      initialDelayMillis: 60000
+    media:
+      latestKey: LATEST
+      directory:
+        source: S:/weatherapp/media/station/source
+        target: S:/weatherapp/media/station
+      cronjob:
+        latest: '0 0/1 * * * *'
+        review: '30 30 12 * * *'
     parameter:
       rainCount: RAIN_COUNT
     vendor:

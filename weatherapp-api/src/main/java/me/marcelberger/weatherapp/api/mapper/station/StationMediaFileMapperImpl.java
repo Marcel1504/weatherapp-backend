@@ -2,8 +2,8 @@ package me.marcelberger.weatherapp.api.mapper.station;
 
 import me.marcelberger.weatherapp.api.dto.response.station.StationMediaFileResponseDto;
 import me.marcelberger.weatherapp.api.mapper.Mapper;
-import me.marcelberger.weatherapp.api.service.file.FileService;
 import me.marcelberger.weatherapp.core.entity.station.StationMediaEntity;
+import me.marcelberger.weatherapp.core.service.file.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;

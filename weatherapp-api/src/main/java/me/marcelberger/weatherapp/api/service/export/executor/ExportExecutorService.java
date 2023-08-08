@@ -2,12 +2,12 @@ package me.marcelberger.weatherapp.api.service.export.executor;
 
 import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.api.service.export.csv.ExportCsvService;
-import me.marcelberger.weatherapp.api.service.file.FileService;
-import me.marcelberger.weatherapp.api.service.mail.MailService;
 import me.marcelberger.weatherapp.api.service.message.MessageService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.repository.data.day.DayDataRepository;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
+import me.marcelberger.weatherapp.core.service.file.FileService;
+import me.marcelberger.weatherapp.core.service.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -54,7 +54,6 @@ public abstract class ExportExecutorService<SOURCE> {
             log.error("Could not export CSV to mail {}, station {} not found", email, stationCode);
             return;
         }
-        fileService.makeDirectories(exportMediaDirectory);
         String filename = generateCSVFilename(stationCode, startDay, endDay);
         String absolutePath = String.format("%s/%s", exportMediaDirectory, filename);
         try {

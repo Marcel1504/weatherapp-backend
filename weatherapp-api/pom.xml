@@ -22,17 +22,23 @@
             <groupId>me.marcelberger.weatherapp.core</groupId>
             <artifactId>weatherapp-core</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.10.0</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -51,7 +57,7 @@
                                 <argument>--build-arg</argument>
                                 <argument>JAR_FILE=target/${project.artifactId}-${project.version}.jar</argument>
                                 <argument>-t</argument>
-                                <argument>marcel1504/${project.artifactId}:latest</argument>
+                                <argument>marcel1504/${project.artifactId}:${project.version}</argument>
                                 <argument>.</argument>
                             </arguments>
                         </configuration>

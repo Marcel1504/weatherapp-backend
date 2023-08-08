@@ -24,7 +24,12 @@ public abstract class DataUpdaterService<FROM, TO> {
         TO newEntity = createNewEntity(request, station);
         LocalDateTime newEntityTimestamp = getTimestampOfEntity(newEntity);
         LocalDateTime latestEntityTimestamp = getTimestampOfEntity(getLatestExistingEntityForStation(station));
-
+        if (station.getDisabled()) {
+            log.warn(
+                    "Update for station '{}' failed: station is disabled",
+                    station.getCode());
+            return;
+        }
         if (latestEntityTimestamp != null
                 && (latestEntityTimestamp.isAfter(newEntityTimestamp)
                 || latestEntityTimestamp.isEqual(newEntityTimestamp))) {
@@ -33,7 +38,6 @@ public abstract class DataUpdaterService<FROM, TO> {
                     station.getCode());
             return;
         }
-
         if (dataValidatorService.isValid(newEntity)) {
             saveEntity(newEntity);
             log.info("Update for station '{}' successful, new data is at timestamp {}",

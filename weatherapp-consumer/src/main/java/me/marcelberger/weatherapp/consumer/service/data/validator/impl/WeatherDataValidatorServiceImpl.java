@@ -58,8 +58,9 @@ public class WeatherDataValidatorServiceImpl implements DataValidatorService<Wea
     }
 
     private boolean isValidTemperature(WeatherSingleDataEntity w) {
-        return w.getTemperature() == null
-                || (w.getTemperature() <= temperatureMax && w.getTemperature() >= temperatureMin);
+        // temperature should always be provided and never be null
+        return w.getTemperature() != null
+                && (w.getTemperature() <= temperatureMax && w.getTemperature() >= temperatureMin);
     }
 
     private boolean isValidHumidity(WeatherSingleDataEntity w) {
