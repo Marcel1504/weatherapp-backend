@@ -12,6 +12,10 @@ Application that handles WeatherApp-UI requests
 
 Application that summarizes raw data by hour, day, month, and year
 
+### weatherapp-assistant
+
+Application that provides an AI chatbot for assistance related to the WeatherApp
+
 ### weatherapp-consumer
 
 Application that consumes raw data and media sent by stations
