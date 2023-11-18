@@ -38,7 +38,7 @@ Core library of weather backend application modules
 | 2.2.0   | 2022-08-24 | Upgrade applications for usage with docker                                                                 |
 | 2.1.1   | 2021-11-01 | Fix synchronization query                                                                                  |
 | 2.1.0   | 2021-10-31 | Increase performance of applications                                                                       |
-| 2.0.0   | 2021-08-28 | Refactoring of applications to utilize the new WeatherApp Flutter UI, Remove user management               |
+| 2.0.0   | 2021-09-28 | Refactoring of applications to utilize the new WeatherApp Flutter UI, Remove user management               |
 | 1.2.0   | 2021-05-19 | Add functionality to receive and handle data of soil stations                                              |
-| 1.1.0   | 2020-01-02 | Add multi station feature, Add filter and sort features                                                    |
+| 1.1.0   | 2021-01-02 | Add multi station feature, Add filter and sort features                                                    |
 | 1.0.0   | 2020-10-05 | Initial Release including user management, media and weather features                                      |
