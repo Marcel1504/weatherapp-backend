@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.core.repository.station;
 
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
+import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

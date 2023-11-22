@@ -1,9 +1,9 @@
 package me.marcelberger.weatherapp.api.controller.ventilation;
 
 import jakarta.validation.Valid;
-import me.marcelberger.weatherapp.api.dto.request.ventilation.VentilationRequestDto;
-import me.marcelberger.weatherapp.api.dto.response.ventilation.VentilationResponseDto;
-import me.marcelberger.weatherapp.api.facade.ventilation.VentilationFacade;
+import me.marcelberger.weatherapp.api.dto.VentilationRequestDto;
+import me.marcelberger.weatherapp.core.data.ventilation.VentilationData;
+import me.marcelberger.weatherapp.core.facade.ventilation.VentilationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +19,12 @@ public class VentilationController {
     private VentilationFacade ventilationFacade;
 
     @PutMapping
-    public ResponseEntity<VentilationResponseDto> determineNeedForVentilation(
+    public ResponseEntity<VentilationData> determineNeedForVentilation(
             @RequestBody @Valid VentilationRequestDto input) {
-        return ResponseEntity.ok(ventilationFacade.determineNeedForVentilation(input));
+        return ResponseEntity.ok(ventilationFacade.determineNeedForVentilation(
+                input.getTemperatureIn(),
+                input.getHumidityIn(),
+                input.getTemperatureOut(),
+                input.getHumidityOut()));
     }
 }

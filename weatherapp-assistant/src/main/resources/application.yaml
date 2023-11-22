@@ -33,6 +33,13 @@ spring:
             enable: true
 
 weatherapp:
+  media:
+    directory: S:/weatherapp/media
+  station:
+    media:
+      latestKey: LATEST
+      baseUrl: "http://localhost:8080/station/media?station={station}&name={name}"
+      directory: ${weatherapp.media.directory}/station
   openAI:
     api:
       host: https://api.openai.com

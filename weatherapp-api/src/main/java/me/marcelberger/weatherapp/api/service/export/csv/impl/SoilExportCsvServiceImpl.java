@@ -1,16 +1,16 @@
 package me.marcelberger.weatherapp.api.service.export.csv.impl;
 
 import me.marcelberger.weatherapp.api.service.export.csv.ExportCsvService;
-import me.marcelberger.weatherapp.core.entity.data.day.SoilDayDataEntity;
+import me.marcelberger.weatherapp.core.entity.summary.day.SoilDaySummaryEntity;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class SoilExportCsvServiceImpl implements ExportCsvService<SoilDayDataEntity> {
+public class SoilExportCsvServiceImpl implements ExportCsvService<SoilDaySummaryEntity> {
     @Override
-    public void printRecord(CSVPrinter printer, SoilDayDataEntity item) throws IOException {
+    public void printRecord(CSVPrinter printer, SoilDaySummaryEntity item) throws IOException {
         printer.printRecord(
                 item.getDay(),
                 item.getAmount(),

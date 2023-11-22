@@ -2,7 +2,7 @@ package me.marcelberger.weatherapp.core.entity.station;
 
 import jakarta.persistence.*;
 import lombok.*;
-import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
+import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

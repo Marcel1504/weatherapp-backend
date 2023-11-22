@@ -1,14 +1,14 @@
 package me.marcelberger.weatherapp.aggregator.service.synchronization.impl;
 
 import me.marcelberger.weatherapp.aggregator.service.synchronization.SynchronizationService;
-import me.marcelberger.weatherapp.core.entity.data.single.SoilSingleDataEntity;
-import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
+import me.marcelberger.weatherapp.core.entity.summary.single.SoilSingleSummaryEntity;
+import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
-public class SoilSynchronizationServiceImpl extends SynchronizationService<SoilSingleDataEntity> {
+public class SoilSynchronizationServiceImpl extends SynchronizationService<SoilSingleSummaryEntity> {
 
     @Override
     public StationTypeEnum getStationType() {
@@ -16,7 +16,7 @@ public class SoilSynchronizationServiceImpl extends SynchronizationService<SoilS
     }
 
     @Override
-    protected LocalDateTime getTimestampOfSourceEntity(SoilSingleDataEntity entity) {
+    protected LocalDateTime getTimestampOfSourceEntity(SoilSingleSummaryEntity entity) {
         return entity.getTimestamp();
     }
 }

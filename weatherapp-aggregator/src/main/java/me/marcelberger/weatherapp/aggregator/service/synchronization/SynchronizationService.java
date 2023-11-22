@@ -5,10 +5,10 @@ import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationParameterEntity;
-import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
-import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
+import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
 import me.marcelberger.weatherapp.core.repository.station.StationParameterRepository;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
+import me.marcelberger.weatherapp.core.repository.summary.single.SingleSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -30,7 +30,7 @@ public abstract class SynchronizationService<SOURCE> {
     private List<AggregationService<SOURCE, ?>> aggregationServices;
 
     @Autowired
-    private SingleDataRepository<SOURCE> singleDataRepository;
+    private SingleSummaryRepository<SOURCE> singleSummaryRepository;
 
     @Value("${weatherapp.station.parameter.lastSyncedEntityTimestamp}")
     private String lastSyncedEntityTimestampParameter;
@@ -50,7 +50,7 @@ public abstract class SynchronizationService<SOURCE> {
     protected abstract LocalDateTime getTimestampOfSourceEntity(SOURCE entity);
 
     private LocalDateTime getLatestSourceTimestamp(StationEntity station) {
-        return getTimestampOfSourceEntity(singleDataRepository.findLatestByStationId(station.getId()));
+        return getTimestampOfSourceEntity(singleSummaryRepository.findLatestByStationId(station.getId()));
     }
 
     private void sync(StationEntity station,

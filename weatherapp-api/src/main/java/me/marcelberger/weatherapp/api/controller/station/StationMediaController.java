@@ -1,7 +1,7 @@
 package me.marcelberger.weatherapp.api.controller.station;
 
-import me.marcelberger.weatherapp.api.dto.response.station.StationMediaFileResponseDto;
-import me.marcelberger.weatherapp.api.facade.station.media.StationMediaFacade;
+import me.marcelberger.weatherapp.core.data.station.StationMediaFileData;
+import me.marcelberger.weatherapp.core.facade.station.media.StationMediaFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +21,7 @@ public class StationMediaController {
     public ResponseEntity<FileSystemResource> getStationMediaFile(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "station") String stationCode) {
-        StationMediaFileResponseDto mediaFile = stationMediaFacade.getStationMediaFile(name, stationCode);
+        StationMediaFileData mediaFile = stationMediaFacade.getStationMediaFile(name, stationCode);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(mediaFile.getMediaType());
         return new ResponseEntity<>(

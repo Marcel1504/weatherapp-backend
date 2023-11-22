@@ -3,7 +3,7 @@ package me.marcelberger.weatherapp.aggregator.service.aggregation.hour;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.data.hour.HourDataRepository;
+import me.marcelberger.weatherapp.core.repository.summary.hour.HourSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 public abstract class HourAggregationService<SOURCE, TARGET> extends AggregationService<SOURCE, TARGET> {
 
     @Autowired
-    private HourDataRepository<TARGET> hourDataRepository;
+    private HourSummaryRepository<TARGET> hourSummaryRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -47,7 +47,7 @@ public abstract class HourAggregationService<SOURCE, TARGET> extends Aggregation
     protected TARGET getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String day = timestampBase.getValue(CalendarParameter.Item.DAY);
         String hour = timestampBase.getValue(CalendarParameter.Item.HOUR);
-        TARGET entity = hourDataRepository.findByStationAndDayAndHour(station, day, hour);
+        TARGET entity = hourSummaryRepository.findByStationAndDayAndHour(station, day, hour);
         if (entity == null) {
             entity = createBaseTarget(station, day, hour);
         }
@@ -56,7 +56,7 @@ public abstract class HourAggregationService<SOURCE, TARGET> extends Aggregation
 
     @Override
     protected void saveTarget(TARGET entity) {
-        this.hourDataRepository.save(entity);
+        this.hourSummaryRepository.save(entity);
     }
 
     protected abstract TARGET createBaseTarget(StationEntity station, String day, String hour);

@@ -4,8 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.consumer.facade.data.DataFacade;
 import me.marcelberger.weatherapp.consumer.service.data.updater.impl.ECODataUpdaterServiceImpl;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
-import me.marcelberger.weatherapp.core.exception.ServiceException;
+import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
+import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
+import me.marcelberger.weatherapp.core.exception.CoreException;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,16 +33,15 @@ public class ECODataFacadeImpl extends DataFacade<String> {
 
     @Override
     protected StationEntity getStationFromData(String data) {
-        StationEntity station;
         if (data != null) {
             String passkey = getDataMapFromString(data).get(passkeyKey);
-            station = stationRepository.findByApiKey(passkey);
+            StationEntity station = stationRepository.findByApiKey(passkey);
             if (station == null) {
-                throw new ServiceException("No station with API key '%s' found", passkey);
+                throw new CoreException(ErrorCodeEnum.CODE00022, passkey);
             }
             return station;
         }
-        throw new ServiceException("Cannot load station from ECO data: No data provided");
+        throw new CoreException(ErrorCodeEnum.CODE00023);
     }
 
     @Override

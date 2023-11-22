@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionCallData;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionResultData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
-import me.marcelberger.weatherapp.core.exception.ServiceException;
+import me.marcelberger.weatherapp.core.exception.CoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class OpenAIFunctionService<DATA> {
@@ -18,7 +18,7 @@ public abstract class OpenAIFunctionService<DATA> {
             DATA data = objectMapper.readValue(functionCall.getArguments(), getFunctionCallDataClass());
             return executeByFunctionCalData(data);
         } catch (JsonProcessingException exception) {
-            throw new ServiceException("Can not execute function call: %s", exception.getMessage());
+            throw new CoreException("Can not execute function call: %s", exception.getMessage());
         }
     }
 

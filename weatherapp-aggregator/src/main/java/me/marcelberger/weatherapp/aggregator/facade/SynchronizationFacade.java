@@ -1,13 +1,11 @@
 package me.marcelberger.weatherapp.aggregator.facade;
 
-import me.marcelberger.weatherapp.core.data.StatusData;
-
 public interface SynchronizationFacade {
-    StatusData syncFullForStationByCode(String stationCode);
+    String syncFullForStationByCode(String stationCode);
 
-    StatusData syncFullForAllStations();
+    String syncFullForAllStations();
 
-    StatusData syncDeltaForStationByCode(String stationCode);
+    String syncDeltaForStationByCode(String stationCode);
 
-    StatusData syncDeltaForAllStations();
+    String syncDeltaForAllStations();
 }

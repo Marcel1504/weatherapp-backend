@@ -1,9 +1,9 @@
 package me.marcelberger.weatherapp.aggregator.builder.weather;
 
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
-import me.marcelberger.weatherapp.core.entity.data.WeatherSummaryDataEntity;
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherSingleDataEntity;
-import me.marcelberger.weatherapp.core.enumeration.WeatherWindDirectionEnum;
+import me.marcelberger.weatherapp.core.entity.summary.WeatherSummaryEntity;
+import me.marcelberger.weatherapp.core.entity.summary.single.WeatherSingleSummaryEntity;
+import me.marcelberger.weatherapp.core.enumeration.weather.WeatherWindDirectionEnum;
 import me.marcelberger.weatherapp.core.service.weather.wind.WeatherWindService;
 
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class WeatherTargetBuilder<T extends WeatherSummaryDataEntity> implements TargetBuilder<WeatherSingleDataEntity, T> {
+public abstract class WeatherTargetBuilder<T extends WeatherSummaryEntity> implements TargetBuilder<WeatherSingleSummaryEntity, T> {
 
     private final WeatherWindService weatherWindService;
     private final Map<WeatherWindDirectionEnum, Integer> windDirectionCountMap = new HashMap<>();
@@ -42,7 +42,7 @@ public abstract class WeatherTargetBuilder<T extends WeatherSummaryDataEntity> i
     }
 
     @Override
-    public void pushSourceEntities(List<WeatherSingleDataEntity> entities) {
+    public void pushSourceEntities(List<WeatherSingleSummaryEntity> entities) {
         entities.forEach(w -> {
             pushTemperature(w.getTemperature());
             pushHumidity(w.getHumidity());

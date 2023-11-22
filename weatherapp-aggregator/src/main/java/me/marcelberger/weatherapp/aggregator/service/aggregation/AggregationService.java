@@ -3,7 +3,7 @@ package me.marcelberger.weatherapp.aggregator.service.aggregation;
 import me.marcelberger.weatherapp.aggregator.builder.TargetBuilder;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
+import me.marcelberger.weatherapp.core.repository.summary.single.SingleSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +16,7 @@ import java.util.function.Function;
 public abstract class AggregationService<SOURCE, TARGET> {
 
     @Autowired
-    private SingleDataRepository<SOURCE> dataRepository;
+    private SingleSummaryRepository<SOURCE> dataRepository;
 
     protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

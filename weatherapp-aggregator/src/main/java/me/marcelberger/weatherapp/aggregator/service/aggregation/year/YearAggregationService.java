@@ -3,7 +3,7 @@ package me.marcelberger.weatherapp.aggregator.service.aggregation.year;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.data.year.YearDataRepository;
+import me.marcelberger.weatherapp.core.repository.summary.year.YearSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 public abstract class YearAggregationService<SOURCE, TARGET> extends AggregationService<SOURCE, TARGET> {
 
     @Autowired
-    private YearDataRepository<TARGET> yearDataRepository;
+    private YearSummaryRepository<TARGET> yearSummaryRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -40,7 +40,7 @@ public abstract class YearAggregationService<SOURCE, TARGET> extends Aggregation
     @Override
     protected TARGET getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String year = timestampBase.getValue(CalendarParameter.Item.YEAR);
-        TARGET entity = yearDataRepository.findByStationAndYear(station, year);
+        TARGET entity = yearSummaryRepository.findByStationAndYear(station, year);
         if (entity == null) {
             entity = createBaseTarget(station, year);
         }
@@ -49,7 +49,7 @@ public abstract class YearAggregationService<SOURCE, TARGET> extends Aggregation
 
     @Override
     protected void saveTarget(TARGET entity) {
-        this.yearDataRepository.save(entity);
+        this.yearSummaryRepository.save(entity);
     }
 
     protected abstract TARGET createBaseTarget(StationEntity station, String year);

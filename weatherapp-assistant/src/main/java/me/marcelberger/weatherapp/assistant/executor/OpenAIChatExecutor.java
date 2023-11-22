@@ -16,7 +16,7 @@ import me.marcelberger.weatherapp.assistant.service.openai.function.OpenAIFuncti
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
 import me.marcelberger.weatherapp.assistant.service.openai.sender.OpenAISenderService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.exception.ServiceException;
+import me.marcelberger.weatherapp.core.exception.CoreException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,13 +73,13 @@ public class OpenAIChatExecutor {
 
     private void validate() {
         if (userMessage == null || userMessage.isBlank()) {
-            throw new ServiceException("OpenAI-Chat execution failed: user message is null or blank");
+            throw new CoreException("OpenAI-Chat execution failed: user message is null or blank");
         }
         if (chat == null || chat.getMessages() == null) {
-            throw new ServiceException("OpenAI-Chat execution failed: ChatEntity is null or has no messages");
+            throw new CoreException("OpenAI-Chat execution failed: ChatEntity is null or has no messages");
         }
         if (contextStation == null || contextStation.getName() == null) {
-            throw new ServiceException("OpenAI-Chat execution failed: context StationEntity is null or has no name");
+            throw new CoreException("OpenAI-Chat execution failed: context StationEntity is null or has no name");
         }
     }
 

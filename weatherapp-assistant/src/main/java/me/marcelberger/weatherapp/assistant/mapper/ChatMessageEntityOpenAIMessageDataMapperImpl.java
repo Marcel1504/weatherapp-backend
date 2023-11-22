@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIMessageData;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
-import me.marcelberger.weatherapp.core.exception.ServiceException;
+import me.marcelberger.weatherapp.core.exception.CoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class ChatMessageEntityOpenAIMessageDataMapperImpl implements Mapper<Chat
         try {
             return objectMapper.readValue(object.getOpenAIMessage(), OpenAIMessageData.class);
         } catch (JsonProcessingException e) {
-            throw new ServiceException("Can not map chat message to openAI message: %s", e.getMessage());
+            throw new CoreException("Can not map chat message to openAI message: %s", e.getMessage());
         }
     }
 }

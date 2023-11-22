@@ -1,30 +1,30 @@
 package me.marcelberger.weatherapp.consumer.service.data.updater;
 
-import me.marcelberger.weatherapp.core.entity.data.single.WeatherSingleDataEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.data.single.SingleDataRepository;
+import me.marcelberger.weatherapp.core.entity.summary.single.WeatherSingleSummaryEntity;
+import me.marcelberger.weatherapp.core.repository.summary.single.SingleSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService<FROM, WeatherSingleDataEntity> {
+public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService<FROM, WeatherSingleSummaryEntity> {
 
     @Autowired
-    private SingleDataRepository<WeatherSingleDataEntity> weatherRepository;
+    private SingleSummaryRepository<WeatherSingleSummaryEntity> weatherRepository;
 
     @Override
-    protected WeatherSingleDataEntity getLatestExistingEntityForStation(StationEntity station) {
+    protected WeatherSingleSummaryEntity getLatestExistingEntityForStation(StationEntity station) {
         return weatherRepository.findLatestByStationId(station.getId());
     }
 
     @Override
-    protected LocalDateTime getTimestampOfEntity(WeatherSingleDataEntity entity) {
+    protected LocalDateTime getTimestampOfEntity(WeatherSingleSummaryEntity entity) {
         return entity != null ? entity.getTimestamp() : null;
     }
 
     @Override
-    protected WeatherSingleDataEntity createNewEntity(FROM data, StationEntity station) {
-        return WeatherSingleDataEntity.builder()
+    protected WeatherSingleSummaryEntity createNewEntity(FROM data, StationEntity station) {
+        return WeatherSingleSummaryEntity.builder()
                 .station(station)
                 .timestamp(getTimestamp(data))
                 .temperature(getTemperature(data))
@@ -39,7 +39,7 @@ public abstract class WeatherDataUpdaterService<FROM> extends DataUpdaterService
     }
 
     @Override
-    protected void saveEntity(WeatherSingleDataEntity entity) {
+    protected void saveEntity(WeatherSingleSummaryEntity entity) {
         weatherRepository.save(entity);
     }
 

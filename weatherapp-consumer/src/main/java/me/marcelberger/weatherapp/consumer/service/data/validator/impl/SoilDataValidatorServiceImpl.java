@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.consumer.service.data.validator.impl;
 
 import me.marcelberger.weatherapp.consumer.service.data.validator.DataValidatorService;
-import me.marcelberger.weatherapp.core.entity.data.single.SoilSingleDataEntity;
+import me.marcelberger.weatherapp.core.entity.summary.single.SoilSingleSummaryEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SoilDataValidatorServiceImpl implements DataValidatorService<SoilSingleDataEntity> {
+public class SoilDataValidatorServiceImpl implements DataValidatorService<SoilSingleSummaryEntity> {
 
     @Value("${weatherapp.validation.temperature.max}")
     private double temperatureMax;
@@ -15,7 +15,7 @@ public class SoilDataValidatorServiceImpl implements DataValidatorService<SoilSi
     private double temperatureMin;
 
     @Override
-    public boolean isValid(SoilSingleDataEntity element) {
+    public boolean isValid(SoilSingleSummaryEntity element) {
         return element.getTimestamp() != null
                 && isValidTemperature(element.getTemperature50cm())
                 && isValidTemperature(element.getTemperature100cm())

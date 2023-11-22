@@ -20,10 +20,10 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 public class MediaServiceImpl implements MediaService {
 
-    @Value("${weatherapp.station.media.directory.source}")
+    @Value("${weatherapp.station.media.directorySource}")
     private String sourceDirectory;
 
-    @Value("${weatherapp.station.media.directory.target}")
+    @Value("${weatherapp.station.media.directory}")
     private String targetDirectory;
 
     @Value("${weatherapp.station.media.latestKey}")

@@ -2,9 +2,9 @@ package me.marcelberger.weatherapp.aggregator.facade;
 
 import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.aggregator.service.synchronization.SynchronizationService;
-import me.marcelberger.weatherapp.core.data.StatusData;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.exception.ServiceException;
+import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
+import me.marcelberger.weatherapp.core.exception.CoreException;
 import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,26 +32,26 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
     private List<Long> currentRunningSynchronizationTaskIds;
 
     @Override
-    public StatusData syncFullForStationByCode(String stationCode) {
+    public String syncFullForStationByCode(String stationCode) {
         return syncForStationByCode(stationCode, false);
     }
 
     @Override
-    public StatusData syncFullForAllStations() {
+    public String syncFullForAllStations() {
         return syncForAllStations(false);
     }
 
     @Override
-    public StatusData syncDeltaForStationByCode(String stationCode) {
+    public String syncDeltaForStationByCode(String stationCode) {
         return syncForStationByCode(stationCode, true);
     }
 
     @Override
-    public StatusData syncDeltaForAllStations() {
+    public String syncDeltaForAllStations() {
         return syncForAllStations(true);
     }
 
-    private StatusData syncForStationByCode(String stationCode, boolean syncDelta) {
+    private String syncForStationByCode(String stationCode, boolean syncDelta) {
         return startSynchronizationTask((id) -> {
             StationEntity station = getStationByCode(stationCode);
             synchronizationServices.stream()
@@ -61,7 +61,7 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
         });
     }
 
-    private StatusData syncForAllStations(boolean syncDelta) {
+    private String syncForAllStations(boolean syncDelta) {
         return startSynchronizationTask((id) -> getAllStations()
                 .forEach(station -> synchronizationServices.stream()
                         .filter(s -> s.getStationType() == station.getType())
@@ -69,14 +69,12 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
                         .ifPresent(s -> s.syncForStation(station, syncDelta))));
     }
 
-    private StatusData startSynchronizationTask(Consumer<Long> action) {
+    private String startSynchronizationTask(Consumer<Long> action) {
         if (currentRunningSynchronizationTaskIds.isEmpty()) {
             taskExecutor.execute(getSynchronizationTask(action));
-            return StatusData.builder()
-                    .message("Started synchronization")
-                    .build();
+            return "Started synchronization";
         } else {
-            throw new ServiceException("Cannot synchronize: Another synchronization is currently running");
+            return "Cannot synchronize: Another synchronization is currently running";
         }
     }
 
@@ -96,7 +94,7 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
     private StationEntity getStationByCode(String stationCode) {
         StationEntity station = stationRepository.findByCode(stationCode);
         if (station == null || station.getType() == null) {
-            throw new ServiceException("Station %s was not found or has no type", stationCode);
+            throw new CoreException(ErrorCodeEnum.CODE00020, stationCode);
         }
         return station;
     }

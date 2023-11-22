@@ -6,7 +6,6 @@ import me.marcelberger.weatherapp.consumer.data.request.WEPRequestData;
 import me.marcelberger.weatherapp.consumer.facade.data.impl.ECODataFacadeImpl;
 import me.marcelberger.weatherapp.consumer.facade.data.impl.SOPDataFacadeImpl;
 import me.marcelberger.weatherapp.consumer.facade.data.impl.WEPDataFacadeImpl;
-import me.marcelberger.weatherapp.core.data.StatusData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,19 +30,19 @@ public class DataController {
     private SOPDataFacadeImpl sopDataFacade;
 
     @PostMapping("data/eco")
-    public ResponseEntity<StatusData> updateFromEcowitt(@RequestBody String message) {
+    public ResponseEntity<String> updateFromEcowitt(@RequestBody String message) {
         return ResponseEntity.ok(ecoDataFacade.updateWithStationFromData(message));
     }
 
     @PostMapping("data/wep")
-    public ResponseEntity<StatusData> updateFromWeatherProducer(
+    public ResponseEntity<String> updateFromWeatherProducer(
             Principal principal,
             @RequestBody WEPRequestData data) {
         return ResponseEntity.ok(wepDataFacade.updateWithStationCodeFromPrincipalName(principal, data));
     }
 
     @PostMapping("data/sop")
-    public ResponseEntity<StatusData> updateFromSoilProducer(
+    public ResponseEntity<String> updateFromSoilProducer(
             Principal principal,
             @RequestBody SOPRequestData data) {
         return ResponseEntity.ok(sopDataFacade.updateWithStationCodeFromPrincipalName(principal, data));
@@ -51,7 +50,7 @@ public class DataController {
 
     @Deprecated
     @PutMapping("soil/synchronize")
-    public ResponseEntity<StatusData> updateFromSoilProducerOld(
+    public ResponseEntity<String> updateFromSoilProducerOld(
             Principal principal,
             @RequestBody List<SOPRequestData> data) {
         return ResponseEntity.ok(sopDataFacade.updateWithStationCodeFromPrincipalName(principal, data.get(0)));

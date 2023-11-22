@@ -4,12 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionResultData;
 import me.marcelberger.weatherapp.assistant.data.weather.WeatherTimeFunctionData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
+import me.marcelberger.weatherapp.assistant.service.weather.time.WeatherTimeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 @Slf4j
 public class OpenAIWeatherTimeFunctionServiceImpl extends OpenAIFunctionService<WeatherTimeFunctionData> {
+
+    @Autowired
+    private WeatherTimeService weatherTimeService;
 
     @Override
     public OpenAIFunctionEnum getFunction() {

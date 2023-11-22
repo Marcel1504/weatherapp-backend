@@ -4,7 +4,7 @@ import me.marcelberger.weatherapp.assistant.entity.ChatEntity;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
 import me.marcelberger.weatherapp.assistant.repository.ChatMessageRepository;
 import me.marcelberger.weatherapp.assistant.repository.ChatRepository;
-import me.marcelberger.weatherapp.core.exception.ServiceException;
+import me.marcelberger.weatherapp.core.exception.CoreException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
     public ChatEntity getChatById(Long id) {
         ChatEntity chat = getChatByIdOrNull(id);
         if (chat == null) {
-            throw new ServiceException("No chat with ID %s found", id);
+            throw new CoreException("No chat with ID %s found", id);
         }
         return chat;
     }
@@ -53,10 +53,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatEntity saveChatMessageToChatById(ChatEntity chat, ChatMessageEntity chatMessage) {
         if (chat == null || chat.getId() == null) {
-            throw new ServiceException("Can not save ChatMessageEntity: ChatEntity is null");
+            throw new CoreException("Can not save ChatMessageEntity: ChatEntity is null");
         }
         if (chatMessage == null) {
-            throw new ServiceException(
+            throw new CoreException(
                     "Can not save ChatMessageEntity to ChatEntity(id=%s): ChatMessageEntity is null",
                     chat.getId());
         }

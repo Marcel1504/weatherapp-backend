@@ -26,6 +26,8 @@ spring:
             enable: true
 
 weatherapp:
+  media:
+    directory: S:/weatherapp/media
   station:
     diagnosis:
       adminMail: 'admin@test'
@@ -33,9 +35,9 @@ weatherapp:
       initialDelayMillis: 60000
     media:
       latestKey: LATEST
-      directory:
-        source: S:/weatherapp/media/station/source
-        target: S:/weatherapp/media/station
+      baseUrl: "http://localhost:8080/station/media?station={station}&name={name}"
+      directory: ${weatherapp.media.directory}/station/source
+      directorySource: ${weatherapp.media.directory}/station/source
       cronjob:
         latest: '0 0/1 * * * *'
         review: '30 30 12 * * *'

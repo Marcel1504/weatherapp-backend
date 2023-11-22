@@ -3,7 +3,7 @@ package me.marcelberger.weatherapp.aggregator.service.aggregation.month;
 import me.marcelberger.weatherapp.aggregator.parameter.CalendarParameter;
 import me.marcelberger.weatherapp.aggregator.service.aggregation.AggregationService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.repository.data.month.MonthDataRepository;
+import me.marcelberger.weatherapp.core.repository.summary.month.MonthSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public abstract class MonthAggregationService<SOURCE, TARGET> extends AggregationService<SOURCE, TARGET> {
     @Autowired
-    private MonthDataRepository<TARGET> monthDataRepository;
+    private MonthSummaryRepository<TARGET> monthSummaryRepository;
 
     @Override
     public Set<CalendarParameter.Item> getCalendarParameterItems() {
@@ -47,7 +47,7 @@ public abstract class MonthAggregationService<SOURCE, TARGET> extends Aggregatio
     protected TARGET getOrCreateTarget(CalendarParameter timestampBase, StationEntity station) {
         String year = timestampBase.getValue(CalendarParameter.Item.YEAR);
         String month = timestampBase.getValue(CalendarParameter.Item.MONTH);
-        TARGET entity = monthDataRepository.findByStationAndMonthAndYear(station, month, year);
+        TARGET entity = monthSummaryRepository.findByStationAndMonthAndYear(station, month, year);
         if (entity == null) {
             entity = createBaseTarget(station, month, year);
         }
@@ -56,7 +56,7 @@ public abstract class MonthAggregationService<SOURCE, TARGET> extends Aggregatio
 
     @Override
     protected void saveTarget(TARGET entity) {
-        this.monthDataRepository.save(entity);
+        this.monthSummaryRepository.save(entity);
     }
 
     protected abstract TARGET createBaseTarget(StationEntity station, String month, String year);

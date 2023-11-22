@@ -4,7 +4,7 @@ import me.marcelberger.weatherapp.consumer.data.request.WEPRequestData;
 import me.marcelberger.weatherapp.consumer.facade.data.DataFacade;
 import me.marcelberger.weatherapp.consumer.service.data.updater.impl.WEPDataUpdaterServiceImpl;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.enumeration.StationTypeEnum;
+import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
