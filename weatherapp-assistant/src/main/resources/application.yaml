@@ -3,6 +3,11 @@ logging:
     root: WARN
     me:
       marcelberger: INFO
+    org:
+      springframework:
+        web:
+          client:
+            RestTemplate: DEBUG
 spring:
   datasource:
     driverClassName: 'org.mariadb.jdbc.Driver'
@@ -28,3 +33,16 @@ spring:
             enable: true
 
 weatherapp:
+  openAI:
+    api:
+      host: https://api.openai.com
+      path: /v1/chat/completions
+      key: 123
+      timeoutSeconds: 30
+    model: gpt-3.5-turbo
+    messageTemplate:
+      system: 'You are a weather app assistant. Time is {time}.'
+      user: '{message}. Do not answer if context of this message is not about weather.'
+    functions:
+      filePattern: classpath:openai/function_{name}.json
+      available: weather_media, weather_record, weather_time

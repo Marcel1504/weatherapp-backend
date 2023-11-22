@@ -1,0 +1,37 @@
+{
+  "name": "weather_record",
+  "description": "Get weather data records/achievements",
+  "parameters": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "station": {
+        "type": "string",
+        "description": "Weather data station. Null if station is unknown"
+      },
+      "type": {
+        "type": "string",
+        "description": "Weather achievement type",
+        "enum": [
+          "hottest",
+          "coldest",
+          "mostRain",
+          "strongestWind"
+        ]
+      },
+      "aggregation": {
+        "type": "string",
+        "description": "Weather data time aggregation",
+        "enum": [
+          "day",
+          "month",
+          "year"
+        ]
+      }
+    },
+    "required": [
+      "type",
+      "aggregation"
+    ]
+  }
+}

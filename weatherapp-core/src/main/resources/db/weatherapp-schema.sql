@@ -2,8 +2,25 @@ DROP DATABASE IF EXISTS weatherapp;
 CREATE DATABASE weatherapp;
 USE weatherapp;
 
-DROP TABLE IF EXISTS weatherapp.cn_station;
-CREATE TABLE weatherapp.cn_station (
+DROP TABLE IF EXISTS as_chat;
+CREATE TABLE as_chat (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS as_chat_message;
+CREATE TABLE as_chat_message (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  chat_id BIGINT NOT NULL,
+  timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  role varchar(50) NOT NULL,
+  type varchar(50) NOT NULL,
+  content TEXT DEFAULT NULL,
+  openai_message TEXT DEFAULT NULL
+);
+
+DROP TABLE IF EXISTS cn_station;
+CREATE TABLE cn_station (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   code varchar(50) DEFAULT NULL,
   name varchar(50) DEFAULT NULL,
@@ -19,8 +36,8 @@ CREATE TABLE weatherapp.cn_station (
   disabled boolean NOT NULL DEFAULT false
 );
 
-DROP TABLE IF EXISTS weatherapp.cn_station_media;
-CREATE TABLE weatherapp.cn_station_media (
+DROP TABLE IF EXISTS cn_station_media;
+CREATE TABLE cn_station_media (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   name varchar(50) DEFAULT NULL,
   path varchar(500) DEFAULT NULL,
@@ -28,16 +45,16 @@ CREATE TABLE weatherapp.cn_station_media (
   creation_timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS weatherapp.cn_station_parameter;
-CREATE TABLE weatherapp.cn_station_parameter (
+DROP TABLE IF EXISTS cn_station_parameter;
+CREATE TABLE cn_station_parameter (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   code varchar(50) DEFAULT NULL,
   value varchar(500) DEFAULT NULL,
   station_id BIGINT DEFAULT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.we_weather;
-CREATE TABLE weatherapp.we_weather (
+DROP TABLE IF EXISTS we_weather;
+CREATE TABLE we_weather (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   temperature decimal(3,1) DEFAULT NULL,
   humidity int(3) DEFAULT NULL,
@@ -51,8 +68,8 @@ CREATE TABLE weatherapp.we_weather (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.we_weather_hour;
-CREATE TABLE weatherapp.we_weather_hour (
+DROP TABLE IF EXISTS we_weather_hour;
+CREATE TABLE we_weather_hour (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature_avg decimal(3,1) DEFAULT NULL,
@@ -76,8 +93,8 @@ CREATE TABLE weatherapp.we_weather_hour (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.we_weather_day;
-CREATE TABLE weatherapp.we_weather_day (
+DROP TABLE IF EXISTS we_weather_day;
+CREATE TABLE we_weather_day (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature_avg decimal(3,1) DEFAULT NULL,
@@ -100,8 +117,8 @@ CREATE TABLE weatherapp.we_weather_day (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.we_weather_month;
-CREATE TABLE weatherapp.we_weather_month (
+DROP TABLE IF EXISTS we_weather_month;
+CREATE TABLE we_weather_month (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature_avg decimal(3,1) DEFAULT NULL,
@@ -125,8 +142,8 @@ CREATE TABLE weatherapp.we_weather_month (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.we_weather_year;
-CREATE TABLE weatherapp.we_weather_year (
+DROP TABLE IF EXISTS we_weather_year;
+CREATE TABLE we_weather_year (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature_avg decimal(3,1) DEFAULT NULL,
@@ -149,8 +166,8 @@ CREATE TABLE weatherapp.we_weather_year (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.so_soil;
-CREATE TABLE weatherapp.so_soil (
+DROP TABLE IF EXISTS so_soil;
+CREATE TABLE so_soil (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   temperature50cm decimal(3,1) DEFAULT NULL,
@@ -159,8 +176,8 @@ CREATE TABLE weatherapp.so_soil (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.so_soil_day;
-CREATE TABLE weatherapp.so_soil_day (
+DROP TABLE IF EXISTS so_soil_day;
+CREATE TABLE so_soil_day (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature50cm_avg decimal(3,1) DEFAULT NULL,
@@ -176,8 +193,8 @@ CREATE TABLE weatherapp.so_soil_day (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.so_soil_month;
-CREATE TABLE weatherapp.so_soil_month (
+DROP TABLE IF EXISTS so_soil_month;
+CREATE TABLE so_soil_month (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature50cm_avg decimal(3,1) DEFAULT NULL,
@@ -194,8 +211,8 @@ CREATE TABLE weatherapp.so_soil_month (
   station_id BIGINT NOT NULL
 );
 
-DROP TABLE IF EXISTS weatherapp.so_soil_year;
-CREATE TABLE weatherapp.so_soil_year (
+DROP TABLE IF EXISTS so_soil_year;
+CREATE TABLE so_soil_year (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   amount int(10) DEFAULT NULL,
   temperature50cm_avg decimal(3,1) DEFAULT NULL,
@@ -211,49 +228,52 @@ CREATE TABLE weatherapp.so_soil_year (
   station_id BIGINT NOT NULL
 );
 
-ALTER TABLE weatherapp.cn_station
+ALTER TABLE as_chat_message
+  ADD CONSTRAINT c_as_chat_message_chat_id FOREIGN KEY (chat_id) REFERENCES as_chat (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE cn_station
   ADD CONSTRAINT c_cn_station_unique UNIQUE (code);
 
-ALTER TABLE weatherapp.cn_station_media
+ALTER TABLE cn_station_media
   ADD CONSTRAINT c_cn_station_media_unique UNIQUE (name, station_id),
-  ADD CONSTRAINT c_cn_station_media_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT c_cn_station_media_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE SET NULL ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.cn_station_parameter
+ALTER TABLE cn_station_parameter
   ADD CONSTRAINT c_cn_station_parameter_unique UNIQUE (code, station_id),
-  ADD CONSTRAINT c_cn_station_parameter_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT c_cn_station_parameter_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE SET NULL ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.we_weather
+ALTER TABLE we_weather
   ADD CONSTRAINT c_we_weather_unique UNIQUE (timestamp, station_id),
-  ADD CONSTRAINT c_we_weather_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_we_weather_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.we_weather_hour
+ALTER TABLE we_weather_hour
   ADD CONSTRAINT c_we_weather_hour_unique UNIQUE (hour, day, station_id),
-  ADD CONSTRAINT c_we_weather_hour_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_we_weather_hour_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.we_weather_day
+ALTER TABLE we_weather_day
   ADD CONSTRAINT c_we_weather_day_unique UNIQUE (day, station_id),
-  ADD CONSTRAINT c_we_weather_day_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_we_weather_day_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.we_weather_month
+ALTER TABLE we_weather_month
   ADD CONSTRAINT c_we_weather_month_unique UNIQUE (month, year, station_id),
-  ADD CONSTRAINT c_we_weather_month_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_we_weather_month_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.we_weather_year
+ALTER TABLE we_weather_year
   ADD CONSTRAINT c_we_weather_year_unique UNIQUE (year, station_id),
-  ADD CONSTRAINT c_we_weather_year_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_we_weather_year_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.so_soil
+ALTER TABLE so_soil
   ADD CONSTRAINT c_so_soil_unique UNIQUE (timestamp, station_id),
-  ADD CONSTRAINT c_so_soil_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_so_soil_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.so_soil_day
+ALTER TABLE so_soil_day
   ADD CONSTRAINT c_so_soil_day_unique UNIQUE (day, station_id),
-  ADD CONSTRAINT c_so_soil_day_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_so_soil_day_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.so_soil_month
+ALTER TABLE so_soil_month
   ADD CONSTRAINT c_so_soil_month_unique UNIQUE (month, year, station_id),
-  ADD CONSTRAINT c_so_soil_month_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_so_soil_month_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE weatherapp.so_soil_year
+ALTER TABLE so_soil_year
   ADD CONSTRAINT c_so_soil_year_unique UNIQUE (year, station_id),
-  ADD CONSTRAINT c_so_soil_year_station_id FOREIGN KEY (station_id) REFERENCES weatherapp.cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+  ADD CONSTRAINT c_so_soil_year_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,0 +1,22 @@
+{
+  "name": "weather_media",
+  "description": "Get weather station media",
+  "parameters": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "station": {
+        "type": "string",
+        "description": "Weather data station. Default is {station}"
+      },
+      "date": {
+        "type": "string",
+        "description": "Weather data station media date in yyyy-MM-dd"
+      }
+    },
+    "required": [
+      "station",
+      "date"
+    ]
+  }
+}

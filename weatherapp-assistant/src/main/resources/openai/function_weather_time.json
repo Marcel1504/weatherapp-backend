@@ -1,0 +1,32 @@
+{
+  "name": "weather_time",
+  "description": "Get weather data for day, month or year",
+  "parameters": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "station": {
+        "type": "string",
+        "description": "Weather data station. Default is {station}"
+      },
+      "date": {
+        "type": "string",
+        "description": "Weather data time in yyyy-MM-dd"
+      },
+      "aggregation": {
+        "type": "string",
+        "description": "Weather data time aggregation",
+        "enum": [
+          "day",
+          "month",
+          "year"
+        ]
+      }
+    },
+    "required": [
+      "station",
+      "date",
+      "aggregation"
+    ]
+  }
+}
