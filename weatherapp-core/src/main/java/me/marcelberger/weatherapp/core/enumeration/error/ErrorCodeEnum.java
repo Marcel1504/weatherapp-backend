@@ -11,6 +11,8 @@ public enum ErrorCodeEnum {
     CODE00021("StationMedia(name=%s) for Station(code=%s) not found"),
     CODE00022("Station(key=%s) not found"),
     CODE00023("Station is null"),
+    CODE00024("Station(id=%s) not found"),
+    CODE00025("Station not found for name search: %s"),
     CODE00100("WeatherSummary(year=%s) for Station(code=%s) not found"),
     CODE00101("WeatherSummary(single) for Station(code=%s) not found"),
     CODE00102("WeatherSummary(year=%s,month=%s) for Station(code=%s) not found"),

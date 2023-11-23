@@ -14,7 +14,7 @@ import me.marcelberger.weatherapp.assistant.service.chat.ChatService;
 import me.marcelberger.weatherapp.assistant.service.openai.function.OpenAIFunctionService;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
 import me.marcelberger.weatherapp.assistant.service.openai.sender.OpenAISenderService;
-import me.marcelberger.weatherapp.assistant.service.station.StationService;
+import me.marcelberger.weatherapp.core.facade.station.StationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class ChatFacadeImpl implements ChatFacade {
 
     @Autowired
-    private StationService stationService;
+    private StationFacade stationFacade;
 
     @Autowired
     private ChatService chatService;
@@ -55,7 +55,7 @@ public class ChatFacadeImpl implements ChatFacade {
                 : chatService.getChatById(chatRequest.getChatId());
         List<ChatMessageEntity> chatMessageResults = OpenAIChatExecutor.builder()
                 .userMessage(chatRequest.getMessage())
-                .contextStation(stationService.getStationById(chatRequest.getContextStationId()))
+                .contextStation(stationFacade.getById(chatRequest.getContextStationId()))
                 .chat(chat)
                 .chatService(chatService)
                 .openAISenderService(openAISenderService)

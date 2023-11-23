@@ -46,7 +46,6 @@ public class ECODataFacadeImpl extends DataFacade<String> {
 
     @Override
     protected void update(StationEntity station, String data) {
-        log.debug("ECOWITT message for {}: {}", station.getCode(), data);
         dataUpdaterService.update(station, getDataMapFromString(data));
     }
 

@@ -5,7 +5,7 @@ import me.marcelberger.weatherapp.assistant.dto.request.openai.OpenAIRequestDto;
 import me.marcelberger.weatherapp.assistant.dto.response.openai.OpenAIResponseDto;
 import me.marcelberger.weatherapp.assistant.service.openai.api.OpenAIApiService;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
-import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.data.station.StationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class OpenAISenderServiceImpl implements OpenAISenderService {
     private String openAIModel;
 
     @Override
-    public OpenAIResponseDto sendChat(List<OpenAIMessageData> messages, StationEntity contextStation) {
+    public OpenAIResponseDto sendChat(List<OpenAIMessageData> messages, StationData contextStation) {
         OpenAIRequestDto chatRequest = OpenAIRequestDto.builder()
                 .model(openAIModel)
                 .messages(messages)

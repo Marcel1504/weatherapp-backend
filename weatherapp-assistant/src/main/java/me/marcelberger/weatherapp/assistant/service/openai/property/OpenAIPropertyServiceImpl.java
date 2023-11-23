@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionData;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIMessageData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
-import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.data.station.StationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -44,7 +44,7 @@ public class OpenAIPropertyServiceImpl implements OpenAIPropertyService {
     private String openAIUserMessageTemplate;
 
     @Override
-    public List<OpenAIFunctionData> getAvailableFunctions(StationEntity contextStation) {
+    public List<OpenAIFunctionData> getAvailableFunctions(StationData contextStation) {
         List<OpenAIFunctionData> functions = new ArrayList<>();
         for (String name : openAIFunctionsAvailable) {
             try {

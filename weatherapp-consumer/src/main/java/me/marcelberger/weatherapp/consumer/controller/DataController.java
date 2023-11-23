@@ -31,6 +31,7 @@ public class DataController {
 
     @PostMapping("data/eco")
     public ResponseEntity<String> updateFromEcowitt(@RequestBody String message) {
+        log.debug(message);
         return ResponseEntity.ok(ecoDataFacade.updateWithStationFromData(message));
     }
 

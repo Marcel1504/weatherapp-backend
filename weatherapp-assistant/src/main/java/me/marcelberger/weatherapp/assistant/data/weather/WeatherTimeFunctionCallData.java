@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class WeatherTimeFunctionData {
+public class WeatherTimeFunctionCallData {
     private String station;
     private LocalDate date;
     private WeatherAggregationEnum aggregation;

@@ -9,14 +9,15 @@ import me.marcelberger.weatherapp.assistant.dto.response.openai.OpenAIResponseDt
 import me.marcelberger.weatherapp.assistant.entity.ChatEntity;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFinishReasonEnum;
+import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
+import me.marcelberger.weatherapp.assistant.exception.AssistantException;
 import me.marcelberger.weatherapp.assistant.mapper.Mapper;
 import me.marcelberger.weatherapp.assistant.service.chat.ChatService;
 import me.marcelberger.weatherapp.assistant.service.openai.function.OpenAIFunctionService;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
 import me.marcelberger.weatherapp.assistant.service.openai.sender.OpenAISenderService;
-import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.exception.CoreException;
+import me.marcelberger.weatherapp.core.data.station.StationData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class OpenAIChatExecutor {
 
     private final String userMessage;
 
-    private final StationEntity contextStation;
+    private final StationData contextStation;
 
     private final OpenAISenderService openAISenderService;
 
@@ -72,14 +73,10 @@ public class OpenAIChatExecutor {
     }
 
     private void validate() {
-        if (userMessage == null || userMessage.isBlank()) {
-            throw new CoreException("OpenAI-Chat execution failed: user message is null or blank");
-        }
-        if (chat == null || chat.getMessages() == null) {
-            throw new CoreException("OpenAI-Chat execution failed: ChatEntity is null or has no messages");
-        }
-        if (contextStation == null || contextStation.getName() == null) {
-            throw new CoreException("OpenAI-Chat execution failed: context StationEntity is null or has no name");
+        if (userMessage == null || userMessage.isBlank()
+                || chat == null || chat.getMessages() == null
+                || contextStation == null || contextStation.getName() == null) {
+            throw new AssistantException("Could not execute OpenAI chat: Validation failed");
         }
     }
 
@@ -91,9 +88,7 @@ public class OpenAIChatExecutor {
 
     private void handleFunctionCall(OpenAIFunctionCallData functionCall) {
         // perform actual function call and get result
-        OpenAIFunctionResultData functionResult = OpenAIFunctionResultData.builder()
-                .resultShort("No result")
-                .build();
+        OpenAIFunctionResultData functionResult = null;
         OpenAIFunctionService<?> functionService = openAIFunctionServices.stream()
                 .filter(s -> s.getFunction().equals(functionCall.getName()))
                 .findFirst()
@@ -103,21 +98,29 @@ public class OpenAIChatExecutor {
         }
 
         // handle function result messages
-        OpenAIMessageData functionResultOpenAIMessage = OpenAIMessageData.builder()
-                .role(OpenAIRoleEnum.FUNCTION)
-                .name(functionCall.getName())
-                .content(functionResult.getResultShort())
-                .build();
-        openAIMessages.add(functionResultOpenAIMessage);
-        ChatMessageEntity functionResultChatMessageEntity =
-                openAIMessageDataChatMessageEntityMapper.map(functionResultOpenAIMessage);
-        functionResultChatMessageEntity.setContent(functionResult.getResultLong());
-        newChatMessages.add(functionResultChatMessageEntity);
+        handleFunctionCallResult(functionCall.getName(), functionResult);
 
         // perform openAI chat with function result
         OpenAIResponseDto response = openAISenderService.sendChat(openAIMessages, contextStation);
         OpenAIChoiceData firstChoice = response.getChoices().get(0);
         openAIMessages.add(firstChoice.getMessage());
         newChatMessages.add(openAIMessageDataChatMessageEntityMapper.map(firstChoice.getMessage()));
+    }
+
+    private void handleFunctionCallResult(OpenAIFunctionEnum function, OpenAIFunctionResultData functionResult) {
+        OpenAIMessageData functionResultOpenAIMessage = OpenAIMessageData.builder()
+                .role(OpenAIRoleEnum.FUNCTION)
+                .name(function)
+                .content(functionResult != null && functionResult.getResultShort() != null
+                        ? functionResult.getResultShort()
+                        : "No result")
+                .build();
+        openAIMessages.add(functionResultOpenAIMessage);
+        ChatMessageEntity functionResultChatMessageEntity =
+                openAIMessageDataChatMessageEntityMapper.map(functionResultOpenAIMessage);
+        functionResultChatMessageEntity.setContent(functionResult != null
+                ? functionResult.getResultLong()
+                : null);
+        newChatMessages.add(functionResultChatMessageEntity);
     }
 }

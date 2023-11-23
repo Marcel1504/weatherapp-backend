@@ -8,4 +8,8 @@ public interface StationFacade {
     PageData<StationData> getAll();
 
     StationData getByStationCode(String stationCode);
+
+    StationData getById(Long id);
+
+    StationData searchClosestStationMatchByName(String nameSearchQuery);
 }

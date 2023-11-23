@@ -28,7 +28,7 @@ public class CoreExceptionHandler {
     }
 
     @ExceptionHandler(CoreException.class)
-    public ResponseEntity<ErrorData> handleServiceException(CoreException e) {
+    public ResponseEntity<ErrorData> handleCoreException(CoreException e) {
         return statusDataResponseBadRequest(e.getMessage(), e.getCode(), e.getProperties());
     }
 
