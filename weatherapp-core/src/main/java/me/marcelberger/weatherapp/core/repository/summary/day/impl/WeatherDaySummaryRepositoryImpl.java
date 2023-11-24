@@ -21,6 +21,10 @@ public interface WeatherDaySummaryRepositoryImpl extends DaySummaryRepository<We
     Page<WeatherDaySummaryEntity> findAllDaysForStation(Pageable pageable, @Param("station") StationEntity station);
 
     @Override
+    @Query(value = "SELECT w FROM WeatherDaySummaryEntity w")
+    Page<WeatherDaySummaryEntity> findAllDays(Pageable pageable);
+
+    @Override
     @Query(value = "SELECT w FROM WeatherDaySummaryEntity w " +
             "WHERE w.station = :station " +
             "AND w.day >= :startDay " +

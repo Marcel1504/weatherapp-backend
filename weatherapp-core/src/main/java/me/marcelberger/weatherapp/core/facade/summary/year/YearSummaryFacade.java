@@ -9,6 +9,7 @@ import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import me.marcelberger.weatherapp.core.repository.summary.year.YearSummaryRepository;
 import me.marcelberger.weatherapp.core.service.sort.SortService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 public abstract class YearSummaryFacade<SOURCE, TARGET, SORT> {
@@ -34,6 +35,15 @@ public abstract class YearSummaryFacade<SOURCE, TARGET, SORT> {
         return dataMapper.map(yearSummaryEntity);
     }
 
+    public TARGET getYearForStationOrNull(String stationCode, String year) {
+        StationEntity station = getStation(stationCode);
+        SOURCE yearSummaryEntity = yearSummaryRepository.findByStationAndYear(station, year);
+        if (yearSummaryEntity == null) {
+            return null;
+        }
+        return dataMapper.map(yearSummaryEntity);
+    }
+
     public PageData<TARGET> getAllYearsForStation(String stationCode,
                                                   Integer page,
                                                   Integer size,
@@ -42,6 +52,12 @@ public abstract class YearSummaryFacade<SOURCE, TARGET, SORT> {
         return dataMapper.mapPage(yearSummaryRepository.findAllByStation(
                 PageRequest.of(page, size, sortService.forYear(sort)),
                 station));
+    }
+
+    public PageData<TARGET> getAllYears(Integer page, Integer size, SORT sort) {
+        Page<SOURCE> data = yearSummaryRepository
+                .findAll(PageRequest.of(page, size, sortService.forDay(sort)));
+        return dataMapper.mapPage(data);
     }
 
     protected abstract ErrorCodeEnum getYearSummaryNotFoundErrorCode();

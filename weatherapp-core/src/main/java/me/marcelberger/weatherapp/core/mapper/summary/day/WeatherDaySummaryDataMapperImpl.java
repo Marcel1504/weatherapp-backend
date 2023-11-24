@@ -34,6 +34,7 @@ public class WeatherDaySummaryDataMapperImpl implements Mapper<WeatherDaySummary
                 .solarRadiationMax(object.getSolarRadiationMax())
                 .solarRadiationMin(object.getSolarRadiationMin())
                 .day(object.getDay())
+                .stationId(object.getStation().getId())
                 .build();
     }
 }

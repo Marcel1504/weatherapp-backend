@@ -29,9 +29,10 @@ public class WeatherTimeServiceImpl implements WeatherTimeService {
     private YearSummaryFacade<WeatherYearSummaryEntity, WeatherYearSummaryData, WeatherSortEnum> yearSummaryFacade;
 
     @Override
-    public WeatherTimeData getWeatherDay(String date, StationData station) {
-        WeatherDaySummaryData data = daySummaryFacade.getDayForStation(station.getCode(), date);
-        return WeatherTimeData.builder()
+    public WeatherTimeData getWeatherDayOrNull(String date, StationData station) {
+        WeatherDaySummaryData data = daySummaryFacade.getDayForStationOrNull(station.getCode(), date);
+        return data != null
+                ? WeatherTimeData.builder()
                 .type(WeatherAggregationEnum.DAY)
                 .windMax(data.getWindMax())
                 .temperature(data.getTemperatureAvg())
@@ -39,13 +40,15 @@ public class WeatherTimeServiceImpl implements WeatherTimeService {
                 .humidity(data.getHumidityAvg())
                 .rainTotal(data.getRainTotal())
                 .station(station.getName())
-                .build();
+                .build()
+                : null;
     }
 
     @Override
-    public WeatherTimeData getWeatherMonth(String year, String month, StationData station) {
-        WeatherMonthSummaryData data = monthSummaryFacade.getMonthForStation(station.getCode(), month, year);
-        return WeatherTimeData.builder()
+    public WeatherTimeData getWeatherMonthOrNull(String year, String month, StationData station) {
+        WeatherMonthSummaryData data = monthSummaryFacade.getMonthForStationOrNull(station.getCode(), month, year);
+        return data != null
+                ? WeatherTimeData.builder()
                 .type(WeatherAggregationEnum.DAY)
                 .windMax(data.getWindMax())
                 .temperature(data.getTemperatureAvg())
@@ -53,13 +56,15 @@ public class WeatherTimeServiceImpl implements WeatherTimeService {
                 .humidity(data.getHumidityAvg())
                 .rainTotal(data.getRainTotal())
                 .station(station.getName())
-                .build();
+                .build()
+                : null;
     }
 
     @Override
-    public WeatherTimeData getWeatherYear(String year, StationData station) {
-        WeatherYearSummaryData data = yearSummaryFacade.getYearForStation(station.getCode(), year);
-        return WeatherTimeData.builder()
+    public WeatherTimeData getWeatherYearOrNull(String year, StationData station) {
+        WeatherYearSummaryData data = yearSummaryFacade.getYearForStationOrNull(station.getCode(), year);
+        return data != null
+                ? WeatherTimeData.builder()
                 .type(WeatherAggregationEnum.DAY)
                 .windMax(data.getWindMax())
                 .temperature(data.getTemperatureAvg())
@@ -67,6 +72,7 @@ public class WeatherTimeServiceImpl implements WeatherTimeService {
                 .humidity(data.getHumidityAvg())
                 .rainTotal(data.getRainTotal())
                 .station(station.getName())
-                .build();
+                .build()
+                : null;
     }
 }

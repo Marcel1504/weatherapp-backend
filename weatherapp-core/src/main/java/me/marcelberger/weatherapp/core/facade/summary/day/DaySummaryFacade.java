@@ -67,11 +67,26 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
         return dataMapper.mapPage(data);
     }
 
+    public PageData<TARGET> getAllDays(Integer page, Integer size, SORT sort) {
+        Page<SOURCE> data = daySummaryRepository
+                .findAllDays(PageRequest.of(page, size, sortService.forDay(sort)));
+        return dataMapper.mapPage(data);
+    }
+
     public TARGET getDayForStation(String stationCode, String day) {
         StationEntity station = getStation(stationCode);
         SOURCE dayEntity = daySummaryRepository.findByStationAndDay(station, day);
         if (dayEntity == null) {
             throw new CoreException(getDaySummaryNotFoundErrorCode(), day, station.getCode());
+        }
+        return dataMapper.map(dayEntity);
+    }
+
+    public TARGET getDayForStationOrNull(String stationCode, String day) {
+        StationEntity station = getStation(stationCode);
+        SOURCE dayEntity = daySummaryRepository.findByStationAndDay(station, day);
+        if (dayEntity == null) {
+            return null;
         }
         return dataMapper.map(dayEntity);
     }

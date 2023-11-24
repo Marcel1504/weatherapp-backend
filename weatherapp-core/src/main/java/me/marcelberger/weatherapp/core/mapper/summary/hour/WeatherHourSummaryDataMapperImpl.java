@@ -30,6 +30,7 @@ public class WeatherHourSummaryDataMapperImpl implements Mapper<WeatherHourSumma
                 .solarRadiationMin(object.getSolarRadiationMin())
                 .day(object.getDay())
                 .hour(object.getHour())
+                .stationId(object.getStation().getId())
                 .build();
     }
 }

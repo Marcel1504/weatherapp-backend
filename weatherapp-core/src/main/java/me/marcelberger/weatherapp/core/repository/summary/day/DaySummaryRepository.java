@@ -13,6 +13,8 @@ public interface DaySummaryRepository<ENTITY> {
 
     Page<ENTITY> findAllDaysForStation(Pageable pageable, StationEntity station);
 
+    Page<ENTITY> findAllDays(Pageable pageable);
+
     Page<ENTITY> findAllDaysOfMonthForStation(Pageable pageable, StationEntity station, String yearMonth);
 
     ENTITY findByStationAndDay(StationEntity station, String day);

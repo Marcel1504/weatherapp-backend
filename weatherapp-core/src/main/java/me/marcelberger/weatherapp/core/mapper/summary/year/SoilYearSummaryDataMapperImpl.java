@@ -21,6 +21,7 @@ public class SoilYearSummaryDataMapperImpl implements Mapper<SoilYearSummaryEnti
                 .temperature200cmMax(object.getTemperature200cmMax())
                 .temperature200cmMin(object.getTemperature200cmMin())
                 .year(object.getYear())
+                .stationId(object.getStation().getId())
                 .build();
     }
 }

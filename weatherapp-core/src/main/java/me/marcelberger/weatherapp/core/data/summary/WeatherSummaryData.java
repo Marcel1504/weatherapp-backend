@@ -24,4 +24,5 @@ public abstract class WeatherSummaryData {
     private Double solarRadiationAvg;
     private Double solarRadiationMax;
     private Double solarRadiationMin;
+    private Long stationId;
 }

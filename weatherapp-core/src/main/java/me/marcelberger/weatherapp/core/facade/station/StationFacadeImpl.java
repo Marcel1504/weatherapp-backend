@@ -49,6 +49,15 @@ public class StationFacadeImpl implements StationFacade {
     }
 
     @Override
+    public StationData getByIdOrNull(Long id) {
+        StationEntity station = null;
+        if (id != null) {
+            station = stationRepository.findById(id).orElse(null);
+        }
+        return station != null ? stationMapper.map(station) : null;
+    }
+
+    @Override
     public StationData searchClosestStationMatchByName(String nameSearchQuery) {
         if (nameSearchQuery == null) {
             nameSearchQuery = "";

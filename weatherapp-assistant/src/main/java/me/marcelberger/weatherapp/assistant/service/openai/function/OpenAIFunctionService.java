@@ -22,6 +22,21 @@ public abstract class OpenAIFunctionService<DATA> {
         }
     }
 
+    protected OpenAIFunctionResultData buildNoResultData() {
+        return OpenAIFunctionResultData.builder()
+                .resultShort("No result")
+                .resultLong(null)
+                .build();
+    }
+
+    protected String writeDataAsString(Object data) {
+        try {
+            return objectMapper.writeValueAsString(data);
+        } catch (JsonProcessingException e) {
+            throw new AssistantException("Can not process data");
+        }
+    }
+
     public abstract OpenAIFunctionEnum getFunction();
 
     protected abstract Class<DATA> getFunctionCallDataClass();

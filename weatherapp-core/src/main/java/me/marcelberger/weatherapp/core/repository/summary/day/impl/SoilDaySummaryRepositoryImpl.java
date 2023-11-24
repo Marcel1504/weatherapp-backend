@@ -21,6 +21,10 @@ public interface SoilDaySummaryRepositoryImpl extends DaySummaryRepository<SoilD
     Page<SoilDaySummaryEntity> findAllDaysForStation(Pageable pageable, @Param("station") StationEntity station);
 
     @Override
+    @Query(value = "SELECT w FROM SoilDaySummaryEntity w")
+    Page<SoilDaySummaryEntity> findAllDays(Pageable pageable);
+
+    @Override
     @Query(value = "SELECT w FROM SoilDaySummaryEntity w " +
             "WHERE w.station = :station " +
             "AND w.day >= :startDay " +

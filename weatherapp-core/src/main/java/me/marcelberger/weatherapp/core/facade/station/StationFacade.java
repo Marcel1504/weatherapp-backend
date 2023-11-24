@@ -11,5 +11,7 @@ public interface StationFacade {
 
     StationData getById(Long id);
 
+    StationData getByIdOrNull(Long id);
+
     StationData searchClosestStationMatchByName(String nameSearchQuery);
 }

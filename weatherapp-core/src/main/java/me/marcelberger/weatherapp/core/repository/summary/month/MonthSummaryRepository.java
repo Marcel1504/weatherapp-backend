@@ -11,5 +11,7 @@ public interface MonthSummaryRepository<ENTITY> {
 
     Page<ENTITY> findAllByStation(Pageable pageable, StationEntity station);
 
+    Page<ENTITY> findAll(Pageable pageable);
+
     ENTITY save(ENTITY s);
 }

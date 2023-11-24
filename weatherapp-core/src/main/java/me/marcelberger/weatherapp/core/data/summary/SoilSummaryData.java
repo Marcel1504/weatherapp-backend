@@ -16,4 +16,5 @@ public abstract class SoilSummaryData {
     private Double temperature200cmMax;
     private Double temperature200cmMin;
     private Double temperature200cmAvg;
+    private Long stationId;
 }

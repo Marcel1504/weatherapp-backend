@@ -53,6 +53,14 @@ CREATE TABLE cn_station_parameter (
   station_id BIGINT DEFAULT NULL
 );
 
+DROP TABLE IF EXISTS cn_usage;
+CREATE TABLE cn_usage (
+  id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  ip_address varchar(40) NOT NULL,
+  module_name varchar(20) NOT NULL,
+  last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 DROP TABLE IF EXISTS we_weather;
 CREATE TABLE we_weather (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -241,6 +249,9 @@ ALTER TABLE cn_station_media
 ALTER TABLE cn_station_parameter
   ADD CONSTRAINT c_cn_station_parameter_unique UNIQUE (code, station_id),
   ADD CONSTRAINT c_cn_station_parameter_station_id FOREIGN KEY (station_id) REFERENCES cn_station (id) ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE cn_usage
+  ADD CONSTRAINT c_cn_usage_unique UNIQUE (ip_address, module_name);
 
 ALTER TABLE we_weather
   ADD CONSTRAINT c_we_weather_unique UNIQUE (timestamp, station_id),

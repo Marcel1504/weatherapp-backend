@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCodeEnum {
     CODE00001("Validation failed"),
+    CODE00002("Can not determine IP address for this request"),
+    CODE00003("Can not save Usage: IP address or module name not provided"),
     CODE00020("Station(code=%s) not found"),
     CODE00021("StationMedia(name=%s) for Station(code=%s) not found"),
     CODE00022("Station(key=%s) not found"),

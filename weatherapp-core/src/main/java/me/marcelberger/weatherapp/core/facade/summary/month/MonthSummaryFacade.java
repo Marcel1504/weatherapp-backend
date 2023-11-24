@@ -34,6 +34,15 @@ public abstract class MonthSummaryFacade<SOURCE, TARGET, SORT> {
         return dataMapper.map(monthEntity);
     }
 
+    public TARGET getMonthForStationOrNull(String stationCode, String month, String year) {
+        StationEntity station = getStation(stationCode);
+        SOURCE monthEntity = monthSummaryRepository.findByStationAndMonthAndYear(station, month, year);
+        if (monthEntity == null) {
+            return null;
+        }
+        return dataMapper.map(monthEntity);
+    }
+
     public PageData<TARGET> getMonthsOfYearForStation(String stationCode,
                                                       Integer page,
                                                       Integer size,
@@ -51,6 +60,19 @@ public abstract class MonthSummaryFacade<SOURCE, TARGET, SORT> {
                     PageRequest.of(page, size, sortService.forMonth(sort)),
                     station);
         }
+        return dataMapper.mapPage(data);
+    }
+
+    public PageData<TARGET> getAllMonthsForStation(String stationCode, Integer page, Integer size, SORT sort) {
+        StationEntity station = getStation(stationCode);
+        Page<SOURCE> data = monthSummaryRepository
+                .findAllByStation(PageRequest.of(page, size, sortService.forDay(sort)), station);
+        return dataMapper.mapPage(data);
+    }
+
+    public PageData<TARGET> getAllMonths(Integer page, Integer size, SORT sort) {
+        Page<SOURCE> data = monthSummaryRepository
+                .findAll(PageRequest.of(page, size, sortService.forDay(sort)));
         return dataMapper.mapPage(data);
     }
 

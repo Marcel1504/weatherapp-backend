@@ -28,6 +28,7 @@ public class WeatherYearSummaryDataMapperImpl implements Mapper<WeatherYearSumma
                 .solarRadiationMax(object.getSolarRadiationMax())
                 .solarRadiationMin(object.getSolarRadiationMin())
                 .year(object.getYear())
+                .stationId(object.getStation().getId())
                 .build();
     }
 }

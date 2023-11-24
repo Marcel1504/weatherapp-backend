@@ -22,6 +22,7 @@ public class SoilMonthSummaryDataMapperImpl implements Mapper<SoilMonthSummaryEn
                 .temperature200cmMin(object.getTemperature200cmMin())
                 .month(object.getMonth())
                 .year(object.getYear())
+                .stationId(object.getStation().getId())
                 .build();
     }
 }
