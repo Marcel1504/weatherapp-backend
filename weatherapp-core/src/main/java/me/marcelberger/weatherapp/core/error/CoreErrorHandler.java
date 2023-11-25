@@ -1,9 +1,8 @@
-package me.marcelberger.weatherapp.core.exception;
+package me.marcelberger.weatherapp.core.error;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import me.marcelberger.weatherapp.core.data.error.ErrorData;
-import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import java.util.List;
 
 @ControllerAdvice
-public class CoreExceptionHandler {
+public class CoreErrorHandler {
 
     @Autowired
     private Validator validator;
@@ -27,33 +26,31 @@ public class CoreExceptionHandler {
         binder.setValidator(validator);
     }
 
-    @ExceptionHandler(CoreException.class)
-    public ResponseEntity<ErrorData> handleCoreException(CoreException e) {
-        return statusDataResponseBadRequest(e.getMessage(), e.getCode(), e.getProperties());
+    @ExceptionHandler(CoreError.class)
+    public ResponseEntity<ErrorData<CoreError.Code>> handleCoreError(CoreError e) {
+        return ResponseEntity.badRequest().body(ErrorData.<CoreError.Code>builder()
+                .code(e.getCode())
+                .message(e.getMessage())
+                .build());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorData> handleConstrainViolationException(ConstraintViolationException e) {
+    public ResponseEntity<ErrorData<CoreError.Code>> handleConstrainViolationException(ConstraintViolationException e) {
         List<String> list = e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).toList();
-        return statusDataResponseBadRequest(e.getMessage(), ErrorCodeEnum.CODE00001, list);
+        return ResponseEntity.badRequest().body(ErrorData.<CoreError.Code>builder()
+                .code(CoreError.Code.CORE00001)
+                .message(String.format("Constraints violated for %s", list))
+                .build());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorData> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorData<CoreError.Code>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         List<String> list = e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .toList();
-        return statusDataResponseBadRequest(e.getMessage(), ErrorCodeEnum.CODE00001, list);
-    }
-
-    private ResponseEntity<ErrorData> statusDataResponseBadRequest(String message,
-                                                                   ErrorCodeEnum code,
-                                                                   List<String> properties) {
-        ErrorData data = ErrorData.builder()
-                .message(message)
-                .code(code)
-                .properties(properties)
-                .build();
-        return ResponseEntity.badRequest().body(data);
+        return ResponseEntity.badRequest().body(ErrorData.<CoreError.Code>builder()
+                .code(CoreError.Code.CORE00001)
+                .message(String.format("Method arguments not valid for %s", list))
+                .build());
     }
 }

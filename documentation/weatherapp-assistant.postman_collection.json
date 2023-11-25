@@ -1,0 +1,36 @@
+{
+  "info": {
+    "_postman_id": "714e775b-0f04-4a45-9f9b-6ff72f44a144",
+    "name": "weatherapp-assistant",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31247129"
+  },
+  "item": [
+    {
+      "name": "/chat",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"chatId\": null,\r\n    \"message\": \"How was the weather today?\",\r\n    \"contextStationCode\": \"{{stationCode1}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urlAssistant}}/chat",
+          "host": [
+            "{{urlAssistant}}"
+          ],
+          "path": [
+            "chat"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

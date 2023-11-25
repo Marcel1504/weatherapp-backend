@@ -2,12 +2,11 @@ package me.marcelberger.weatherapp.core.facade.summary.day;
 
 import me.marcelberger.weatherapp.core.data.PageData;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
-import me.marcelberger.weatherapp.core.exception.CoreException;
+import me.marcelberger.weatherapp.core.error.CoreError;
 import me.marcelberger.weatherapp.core.mapper.Mapper;
-import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import me.marcelberger.weatherapp.core.repository.summary.day.DaySummaryRepository;
 import me.marcelberger.weatherapp.core.service.sort.SortService;
+import me.marcelberger.weatherapp.core.service.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
 
     @Autowired
-    private StationRepository stationRepository;
+    private StationService stationService;
 
     @Autowired
     private Mapper<SOURCE, TARGET> dataMapper;
@@ -27,7 +26,7 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
     private DaySummaryRepository<SOURCE> daySummaryRepository;
 
     public PageData<TARGET> getDaysOfMonthForStation(String stationCode, String month, String year, SORT sort) {
-        StationEntity station = getStation(stationCode);
+        StationEntity station = stationService.getByStationCode(stationCode);
         Page<SOURCE> data = daySummaryRepository.findAllDaysOfMonthForStation(
                 PageRequest.of(0, 31, sortService.forDay(sort)),
                 station,
@@ -41,7 +40,7 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
                                                  String startDay,
                                                  String endDay,
                                                  SORT sort) {
-        StationEntity station = getStation(stationCode);
+        StationEntity station = stationService.getByStationCode(stationCode);
         Page<SOURCE> data;
         if (startDay != null && endDay != null) {
             data = daySummaryRepository.findAllDaysInRangeForStation(
@@ -74,16 +73,16 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
     }
 
     public TARGET getDayForStation(String stationCode, String day) {
-        StationEntity station = getStation(stationCode);
+        StationEntity station = stationService.getByStationCode(stationCode);
         SOURCE dayEntity = daySummaryRepository.findByStationAndDay(station, day);
         if (dayEntity == null) {
-            throw new CoreException(getDaySummaryNotFoundErrorCode(), day, station.getCode());
+            throw new CoreError(getDaySummaryNotFoundErrorCode(), "Day summary for day %s not found", day);
         }
         return dataMapper.map(dayEntity);
     }
 
     public TARGET getDayForStationOrNull(String stationCode, String day) {
-        StationEntity station = getStation(stationCode);
+        StationEntity station = stationService.getByStationCode(stationCode);
         SOURCE dayEntity = daySummaryRepository.findByStationAndDay(station, day);
         if (dayEntity == null) {
             return null;
@@ -91,13 +90,5 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
         return dataMapper.map(dayEntity);
     }
 
-    protected abstract ErrorCodeEnum getDaySummaryNotFoundErrorCode();
-
-    private StationEntity getStation(String stationCode) {
-        StationEntity station = stationRepository.findByCode(stationCode);
-        if (station == null) {
-            throw new CoreException(ErrorCodeEnum.CODE00020, stationCode);
-        }
-        return station;
-    }
+    protected abstract CoreError.Code getDaySummaryNotFoundErrorCode();
 }

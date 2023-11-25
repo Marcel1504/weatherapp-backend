@@ -1,11 +1,11 @@
 package me.marcelberger.weatherapp.assistant.service.weather.time;
 
 import me.marcelberger.weatherapp.assistant.data.weather.time.WeatherTimeData;
-import me.marcelberger.weatherapp.core.data.station.StationData;
 import me.marcelberger.weatherapp.core.data.summary.WeatherSummaryData;
 import me.marcelberger.weatherapp.core.data.summary.day.WeatherDaySummaryData;
 import me.marcelberger.weatherapp.core.data.summary.month.WeatherMonthSummaryData;
 import me.marcelberger.weatherapp.core.data.summary.year.WeatherYearSummaryData;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.entity.summary.day.WeatherDaySummaryEntity;
 import me.marcelberger.weatherapp.core.entity.summary.month.WeatherMonthSummaryEntity;
 import me.marcelberger.weatherapp.core.entity.summary.year.WeatherYearSummaryEntity;
@@ -33,19 +33,19 @@ public class WeatherTimeServiceImpl implements WeatherTimeService {
     private Mapper<WeatherSummaryData, WeatherTimeData> weatherSummaryDataWeatherTimeDataMapper;
 
     @Override
-    public WeatherTimeData getWeatherDayOrNull(String date, StationData station) {
+    public WeatherTimeData getWeatherDayOrNull(String date, StationEntity station) {
         WeatherDaySummaryData data = daySummaryFacade.getDayForStationOrNull(station.getCode(), date);
         return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
-    public WeatherTimeData getWeatherMonthOrNull(String year, String month, StationData station) {
+    public WeatherTimeData getWeatherMonthOrNull(String year, String month, StationEntity station) {
         WeatherMonthSummaryData data = monthSummaryFacade.getMonthForStationOrNull(station.getCode(), month, year);
         return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
-    public WeatherTimeData getWeatherYearOrNull(String year, StationData station) {
+    public WeatherTimeData getWeatherYearOrNull(String year, StationEntity station) {
         WeatherYearSummaryData data = yearSummaryFacade.getYearForStationOrNull(station.getCode(), year);
         return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }

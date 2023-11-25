@@ -8,5 +8,5 @@ import lombok.Data;
 public class ChatRequestDto {
     private Long chatId;
     private String message;
-    private Long contextStationId;
+    private String contextStationCode;
 }

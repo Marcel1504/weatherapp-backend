@@ -7,7 +7,6 @@ import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.entity.station.StationParameterEntity;
 import me.marcelberger.weatherapp.core.enumeration.station.StationTypeEnum;
 import me.marcelberger.weatherapp.core.repository.station.StationParameterRepository;
-import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import me.marcelberger.weatherapp.core.repository.summary.single.SingleSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +18,6 @@ import java.util.Set;
 
 @Slf4j
 public abstract class SynchronizationService<SOURCE> {
-
-    @Autowired
-    private StationRepository stationRepository;
 
     @Autowired
     private StationParameterRepository stationParameterRepository;

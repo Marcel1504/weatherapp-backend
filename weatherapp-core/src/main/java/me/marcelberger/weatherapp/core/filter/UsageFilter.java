@@ -1,14 +1,15 @@
 package me.marcelberger.weatherapp.core.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
+import me.marcelberger.weatherapp.core.data.error.ErrorData;
 import me.marcelberger.weatherapp.core.enumeration.usage.UsageModuleNameEnum;
-import me.marcelberger.weatherapp.core.exception.CoreException;
+import me.marcelberger.weatherapp.core.error.CoreError;
 import me.marcelberger.weatherapp.core.service.usage.UsageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -24,8 +25,12 @@ import java.util.Map;
 public abstract class UsageFilter extends OncePerRequestFilter {
 
     private final Map<String, Long> requestCount = new HashMap<>();
+
     @Autowired
     private UsageService usageService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /**
      * Updates Usage and enforces rate limits for the IP address of a request
@@ -38,17 +43,30 @@ public abstract class UsageFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request,
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
-        String ipAddress = getRealIPAddress(request);
-        UsageModuleNameEnum moduleName = getModuleName();
-        if (ipAddress != null && moduleName != null) {
-            usageService.updateUsageForIPAddressAndModuleName(ipAddress, moduleName);
-        }
-        if (ipAddress == null || isRateLimitExceeded(ipAddress)) {
-            response.setStatus(429);
-            response.getWriter().write(String.format("Too many requests for IP %s", ipAddress));
+        String ipAddress = getRealIPAddressOrNull(request);
+        if (ipAddress == null) {
+            writeCoreErrorResponse(
+                    ErrorData.<CoreError.Code>builder()
+                            .code(CoreError.Code.CORE00002)
+                            .message("Can not determine IP address")
+                            .build(),
+                    response,
+                    400);
         } else {
-            incrementRateLimit(ipAddress);
-            filterChain.doFilter(request, response);
+            UsageModuleNameEnum moduleName = getModuleName();
+            usageService.updateUsageForIPAddressAndModuleName(ipAddress, moduleName);
+            if (isRateLimitExceeded(ipAddress)) {
+                writeCoreErrorResponse(
+                        ErrorData.<CoreError.Code>builder()
+                                .code(CoreError.Code.CORE00003)
+                                .message(String.format("Too many requests for IP address %s", ipAddress))
+                                .build(),
+                        response,
+                        429);
+            } else {
+                incrementRateLimit(ipAddress);
+                filterChain.doFilter(request, response);
+            }
         }
     }
 
@@ -62,12 +80,12 @@ public abstract class UsageFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Gets the original IP address of a request
+     * Gets the original IP address of a request, or null
      *
      * @param request HttpServletRequest
-     * @return IP address
+     * @return IP address or null
      */
-    private String getRealIPAddress(HttpServletRequest request) {
+    private String getRealIPAddressOrNull(HttpServletRequest request) {
         if (request != null) {
             String ip = request.getHeader("X-Real-IP");
             if (ip == null || ip.isBlank()) {
@@ -75,7 +93,7 @@ public abstract class UsageFilter extends OncePerRequestFilter {
             }
             return ip;
         }
-        throw new CoreException(ErrorCodeEnum.CODE00002);
+        return null;
     }
 
     /**
@@ -96,6 +114,22 @@ public abstract class UsageFilter extends OncePerRequestFilter {
     private void incrementRateLimit(String ipAddress) {
         Long currentRate = requestCount.get(ipAddress);
         requestCount.put(ipAddress, currentRate != null ? currentRate + 1 : 1);
+    }
+
+    /**
+     * Writes a CoreError to the response
+     *
+     * @param error    CoreError
+     * @param response HttpServletResponse
+     * @param status   HTTP-Status code
+     */
+    private void writeCoreErrorResponse(
+            ErrorData<CoreError.Code> error,
+            HttpServletResponse response,
+            Integer status) throws IOException {
+        response.setStatus(status != null ? status : 400);
+        response.setHeader("Content-Type", "application/json");
+        response.getWriter().write(objectMapper.writeValueAsString(error));
     }
 
     protected abstract UsageModuleNameEnum getModuleName();

@@ -28,6 +28,8 @@ spring:
             enable: true
 
 weatherapp:
+  usage:
+    requestsPerMinute: 2000
   export:
     directory: ${weatherapp.media.directory}/export
   media:

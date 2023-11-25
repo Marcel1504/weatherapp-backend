@@ -15,7 +15,7 @@ public class SOPDataFacadeImpl extends DataFacade<SOPRequestData> {
     private SOPDataUpdaterServiceImpl dataUpdaterService;
 
     @Override
-    protected StationEntity getStationFromData(SOPRequestData sopRequestData) {
+    protected StationEntity getStationFromDataOrNull(SOPRequestData sopRequestData) {
         throw new UnsupportedOperationException("Station cannot be loaded from SOPRequestData");
     }
 

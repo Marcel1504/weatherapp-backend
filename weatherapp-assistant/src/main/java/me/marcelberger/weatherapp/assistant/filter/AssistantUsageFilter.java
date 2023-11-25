@@ -2,10 +2,14 @@ package me.marcelberger.weatherapp.assistant.filter;
 
 import me.marcelberger.weatherapp.core.enumeration.usage.UsageModuleNameEnum;
 import me.marcelberger.weatherapp.core.filter.UsageFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AssistantUsageFilter extends UsageFilter {
+
+    @Value("${weatherapp.usage.requestsPerMinute}")
+    private Long requestsPerMinute;
 
     @Override
     protected UsageModuleNameEnum getModuleName() {
@@ -14,6 +18,6 @@ public class AssistantUsageFilter extends UsageFilter {
 
     @Override
     protected Long getRequestsPerMinute() {
-        return 3L;
+        return requestsPerMinute;
     }
 }

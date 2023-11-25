@@ -2,17 +2,16 @@ package me.marcelberger.weatherapp.core.facade.summary.single;
 
 
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
-import me.marcelberger.weatherapp.core.exception.CoreException;
+import me.marcelberger.weatherapp.core.error.CoreError;
 import me.marcelberger.weatherapp.core.mapper.Mapper;
-import me.marcelberger.weatherapp.core.repository.station.StationRepository;
 import me.marcelberger.weatherapp.core.repository.summary.single.SingleSummaryRepository;
+import me.marcelberger.weatherapp.core.service.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class SingleSummaryFacade<SOURCE, TARGET> {
 
     @Autowired
-    private StationRepository stationRepository;
+    private StationService stationService;
 
     @Autowired
     private Mapper<SOURCE, TARGET> dataMapper;
@@ -21,16 +20,13 @@ public abstract class SingleSummaryFacade<SOURCE, TARGET> {
     private SingleSummaryRepository<SOURCE> singleSummaryRepository;
 
     public TARGET getLatest(String stationCode) {
-        StationEntity station = stationRepository.findByCode(stationCode);
-        if (station == null) {
-            throw new CoreException(ErrorCodeEnum.CODE00020, stationCode);
-        }
+        StationEntity station = stationService.getByStationCode(stationCode);
         SOURCE data = singleSummaryRepository.findLatestByStationId(station.getId());
         if (data == null) {
-            throw new CoreException(getSingleSummaryNotFoundErrorCode(), station.getCode());
+            throw new CoreError(getSingleSummaryNotFoundErrorCode(), "Latest single summary not found");
         }
         return dataMapper.map(data);
     }
 
-    protected abstract ErrorCodeEnum getSingleSummaryNotFoundErrorCode();
+    protected abstract CoreError.Code getSingleSummaryNotFoundErrorCode();
 }

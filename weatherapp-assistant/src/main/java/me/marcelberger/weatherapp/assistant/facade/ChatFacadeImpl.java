@@ -55,7 +55,7 @@ public class ChatFacadeImpl implements ChatFacade {
                 : chatService.getChatById(chatRequest.getChatId());
         List<ChatMessageEntity> chatMessageResults = OpenAIChatExecutor.builder()
                 .userMessage(chatRequest.getMessage())
-                .contextStation(stationFacade.getById(chatRequest.getContextStationId()))
+                .contextStation(stationFacade.getStationByCode(chatRequest.getContextStationCode()))
                 .chat(chat)
                 .chatService(chatService)
                 .openAISenderService(openAISenderService)

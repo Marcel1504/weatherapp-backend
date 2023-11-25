@@ -1,12 +1,12 @@
 package me.marcelberger.weatherapp.assistant.service.weather.time;
 
 import me.marcelberger.weatherapp.assistant.data.weather.time.WeatherTimeData;
-import me.marcelberger.weatherapp.core.data.station.StationData;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 
 public interface WeatherTimeService {
-    WeatherTimeData getWeatherDayOrNull(String date, StationData station);
+    WeatherTimeData getWeatherDayOrNull(String date, StationEntity station);
 
-    WeatherTimeData getWeatherMonthOrNull(String year, String month, StationData station);
+    WeatherTimeData getWeatherMonthOrNull(String year, String month, StationEntity station);
 
-    WeatherTimeData getWeatherYearOrNull(String year, StationData station);
+    WeatherTimeData getWeatherYearOrNull(String year, StationEntity station);
 }

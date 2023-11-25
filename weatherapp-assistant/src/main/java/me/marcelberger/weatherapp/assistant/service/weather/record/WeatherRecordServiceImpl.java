@@ -2,11 +2,11 @@ package me.marcelberger.weatherapp.assistant.service.weather.record;
 
 import me.marcelberger.weatherapp.assistant.data.weather.record.WeatherRecordData;
 import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherRecordEnum;
-import me.marcelberger.weatherapp.core.data.station.StationData;
 import me.marcelberger.weatherapp.core.data.summary.WeatherSummaryData;
 import me.marcelberger.weatherapp.core.data.summary.day.WeatherDaySummaryData;
 import me.marcelberger.weatherapp.core.data.summary.month.WeatherMonthSummaryData;
 import me.marcelberger.weatherapp.core.data.summary.year.WeatherYearSummaryData;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
 import me.marcelberger.weatherapp.core.entity.summary.day.WeatherDaySummaryEntity;
 import me.marcelberger.weatherapp.core.entity.summary.month.WeatherMonthSummaryEntity;
 import me.marcelberger.weatherapp.core.entity.summary.year.WeatherYearSummaryEntity;
@@ -34,7 +34,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
     private Mapper<WeatherSummaryData, WeatherRecordData> weatherSummaryDataWeatherTimeDataMapper;
 
     @Override
-    public WeatherRecordData getWeatherDayOrNull(WeatherRecordEnum type, StationData station) {
+    public WeatherRecordData getWeatherDayOrNull(WeatherRecordEnum type, StationEntity station) {
         WeatherDaySummaryData data = daySummaryFacade.getAllDaysForStation(
                         station.getCode(), 0, 1, null, null, determineWeatherSort(type))
                 .getList()
@@ -56,7 +56,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
     }
 
     @Override
-    public WeatherRecordData getWeatherMonthOrNull(WeatherRecordEnum type, StationData station) {
+    public WeatherRecordData getWeatherMonthOrNull(WeatherRecordEnum type, StationEntity station) {
         WeatherMonthSummaryData data = monthSummaryFacade.getAllMonthsForStation(
                         station.getCode(), 0, 1, determineWeatherSort(type))
                 .getList()
@@ -78,7 +78,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
     }
 
     @Override
-    public WeatherRecordData getWeatherYearOrNull(WeatherRecordEnum type, StationData station) {
+    public WeatherRecordData getWeatherYearOrNull(WeatherRecordEnum type, StationEntity station) {
         WeatherYearSummaryData data = yearSummaryFacade.getAllYearsForStation(
                         station.getCode(), 0, 1, determineWeatherSort(type))
                 .getList()

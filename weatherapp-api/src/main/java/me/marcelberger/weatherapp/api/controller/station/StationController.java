@@ -17,11 +17,11 @@ public class StationController {
 
     @GetMapping("/all")
     public ResponseEntity<PageData<StationData>> getAll() {
-        return ResponseEntity.ok(stationFacade.getAll());
+        return ResponseEntity.ok(stationFacade.getAllStations());
     }
 
     @GetMapping
     public ResponseEntity<StationData> getByStationCode(@RequestParam(name = "station") String stationCode) {
-        return ResponseEntity.ok(stationFacade.getByStationCode(stationCode));
+        return ResponseEntity.ok(stationFacade.getStationByCode(stationCode));
     }
 }

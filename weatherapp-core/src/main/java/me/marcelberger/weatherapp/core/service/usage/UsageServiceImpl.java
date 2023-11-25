@@ -1,9 +1,8 @@
 package me.marcelberger.weatherapp.core.service.usage;
 
 import me.marcelberger.weatherapp.core.entity.usage.UsageEntity;
-import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
 import me.marcelberger.weatherapp.core.enumeration.usage.UsageModuleNameEnum;
-import me.marcelberger.weatherapp.core.exception.CoreException;
+import me.marcelberger.weatherapp.core.error.CoreError;
 import me.marcelberger.weatherapp.core.repository.usage.UsageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,9 @@ public class UsageServiceImpl implements UsageService {
     @Override
     public void updateUsageForIPAddressAndModuleName(String ipAddress, UsageModuleNameEnum moduleName) {
         if (ipAddress == null || moduleName == null) {
-            throw new CoreException(ErrorCodeEnum.CODE00003);
+            throw new CoreError(
+                    CoreError.Code.CORE00002,
+                    "Usage can not be updated: IP address or module name not provided");
         }
         UsageEntity usage = usageRepository.findByIpAddressAndModuleName(ipAddress, moduleName).orElse(null);
         if (usage == null) {

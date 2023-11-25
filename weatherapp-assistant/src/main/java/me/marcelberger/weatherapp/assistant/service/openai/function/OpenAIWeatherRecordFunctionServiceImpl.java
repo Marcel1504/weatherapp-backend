@@ -6,8 +6,8 @@ import me.marcelberger.weatherapp.assistant.data.weather.record.WeatherRecordFun
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherRecordEnum;
 import me.marcelberger.weatherapp.assistant.service.weather.record.WeatherRecordService;
-import me.marcelberger.weatherapp.core.data.station.StationData;
-import me.marcelberger.weatherapp.core.facade.station.StationFacade;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.service.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class OpenAIWeatherRecordFunctionServiceImpl extends OpenAIFunctionService<WeatherRecordFunctionCallData> {
 
     @Autowired
-    private StationFacade stationFacade;
+    private StationService stationService;
 
     @Autowired
     private WeatherRecordService weatherRecordService;
@@ -47,7 +47,7 @@ public class OpenAIWeatherRecordFunctionServiceImpl extends OpenAIFunctionServic
     }
 
     private OpenAIFunctionResultData executeForSpecificStation(WeatherRecordFunctionCallData data) {
-        StationData station = stationFacade.searchClosestStationMatchByName(data.getStation());
+        StationEntity station = stationService.searchClosestStationMatchByName(data.getStation());
         WeatherRecordData weatherRecord = switch (data.getAggregation()) {
             case DAY -> weatherRecordService.getWeatherDayOrNull(data.getType(), station);
             case MONTH -> weatherRecordService.getWeatherMonthOrNull(data.getType(), station);

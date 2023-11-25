@@ -6,8 +6,8 @@ import me.marcelberger.weatherapp.assistant.data.weather.time.WeatherTimeData;
 import me.marcelberger.weatherapp.assistant.data.weather.time.WeatherTimeFunctionCallData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.service.weather.time.WeatherTimeService;
-import me.marcelberger.weatherapp.core.data.station.StationData;
-import me.marcelberger.weatherapp.core.facade.station.StationFacade;
+import me.marcelberger.weatherapp.core.entity.station.StationEntity;
+import me.marcelberger.weatherapp.core.service.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class OpenAIWeatherTimeFunctionServiceImpl extends OpenAIFunctionService<
     private WeatherTimeService weatherTimeService;
 
     @Autowired
-    private StationFacade stationFacade;
+    private StationService stationService;
 
     @Override
     public OpenAIFunctionEnum getFunction() {
@@ -36,7 +36,7 @@ public class OpenAIWeatherTimeFunctionServiceImpl extends OpenAIFunctionService<
 
     @Override
     protected OpenAIFunctionResultData executeByFunctionCalData(WeatherTimeFunctionCallData data) {
-        StationData station = stationFacade.searchClosestStationMatchByName(data.getStation());
+        StationEntity station = stationService.searchClosestStationMatchByName(data.getStation());
         String date = data.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String month = data.getDate().format(DateTimeFormatter.ofPattern("MM"));
         String year = data.getDate().format(DateTimeFormatter.ofPattern("yyyy"));

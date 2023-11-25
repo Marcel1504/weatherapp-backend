@@ -15,7 +15,7 @@ public class WEPDataFacadeImpl extends DataFacade<WEPRequestData> {
     private WEPDataUpdaterServiceImpl dataUpdaterService;
 
     @Override
-    protected StationEntity getStationFromData(WEPRequestData wepRequestData) {
+    protected StationEntity getStationFromDataOrNull(WEPRequestData wepRequestData) {
         throw new UnsupportedOperationException("Station cannot be loaded from WEPRequestData");
     }
 

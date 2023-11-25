@@ -1,836 +1,837 @@
 {
-  "info": {
-    "_postman_id": "988b15b2-4e24-4302-b32c-52938df74150",
-    "name": "weatherapp-api",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "/station",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/station?station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "station"
-          ],
-          "query": [
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/station/all",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/station/all",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "station",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/station/media",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/station/media?name=test&station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "station",
-            "media"
-          ],
-          "query": [
-            {
-              "key": "name",
-              "value": "test"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/day",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/soil/day?day=2022-10-20&station={{stationCode3}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "day"
-          ],
-          "query": [
-            {
-              "key": "day",
-              "value": "2022-10-20"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/days",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/soil/days?station={{stationCode3}}&year=2022&month=10&sort=OLDEST",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "days"
-          ],
-          "query": [
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            },
-            {
-              "key": "year",
-              "value": "2022"
-            },
-            {
-              "key": "month",
-              "value": "10"
-            },
-            {
-              "key": "sort",
-              "value": "OLDEST"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/days/all",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/soil/days/all?page=0&size=5&sort=LATEST&station={{stationCode3}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "days",
-            "all"
-          ],
-          "query": [
-            {
-              "key": "page",
-              "value": "0"
-            },
-            {
-              "key": "size",
-              "value": "5"
-            },
-            {
-              "key": "sort",
-              "value": "LATEST"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/export",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\":\"m@a.lil\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{urlApi}}/soil/export?startDay=2021-05-20&endDay=2023-10-20&station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "export"
-          ],
-          "query": [
-            {
-              "key": "startDay",
-              "value": "2021-05-20"
-            },
-            {
-              "key": "endDay",
-              "value": "2023-10-20"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/latest",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/soil/latest?station={{stationCode3}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "latest"
-          ],
-          "query": [
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/month",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/soil/month?year=2022&month=10&station={{stationCode3}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "month"
-          ],
-          "query": [
-            {
-              "key": "year",
-              "value": "2022"
-            },
-            {
-              "key": "month",
-              "value": "10"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/months/all",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/soil/months/all?page=0&sort=OLDEST&size=5&station={{stationCode3}}&year=2022",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "months",
-            "all"
-          ],
-          "query": [
-            {
-              "key": "page",
-              "value": "0"
-            },
-            {
-              "key": "sort",
-              "value": "OLDEST"
-            },
-            {
-              "key": "size",
-              "value": "5"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            },
-            {
-              "key": "year",
-              "value": "2022"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/year",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/soil/year?year=2022&station={{stationCode3}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "year"
-          ],
-          "query": [
-            {
-              "key": "year",
-              "value": "2022"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/soil/year/all",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/soil/years/all?station={{stationCode3}}&sort=HIGHEST_TEMPERATURE50CM&page=0&size=1",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "soil",
-            "years",
-            "all"
-          ],
-          "query": [
-            {
-              "key": "station",
-              "value": "{{stationCode3}}"
-            },
-            {
-              "key": "sort",
-              "value": "HIGHEST_TEMPERATURE50CM"
-            },
-            {
-              "key": "page",
-              "value": "0"
-            },
-            {
-              "key": "size",
-              "value": "1"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/day",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/weather/day?day=2023-02-12&station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "day"
-          ],
-          "query": [
-            {
-              "key": "day",
-              "value": "2023-02-12"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/days",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/weather/days?year=2023&month=04&station={{stationCode1}}&sort=OLDEST",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "days"
-          ],
-          "query": [
-            {
-              "key": "year",
-              "value": "2023"
-            },
-            {
-              "key": "month",
-              "value": "04"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            },
-            {
-              "key": "sort",
-              "value": "OLDEST"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/days/all",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/weather/days/all?page=0&size=5&sort=LATEST&station={{stationCode1}}&startDay=2023-02-01&endDay=2023-02-20",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "days",
-            "all"
-          ],
-          "query": [
-            {
-              "key": "page",
-              "value": "0"
-            },
-            {
-              "key": "size",
-              "value": "5"
-            },
-            {
-              "key": "sort",
-              "value": "LATEST"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            },
-            {
-              "key": "startDay",
-              "value": "2023-02-01"
-            },
-            {
-              "key": "endDay",
-              "value": "2023-02-20"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/export",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"email\":\"m@a.fdfill\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{urlApi}}/weather/export?startDay=2022-07-12&endDay=2022-09-12&station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "export"
-          ],
-          "query": [
-            {
-              "key": "startDay",
-              "value": "2022-07-12"
-            },
-            {
-              "key": "endDay",
-              "value": "2022-09-12"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/hours",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/weather/hours?day=2022-08-12&station={{stationCode1}}&sort=OLDEST",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "hours"
-          ],
-          "query": [
-            {
-              "key": "day",
-              "value": "2022-08-12"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            },
-            {
-              "key": "sort",
-              "value": "OLDEST"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/latest",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/weather/latest?station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "latest"
-          ],
-          "query": [
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/month",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/weather/month?year=2023&month=05&station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "month"
-          ],
-          "query": [
-            {
-              "key": "year",
-              "value": "2023"
-            },
-            {
-              "key": "month",
-              "value": "05"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/months/all",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/weather/months/all?page=0&sort=LATEST&size=5&station={{stationCode1}}&year=2023",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "months",
-            "all"
-          ],
-          "query": [
-            {
-              "key": "page",
-              "value": "0"
-            },
-            {
-              "key": "sort",
-              "value": "LATEST"
-            },
-            {
-              "key": "size",
-              "value": "5"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            },
-            {
-              "key": "year",
-              "value": "2023"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/ventilation",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "en",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"temperatureIn\": 2022.0,\r\n    \"temperatureOut\": 20.1,\r\n    \"humidityIn\": 44,\r\n    \"humidityOut\": 67\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "{{urlApi}}/ventilation",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "ventilation"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/year",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Accept-Language",
-            "value": "de",
-            "type": "default"
-          }
-        ],
-        "url": {
-          "raw": "{{urlApi}}/weather/year?year=2023&station={{stationCode1}}",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "year"
-          ],
-          "query": [
-            {
-              "key": "year",
-              "value": "2023"
-            },
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "/weather/years/all",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{urlApi}}/weather/years/all?station={{stationCode1}}&sort=HIGHEST_TEMPERATURE&page=0&size=2",
-          "host": [
-            "{{urlApi}}"
-          ],
-          "path": [
-            "weather",
-            "years",
-            "all"
-          ],
-          "query": [
-            {
-              "key": "station",
-              "value": "{{stationCode1}}"
-            },
-            {
-              "key": "sort",
-              "value": "HIGHEST_TEMPERATURE"
-            },
-            {
-              "key": "page",
-              "value": "0"
-            },
-            {
-              "key": "size",
-              "value": "2"
-            }
-          ]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "9040dc84-af53-4d6e-998f-b2ed2fba6971",
+		"name": "weatherapp-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31247129"
+	},
+	"item": [
+		{
+			"name": "/station",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/station?station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"station"
+					],
+					"query": [
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/station/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/station/all",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"station",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/station/media",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/station/media?name=test&station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"station",
+						"media"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "test"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/day",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/soil/day?day=2022-10-20&station={{stationCode2}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"day"
+					],
+					"query": [
+						{
+							"key": "day",
+							"value": "2022-10-20"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/days",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/soil/days?station={{stationCode2}}&year=2022&month=10&sort=OLDEST",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"days"
+					],
+					"query": [
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						},
+						{
+							"key": "year",
+							"value": "2022"
+						},
+						{
+							"key": "month",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": "OLDEST"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/days/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/soil/days/all?page=0&size=5&sort=LATEST&station={{stationCode2}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"days",
+						"all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "LATEST"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/export",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"m@a.lil\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlApi}}/soil/export?startDay=2021-05-20&endDay=2023-10-20&station={{stationCode2}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"export"
+					],
+					"query": [
+						{
+							"key": "startDay",
+							"value": "2021-05-20"
+						},
+						{
+							"key": "endDay",
+							"value": "2023-10-20"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/latest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/soil/latest?station={{stationCode2}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"latest"
+					],
+					"query": [
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/month",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/soil/month?year=2022&month=10&station={{stationCode2}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"month"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2022"
+						},
+						{
+							"key": "month",
+							"value": "10"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/months/all",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/soil/months/all?page=0&sort=OLDEST&size=5&station={{stationCode2}}&year=2022",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"months",
+						"all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "sort",
+							"value": "OLDEST"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						},
+						{
+							"key": "year",
+							"value": "2022"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/year",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/soil/year?year=2022&station={{stationCode2}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"year"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2022"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/soil/year/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/soil/years/all?station={{stationCode2}}&sort=HIGHEST_TEMPERATURE50CM&page=0&size=1",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"soil",
+						"years",
+						"all"
+					],
+					"query": [
+						{
+							"key": "station",
+							"value": "{{stationCode2}}"
+						},
+						{
+							"key": "sort",
+							"value": "HIGHEST_TEMPERATURE50CM"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/day",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/weather/day?day=2023-02-12&station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"day"
+					],
+					"query": [
+						{
+							"key": "day",
+							"value": "2023-02-12"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/days",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/weather/days?year=2023&month=04&station={{stationCode1}}&sort=OLDEST",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"days"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2023"
+						},
+						{
+							"key": "month",
+							"value": "04"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						},
+						{
+							"key": "sort",
+							"value": "OLDEST"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/days/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/weather/days/all?page=0&size=5&sort=LATEST&station={{stationCode1}}&startDay=2023-02-01&endDay=2023-02-20",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"days",
+						"all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "sort",
+							"value": "LATEST"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						},
+						{
+							"key": "startDay",
+							"value": "2023-02-01"
+						},
+						{
+							"key": "endDay",
+							"value": "2023-02-20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/export",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"m@a.fdfill\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlApi}}/weather/export?startDay=2022-07-12&endDay=2022-09-12&station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"export"
+					],
+					"query": [
+						{
+							"key": "startDay",
+							"value": "2022-07-12"
+						},
+						{
+							"key": "endDay",
+							"value": "2022-09-12"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/hours",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/weather/hours?day=2022-08-12&station={{stationCode1}}&sort=OLDEST",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"hours"
+					],
+					"query": [
+						{
+							"key": "day",
+							"value": "2022-08-12"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						},
+						{
+							"key": "sort",
+							"value": "OLDEST"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/latest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/weather/latest?station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"latest"
+					],
+					"query": [
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/month",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/weather/month?year=2023&month=05&station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"month"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2023"
+						},
+						{
+							"key": "month",
+							"value": "05"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/months/all",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/weather/months/all?page=0&sort=LATEST&size=5&station={{stationCode1}}&year=2023",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"months",
+						"all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "sort",
+							"value": "LATEST"
+						},
+						{
+							"key": "size",
+							"value": "5"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						},
+						{
+							"key": "year",
+							"value": "2023"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ventilation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"temperatureIn\": 2022.0,\r\n    \"temperatureOut\": 20.1,\r\n    \"humidityIn\": 44,\r\n    \"humidityOut\": 67\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlApi}}/ventilation",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"ventilation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/year",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "de",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{urlApi}}/weather/year?year=2023&station={{stationCode1}}",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"year"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2023"
+						},
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/weather/years/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlApi}}/weather/years/all?station={{stationCode1}}&sort=HIGHEST_TEMPERATURE&page=0&size=2",
+					"host": [
+						"{{urlApi}}"
+					],
+					"path": [
+						"weather",
+						"years",
+						"all"
+					],
+					"query": [
+						{
+							"key": "station",
+							"value": "{{stationCode1}}"
+						},
+						{
+							"key": "sort",
+							"value": "HIGHEST_TEMPERATURE"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }

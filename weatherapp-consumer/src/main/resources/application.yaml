@@ -26,6 +26,8 @@ spring:
             enable: true
 
 weatherapp:
+  usage:
+    requestsPerMinute: 3
   media:
     directory: S:/weatherapp/media
   station:

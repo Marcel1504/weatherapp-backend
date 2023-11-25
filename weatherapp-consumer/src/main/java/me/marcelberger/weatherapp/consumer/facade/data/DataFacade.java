@@ -24,7 +24,7 @@ public abstract class DataFacade<DATA> {
     }
 
     public String updateWithStationFromData(DATA data) {
-        StationEntity station = getStationFromData(data);
+        StationEntity station = getStationFromDataOrNull(data);
         if (station == null || station.getType() != stationType()) {
             return "Configuration for station loaded from data does not exist, skipping update";
         }
@@ -32,7 +32,7 @@ public abstract class DataFacade<DATA> {
         return successMessage(station.getCode());
     }
 
-    protected abstract StationEntity getStationFromData(DATA data);
+    protected abstract StationEntity getStationFromDataOrNull(DATA data);
 
     protected abstract void update(StationEntity station, DATA data);
 

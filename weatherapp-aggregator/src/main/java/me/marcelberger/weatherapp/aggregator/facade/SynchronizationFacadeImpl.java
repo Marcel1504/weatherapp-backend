@@ -3,9 +3,7 @@ package me.marcelberger.weatherapp.aggregator.facade;
 import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.aggregator.service.synchronization.SynchronizationService;
 import me.marcelberger.weatherapp.core.entity.station.StationEntity;
-import me.marcelberger.weatherapp.core.enumeration.error.ErrorCodeEnum;
-import me.marcelberger.weatherapp.core.exception.CoreException;
-import me.marcelberger.weatherapp.core.repository.station.StationRepository;
+import me.marcelberger.weatherapp.core.service.station.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
@@ -22,7 +20,7 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
     private List<SynchronizationService<?>> synchronizationServices;
 
     @Autowired
-    private StationRepository stationRepository;
+    private StationService stationService;
 
     @Autowired
     private TaskExecutor taskExecutor;
@@ -53,7 +51,7 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
 
     private String syncForStationByCode(String stationCode, boolean syncDelta) {
         return startSynchronizationTask((id) -> {
-            StationEntity station = getStationByCode(stationCode);
+            StationEntity station = stationService.getByStationCode(stationCode);
             synchronizationServices.stream()
                     .filter(s -> s.getStationType() == station.getType())
                     .findFirst()
@@ -62,7 +60,7 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
     }
 
     private String syncForAllStations(boolean syncDelta) {
-        return startSynchronizationTask((id) -> getAllStations()
+        return startSynchronizationTask((id) -> stationService.getAll()
                 .forEach(station -> synchronizationServices.stream()
                         .filter(s -> s.getStationType() == station.getType())
                         .findFirst()
@@ -89,17 +87,5 @@ public class SynchronizationFacadeImpl implements SynchronizationFacade {
             }
             currentRunningSynchronizationTaskIds.remove(id);
         };
-    }
-
-    private StationEntity getStationByCode(String stationCode) {
-        StationEntity station = stationRepository.findByCode(stationCode);
-        if (station == null || station.getType() == null) {
-            throw new CoreException(ErrorCodeEnum.CODE00020, stationCode);
-        }
-        return station;
-    }
-
-    private List<StationEntity> getAllStations() {
-        return stationRepository.findAll().stream().filter(s -> s.getType() != null).toList();
     }
 }

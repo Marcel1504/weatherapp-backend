@@ -1,17 +1,13 @@
 package me.marcelberger.weatherapp.core.facade.station;
 
-
 import me.marcelberger.weatherapp.core.data.PageData;
 import me.marcelberger.weatherapp.core.data.station.StationData;
+import me.marcelberger.weatherapp.core.data.station.StationMediaFileData;
 
 public interface StationFacade {
-    PageData<StationData> getAll();
+    PageData<StationData> getAllStations();
 
-    StationData getByStationCode(String stationCode);
+    StationData getStationByCode(String stationCode);
 
-    StationData getById(Long id);
-
-    StationData getByIdOrNull(Long id);
-
-    StationData searchClosestStationMatchByName(String nameSearchQuery);
+    StationMediaFileData getStationMediaFileByNameAndStationCode(String mediaName, String stationCode);
 }
