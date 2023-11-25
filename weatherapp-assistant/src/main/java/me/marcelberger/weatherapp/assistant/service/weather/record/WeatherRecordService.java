@@ -1,6 +1,6 @@
 package me.marcelberger.weatherapp.assistant.service.weather.record;
 
-import me.marcelberger.weatherapp.assistant.data.weather.WeatherRecordData;
+import me.marcelberger.weatherapp.assistant.data.weather.record.WeatherRecordData;
 import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherRecordEnum;
 import me.marcelberger.weatherapp.core.data.station.StationData;
 

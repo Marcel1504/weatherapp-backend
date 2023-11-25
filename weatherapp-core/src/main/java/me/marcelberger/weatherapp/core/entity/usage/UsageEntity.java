@@ -28,4 +28,7 @@ public class UsageEntity {
 
     @Column(name = "last_activity")
     private LocalDateTime lastActivity;
+
+    @Column(name = "total_requests")
+    private Long totalRequests;
 }

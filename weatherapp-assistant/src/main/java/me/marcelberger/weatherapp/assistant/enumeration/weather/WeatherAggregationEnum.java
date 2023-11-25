@@ -13,7 +13,7 @@ public enum WeatherAggregationEnum {
     @JsonProperty("month")
     MONTH(WeatherAggregationEnum.MONTH_VALUE),
 
-    @JsonProperty("month")
+    @JsonProperty("year")
     YEAR(WeatherAggregationEnum.YEAR_VALUE);
 
     public static final String DAY_VALUE = "DAY";

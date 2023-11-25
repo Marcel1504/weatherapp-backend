@@ -23,6 +23,8 @@ public class ChatServiceImpl implements ChatService {
     public ChatEntity createChat() {
         ChatEntity chat = ChatEntity.builder()
                 .lastActivity(LocalDateTime.now())
+                .totalTokensConsumed(0L)
+                .maxTokensPerRequest(0L)
                 .build();
         return chatRepository.save(chat);
     }
@@ -61,5 +63,20 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setChat(chat);
         chat.getMessages().add(chatMessageRepository.save(chatMessage));
         return chat;
+    }
+
+    @Override
+    public ChatEntity updateTokensForChat(ChatEntity chat, Long tokens) {
+        if (chat == null || chat.getId() == null) {
+            throw new AssistantException("No chat provided to update total tokens");
+        }
+        if (tokens == null) {
+            tokens = 0L;
+        }
+        chat.setTotalTokensConsumed(chat.getTotalTokensConsumed() + tokens);
+        chat.setMaxTokensPerRequest(chat.getMaxTokensPerRequest() < tokens
+                ? tokens
+                : chat.getMaxTokensPerRequest());
+        return chatRepository.save(chat);
     }
 }

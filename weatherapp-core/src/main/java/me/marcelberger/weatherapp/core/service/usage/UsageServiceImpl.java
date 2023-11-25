@@ -17,7 +17,7 @@ public class UsageServiceImpl implements UsageService {
     private UsageRepository usageRepository;
 
     @Override
-    public void saveOrCreateUsageForIPAddressAndModuleName(String ipAddress, UsageModuleNameEnum moduleName) {
+    public void updateUsageForIPAddressAndModuleName(String ipAddress, UsageModuleNameEnum moduleName) {
         if (ipAddress == null || moduleName == null) {
             throw new CoreException(ErrorCodeEnum.CODE00003);
         }
@@ -26,8 +26,10 @@ public class UsageServiceImpl implements UsageService {
             usage = UsageEntity.builder()
                     .ipAddress(ipAddress)
                     .moduleName(moduleName)
+                    .totalRequests(0L)
                     .build();
         }
+        usage.setTotalRequests(usage.getTotalRequests() + 1L);
         usage.setLastActivity(LocalDateTime.now());
         usageRepository.save(usage);
     }

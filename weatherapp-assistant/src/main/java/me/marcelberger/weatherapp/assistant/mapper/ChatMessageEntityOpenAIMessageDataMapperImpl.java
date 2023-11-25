@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIMessageData;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
 import me.marcelberger.weatherapp.assistant.exception.AssistantException;
+import me.marcelberger.weatherapp.core.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

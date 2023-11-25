@@ -2,6 +2,7 @@ package me.marcelberger.weatherapp.assistant.mapper;
 
 import me.marcelberger.weatherapp.assistant.data.chat.ChatMessageData;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
+import me.marcelberger.weatherapp.core.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -5,7 +5,9 @@ USE weatherapp;
 DROP TABLE IF EXISTS as_chat;
 CREATE TABLE as_chat (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  total_tokens_consumed BIGINT NOT NULL DEFAULT 0,
+  max_tokens_per_request BIGINT NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS as_chat_message;
@@ -58,7 +60,8 @@ CREATE TABLE cn_usage (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   ip_address varchar(40) NOT NULL,
   module_name varchar(20) NOT NULL,
-  last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  total_requests BIGINT NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS we_weather;

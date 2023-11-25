@@ -49,7 +49,7 @@ public abstract class YearSummaryFacade<SOURCE, TARGET, SORT> {
                                                   Integer size,
                                                   SORT sort) {
         StationEntity station = getStation(stationCode);
-        return dataMapper.mapPage(yearSummaryRepository.findAllByStation(
+        return dataMapper.mapToPage(yearSummaryRepository.findAllByStation(
                 PageRequest.of(page, size, sortService.forYear(sort)),
                 station));
     }
@@ -57,7 +57,7 @@ public abstract class YearSummaryFacade<SOURCE, TARGET, SORT> {
     public PageData<TARGET> getAllYears(Integer page, Integer size, SORT sort) {
         Page<SOURCE> data = yearSummaryRepository
                 .findAll(PageRequest.of(page, size, sortService.forDay(sort)));
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     protected abstract ErrorCodeEnum getYearSummaryNotFoundErrorCode();

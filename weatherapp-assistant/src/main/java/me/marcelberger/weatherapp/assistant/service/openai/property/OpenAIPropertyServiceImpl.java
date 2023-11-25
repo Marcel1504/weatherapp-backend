@@ -45,6 +45,7 @@ public class OpenAIPropertyServiceImpl implements OpenAIPropertyService {
 
     @Override
     public List<OpenAIFunctionData> getAvailableFunctions(StationData contextStation) {
+
         List<OpenAIFunctionData> functions = new ArrayList<>();
         for (String name : openAIFunctionsAvailable) {
             try {
@@ -77,5 +78,11 @@ public class OpenAIPropertyServiceImpl implements OpenAIPropertyService {
                 .role(OpenAIRoleEnum.USER)
                 .content(openAIUserMessageTemplate.replace("{message}", message))
                 .build();
+    }
+
+    @Override
+    public String cleanUserMessage(String message) {
+        String textToRemove = openAIUserMessageTemplate.replace("{message}", "");
+        return message.replace(textToRemove, "");
     }
 }

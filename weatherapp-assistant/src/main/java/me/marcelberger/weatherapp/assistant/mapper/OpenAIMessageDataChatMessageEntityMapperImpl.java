@@ -8,6 +8,8 @@ import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatRoleEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatTypeEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
 import me.marcelberger.weatherapp.assistant.exception.AssistantException;
+import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
+import me.marcelberger.weatherapp.core.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,13 +19,16 @@ public class OpenAIMessageDataChatMessageEntityMapperImpl implements Mapper<Open
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private OpenAIPropertyService openAIPropertyService;
+
     @Override
     public ChatMessageEntity map(OpenAIMessageData object) {
         try {
             return ChatMessageEntity.builder()
                     .role(ChatRoleEnum.valueOf(object.getRole().getValue().toUpperCase()))
                     .type(getType(object))
-                    .content(object.getContent())
+                    .content(getCleanContent(object))
                     .openAIMessage(objectMapper.writeValueAsString(object))
                     .build();
         } catch (JsonProcessingException e) {
@@ -38,9 +43,18 @@ public class OpenAIMessageDataChatMessageEntityMapperImpl implements Mapper<Open
         if (openAIMessage.getRole() == OpenAIRoleEnum.FUNCTION && openAIMessage.getName() != null) {
             return switch (openAIMessage.getName()) {
                 case WEATHER_MEDIA -> ChatTypeEnum.WEATHER_MEDIA;
-                case WEATHER_TIME, WEATHER_RECORD -> ChatTypeEnum.WEATHER_DATA;
+                case WEATHER_TIME -> ChatTypeEnum.WEATHER_TIME;
+                case WEATHER_RECORD -> ChatTypeEnum.WEATHER_RECORD;
+                case UNKNOWN -> ChatTypeEnum.ERROR;
             };
         }
         return ChatTypeEnum.TEXT;
+    }
+
+    private String getCleanContent(OpenAIMessageData object) {
+        if (object.getRole() == OpenAIRoleEnum.USER) {
+            return openAIPropertyService.cleanUserMessage(object.getContent());
+        }
+        return object.getContent();
     }
 }

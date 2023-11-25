@@ -24,6 +24,12 @@ public class ChatEntity implements Serializable {
     @Column(name = "last_activity")
     private LocalDateTime lastActivity;
 
+    @Column(name = "total_tokens_consumed")
+    private Long totalTokensConsumed;
+
+    @Column(name = "max_tokens_per_request")
+    private Long maxTokensPerRequest;
+
     @Builder.Default
     @OneToMany(mappedBy = "chat")
     private List<ChatMessageEntity> messages = new ArrayList<>();

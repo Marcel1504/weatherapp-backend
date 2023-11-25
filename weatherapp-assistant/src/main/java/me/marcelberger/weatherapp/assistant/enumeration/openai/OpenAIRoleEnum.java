@@ -1,5 +1,6 @@
 package me.marcelberger.weatherapp.assistant.enumeration.openai;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ public enum OpenAIRoleEnum {
     @JsonProperty("user")
     USER(OpenAIRoleEnum.USER_VALUE),
 
+    @JsonEnumDefaultValue
     @JsonProperty("assistant")
     ASSISTANT(OpenAIRoleEnum.ASSISTANT_VALUE),
 

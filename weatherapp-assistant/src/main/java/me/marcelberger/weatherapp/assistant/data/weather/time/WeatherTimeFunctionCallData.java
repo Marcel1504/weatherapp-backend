@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.assistant.data.weather;
+package me.marcelberger.weatherapp.assistant.data.weather.time;
 
 import lombok.Builder;
 import lombok.Data;

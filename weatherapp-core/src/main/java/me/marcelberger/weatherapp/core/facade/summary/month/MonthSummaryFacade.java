@@ -60,20 +60,20 @@ public abstract class MonthSummaryFacade<SOURCE, TARGET, SORT> {
                     PageRequest.of(page, size, sortService.forMonth(sort)),
                     station);
         }
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     public PageData<TARGET> getAllMonthsForStation(String stationCode, Integer page, Integer size, SORT sort) {
         StationEntity station = getStation(stationCode);
         Page<SOURCE> data = monthSummaryRepository
                 .findAllByStation(PageRequest.of(page, size, sortService.forDay(sort)), station);
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     public PageData<TARGET> getAllMonths(Integer page, Integer size, SORT sort) {
         Page<SOURCE> data = monthSummaryRepository
                 .findAll(PageRequest.of(page, size, sortService.forDay(sort)));
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     protected abstract ErrorCodeEnum getMonthSummaryNotFoundErrorCode();

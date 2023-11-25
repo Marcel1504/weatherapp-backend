@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.assistant.data.weather;
+package me.marcelberger.weatherapp.assistant.data.weather.record;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,10 +6,10 @@ import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherAggregati
 
 @Data
 @Builder
-public class WeatherTimeData {
-    Double temperature;
+public class WeatherRecordData {
+    Double temperatureMax;
+    Double temperatureMin;
     Double windMax;
-    Double humidity;
     Double rainTotal;
     String date;
     String station;

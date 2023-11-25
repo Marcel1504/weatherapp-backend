@@ -30,7 +30,7 @@ public abstract class HourSummaryFacade<SOURCE, TARGET, SORT> {
         if (station == null) {
             throw new CoreException(ErrorCodeEnum.CODE00020, stationCode);
         }
-        return dataMapper.mapPage(hourSummaryRepository.findAllByStationAndDay(
+        return dataMapper.mapToPage(hourSummaryRepository.findAllByStationAndDay(
                 PageRequest.of(0, 24, sortService.forHour(sort)),
                 station,
                 day));

@@ -24,7 +24,7 @@ public class StationFacadeImpl implements StationFacade {
 
     @Override
     public PageData<StationData> getAll() {
-        return stationMapper.mapList(stationRepository.findAll());
+        return stationMapper.mapToPage(stationRepository.findAll());
     }
 
     @Override

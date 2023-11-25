@@ -13,4 +13,6 @@ public interface ChatService {
     void deleteChatById(Long id);
 
     ChatEntity saveChatMessageToChatById(ChatEntity chat, ChatMessageEntity chatMessage);
+
+    ChatEntity updateTokensForChat(ChatEntity chat, Long tokens);
 }

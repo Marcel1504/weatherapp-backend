@@ -1,8 +1,8 @@
 package me.marcelberger.weatherapp.assistant.service.openai.function;
 
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionResultData;
-import me.marcelberger.weatherapp.assistant.data.weather.WeatherRecordData;
-import me.marcelberger.weatherapp.assistant.data.weather.WeatherRecordFunctionCallData;
+import me.marcelberger.weatherapp.assistant.data.weather.record.WeatherRecordData;
+import me.marcelberger.weatherapp.assistant.data.weather.record.WeatherRecordFunctionCallData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherRecordEnum;
 import me.marcelberger.weatherapp.assistant.service.weather.record.WeatherRecordService;
@@ -43,9 +43,7 @@ public class OpenAIWeatherRecordFunctionServiceImpl extends OpenAIFunctionServic
             case MONTH -> weatherRecordService.getWeatherMonthForAllStationsOrNull(data.getType());
             case YEAR -> weatherRecordService.getWeatherYearForAllStationsOrNull(data.getType());
         };
-        return weatherRecord != null
-                ? buildForWeatherRecordData(data.getType(), weatherRecord, null)
-                : buildNoResultData();
+        return weatherRecord != null ? buildForWeatherRecordData(data.getType(), weatherRecord) : buildNoResultData();
     }
 
     private OpenAIFunctionResultData executeForSpecificStation(WeatherRecordFunctionCallData data) {
@@ -55,22 +53,18 @@ public class OpenAIWeatherRecordFunctionServiceImpl extends OpenAIFunctionServic
             case MONTH -> weatherRecordService.getWeatherMonthOrNull(data.getType(), station);
             case YEAR -> weatherRecordService.getWeatherYearOrNull(data.getType(), station);
         };
-        return weatherRecord != null
-                ? buildForWeatherRecordData(data.getType(), weatherRecord, station.getName())
-                : buildNoResultData();
+        return weatherRecord != null ? buildForWeatherRecordData(data.getType(), weatherRecord) : buildNoResultData();
     }
 
-    private OpenAIFunctionResultData buildForWeatherRecordData(WeatherRecordEnum type,
-                                                               WeatherRecordData data,
-                                                               String station) {
+    private OpenAIFunctionResultData buildForWeatherRecordData(WeatherRecordEnum type, WeatherRecordData data) {
         String messageShort = switch (type) {
-            case HOTTEST -> String.format("tempMax: %s C", data.getTemperatureMax());
-            case COLDEST -> String.format("tempMin: %s C", data.getTemperatureMin());
-            case MOST_RAIN -> String.format("rain: %s l/m²", data.getRainTotal());
-            case STRONGEST_WIND -> String.format("windMax: %s kph", data.getWindMax());
+            case HOTTEST -> String.format("tempMax:%sC", data.getTemperatureMax());
+            case COLDEST -> String.format("tempMin:%sC", data.getTemperatureMin());
+            case MOST_RAIN -> String.format("rain:%sl/m²", data.getRainTotal());
+            case STRONGEST_WIND -> String.format("windMax:%skph", data.getWindMax());
         };
-        messageShort += station != null ? String.format(", station: %s", station) : "";
-        messageShort += data.getDate() != null ? String.format(", %s", data.getDate()) : "";
+        messageShort += data.getStation() != null ? String.format(",station:%s", data.getStation()) : "";
+        messageShort += data.getDate() != null ? String.format(",%s", data.getDate()) : "";
         return OpenAIFunctionResultData.builder()
                 .resultShort(messageShort)
                 .resultLong(writeDataAsString(data))

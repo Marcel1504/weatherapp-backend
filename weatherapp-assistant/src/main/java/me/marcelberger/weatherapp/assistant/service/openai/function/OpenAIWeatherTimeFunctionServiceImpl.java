@@ -2,8 +2,8 @@ package me.marcelberger.weatherapp.assistant.service.openai.function;
 
 import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionResultData;
-import me.marcelberger.weatherapp.assistant.data.weather.WeatherTimeData;
-import me.marcelberger.weatherapp.assistant.data.weather.WeatherTimeFunctionCallData;
+import me.marcelberger.weatherapp.assistant.data.weather.time.WeatherTimeData;
+import me.marcelberger.weatherapp.assistant.data.weather.time.WeatherTimeFunctionCallData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.service.weather.time.WeatherTimeService;
 import me.marcelberger.weatherapp.core.data.station.StationData;
@@ -51,10 +51,11 @@ public class OpenAIWeatherTimeFunctionServiceImpl extends OpenAIFunctionService<
     private OpenAIFunctionResultData buildForWeatherTimeData(WeatherTimeData weatherTime) {
         return OpenAIFunctionResultData.builder()
                 .resultShort(String.format(
-                        "temp: %s C, windMax: %s kph, rain: %s l/m²",
+                        "tempAvg:%sC,windMax:%skph,rain:%sl/m²,humidityAvg:%s%%",
                         weatherTime.getTemperature(),
                         weatherTime.getWindMax(),
-                        weatherTime.getRainTotal()))
+                        weatherTime.getRainTotal(),
+                        weatherTime.getHumidity()))
                 .resultLong(writeDataAsString(weatherTime))
                 .build();
     }

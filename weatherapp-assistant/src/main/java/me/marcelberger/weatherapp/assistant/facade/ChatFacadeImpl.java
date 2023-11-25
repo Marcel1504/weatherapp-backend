@@ -9,12 +9,12 @@ import me.marcelberger.weatherapp.assistant.entity.ChatEntity;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
 import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatRoleEnum;
 import me.marcelberger.weatherapp.assistant.executor.OpenAIChatExecutor;
-import me.marcelberger.weatherapp.assistant.mapper.Mapper;
 import me.marcelberger.weatherapp.assistant.service.chat.ChatService;
 import me.marcelberger.weatherapp.assistant.service.openai.function.OpenAIFunctionService;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
 import me.marcelberger.weatherapp.assistant.service.openai.sender.OpenAISenderService;
 import me.marcelberger.weatherapp.core.facade.station.StationFacade;
+import me.marcelberger.weatherapp.core.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,11 +67,14 @@ public class ChatFacadeImpl implements ChatFacade {
                 .execute();
         return ChatResponseDto.builder()
                 .chatId(chat.getId())
-                .messages(chatMessageEntityChatMessageDataMapper.map(chatMessageResults.stream()
-                        .filter(m -> m.getRole().equals(ChatRoleEnum.ASSISTANT)
-                                || m.getRole().equals(ChatRoleEnum.FUNCTION))
-                        .filter(m -> m.getContent() != null)
-                        .toList()))
+                .messages(mapChatMessageDataForResponse(chatMessageResults))
                 .build();
+    }
+
+    private List<ChatMessageData> mapChatMessageDataForResponse(List<ChatMessageEntity> messages) {
+        return chatMessageEntityChatMessageDataMapper.map(messages.stream()
+                .filter(m -> m.getRole().equals(ChatRoleEnum.ASSISTANT) || m.getRole().equals(ChatRoleEnum.FUNCTION))
+                .filter(m -> m.getContent() != null)
+                .toList());
     }
 }

@@ -21,7 +21,7 @@ public class SoilDaySummaryDataMapperImpl implements Mapper<SoilDaySummaryEntity
                 .temperature200cmMax(object.getTemperature200cmMax())
                 .temperature200cmMin(object.getTemperature200cmMin())
                 .day(object.getDay())
-                .stationId(object.getStation().getId())
+                .stationName(object.getStation() != null ? object.getStation().getName() : null)
                 .build();
     }
 }

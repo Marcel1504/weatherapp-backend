@@ -30,7 +30,7 @@ public class WeatherMonthSummaryDataMapperImpl implements Mapper<WeatherMonthSum
                 .solarRadiationMin(object.getSolarRadiationMin())
                 .month(object.getMonth())
                 .year(object.getYear())
-                .stationId(object.getStation().getId())
+                .stationName(object.getStation() != null ? object.getStation().getName() : null)
                 .build();
     }
 }

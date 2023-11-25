@@ -32,7 +32,7 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
                 PageRequest.of(0, 31, sortService.forDay(sort)),
                 station,
                 String.format("%s-%s%%", year, month));
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     public PageData<TARGET> getAllDaysForStation(String stationCode,
@@ -64,13 +64,13 @@ public abstract class DaySummaryFacade<SOURCE, TARGET, SORT> {
                     PageRequest.of(page, size, sortService.forDay(sort)),
                     station);
         }
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     public PageData<TARGET> getAllDays(Integer page, Integer size, SORT sort) {
         Page<SOURCE> data = daySummaryRepository
                 .findAllDays(PageRequest.of(page, size, sortService.forDay(sort)));
-        return dataMapper.mapPage(data);
+        return dataMapper.mapToPage(data);
     }
 
     public TARGET getDayForStation(String stationCode, String day) {

@@ -41,7 +41,7 @@ public abstract class UsageFilter extends OncePerRequestFilter {
         String ipAddress = getRealIPAddress(request);
         UsageModuleNameEnum moduleName = getModuleName();
         if (ipAddress != null && moduleName != null) {
-            usageService.saveOrCreateUsageForIPAddressAndModuleName(ipAddress, moduleName);
+            usageService.updateUsageForIPAddressAndModuleName(ipAddress, moduleName);
         }
         if (ipAddress == null || isRateLimitExceeded(ipAddress)) {
             response.setStatus(429);

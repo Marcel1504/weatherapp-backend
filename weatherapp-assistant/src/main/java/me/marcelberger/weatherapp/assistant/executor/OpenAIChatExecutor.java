@@ -12,12 +12,12 @@ import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFinishReaso
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
 import me.marcelberger.weatherapp.assistant.exception.AssistantException;
-import me.marcelberger.weatherapp.assistant.mapper.Mapper;
 import me.marcelberger.weatherapp.assistant.service.chat.ChatService;
 import me.marcelberger.weatherapp.assistant.service.openai.function.OpenAIFunctionService;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
 import me.marcelberger.weatherapp.assistant.service.openai.sender.OpenAISenderService;
 import me.marcelberger.weatherapp.core.data.station.StationData;
+import me.marcelberger.weatherapp.core.mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,34 +45,40 @@ public class OpenAIChatExecutor {
 
     private final List<OpenAIMessageData> openAIMessages = new ArrayList<>();
 
-    private final List<ChatMessageEntity> newChatMessages = new ArrayList<>();
+    private final List<ChatMessageEntity> chatResponseMessages = new ArrayList<>();
 
     public List<ChatMessageEntity> execute() {
-        validate();
-        openAIMessages.add(openAIPropertyService.generateSystemMessage());
-        openAIMessages.addAll(chatMessageEntityOpenAIMessageDataMapper.map(chat.getMessages()));
-        addUserMessage();
+        validateInputs();
+        ChatEntity updatedChat = chat;
 
-        // send first request to OpenAI with the user message
+        // prepare OpenAI messages with data from system, existing chat messages and the new user message
+        openAIMessages.add(openAIPropertyService.generateSystemMessage());
+        openAIMessages.addAll(chatMessageEntityOpenAIMessageDataMapper.mapToPage(chat.getMessages()).getList());
+        updatedChat = addUserMessage(updatedChat);
+
+        // send initial request to OpenAI
         OpenAIResponseDto response = openAISenderService.sendChat(openAIMessages, contextStation);
+        validateOpenAIResponse(response);
+
+        // update from OpenAI response
         OpenAIChoiceData firstChoice = response.getChoices().get(0);
         openAIMessages.add(firstChoice.getMessage());
-        newChatMessages.add(openAIMessageDataChatMessageEntityMapper.map(firstChoice.getMessage()));
+        chatResponseMessages.add(openAIMessageDataChatMessageEntityMapper.map(firstChoice.getMessage()));
+        updatedChat = chatService.updateTokensForChat(updatedChat, Long.valueOf(response.getUsage().getTotalToken()));
 
+        // check if a function call happened and handle it
         if (firstChoice.getFinishReason().equals(OpenAIFinishReasonEnum.FUNCTION_CALL)) {
-            // function call happened
-            handleFunctionCall(firstChoice.getMessage().getFunctionCall());
+            updatedChat = handleFunctionCall(updatedChat, firstChoice.getMessage().getFunctionCall());
         }
 
         // save all new chat messages
-        ChatEntity newChat = chat;
-        for (ChatMessageEntity chatMessage : newChatMessages) {
-            newChat = chatService.saveChatMessageToChatById(newChat, chatMessage);
+        for (ChatMessageEntity chatMessage : chatResponseMessages) {
+            updatedChat = chatService.saveChatMessageToChatById(updatedChat, chatMessage);
         }
-        return newChatMessages;
+        return chatResponseMessages;
     }
 
-    private void validate() {
+    private void validateInputs() {
         if (userMessage == null || userMessage.isBlank()
                 || chat == null || chat.getMessages() == null
                 || contextStation == null || contextStation.getName() == null) {
@@ -80,13 +86,24 @@ public class OpenAIChatExecutor {
         }
     }
 
-    private void addUserMessage() {
-        OpenAIMessageData openAIUserMessage = openAIPropertyService.generateUserMessage(userMessage);
-        openAIMessages.add(openAIUserMessage);
-        newChatMessages.add(openAIMessageDataChatMessageEntityMapper.map(openAIUserMessage));
+    private void validateOpenAIResponse(OpenAIResponseDto response) {
+        if (response == null
+                || response.getChoices() == null
+                || response.getChoices().get(0) == null
+                || response.getUsage() == null) {
+            throw new AssistantException("Response from OpenAI is invalid");
+        }
     }
 
-    private void handleFunctionCall(OpenAIFunctionCallData functionCall) {
+    private ChatEntity addUserMessage(ChatEntity chat) {
+        OpenAIMessageData openAIUserMessage = openAIPropertyService.generateUserMessage(userMessage);
+        openAIMessages.add(openAIUserMessage);
+        return chatService.saveChatMessageToChatById(
+                chat,
+                openAIMessageDataChatMessageEntityMapper.map(openAIUserMessage));
+    }
+
+    private ChatEntity handleFunctionCall(ChatEntity chat, OpenAIFunctionCallData functionCall) {
         // perform actual function call and get result
         OpenAIFunctionResultData functionResult = null;
         OpenAIFunctionService<?> functionService = openAIFunctionServices.stream()
@@ -102,9 +119,13 @@ public class OpenAIChatExecutor {
 
         // perform openAI chat with function result
         OpenAIResponseDto response = openAISenderService.sendChat(openAIMessages, contextStation);
+        validateOpenAIResponse(response);
+
+        // update from OpenAI response
         OpenAIChoiceData firstChoice = response.getChoices().get(0);
         openAIMessages.add(firstChoice.getMessage());
-        newChatMessages.add(openAIMessageDataChatMessageEntityMapper.map(firstChoice.getMessage()));
+        chatResponseMessages.add(openAIMessageDataChatMessageEntityMapper.map(firstChoice.getMessage()));
+        return chatService.updateTokensForChat(chat, Long.valueOf(response.getUsage().getTotalToken()));
     }
 
     private void handleFunctionCallResult(OpenAIFunctionEnum function, OpenAIFunctionResultData functionResult) {
@@ -121,6 +142,6 @@ public class OpenAIChatExecutor {
         functionResultChatMessageEntity.setContent(functionResult != null
                 ? functionResult.getResultLong()
                 : null);
-        newChatMessages.add(functionResultChatMessageEntity);
+        chatResponseMessages.add(functionResultChatMessageEntity);
     }
 }

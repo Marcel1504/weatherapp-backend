@@ -12,4 +12,6 @@ public interface OpenAIPropertyService {
     OpenAIMessageData generateSystemMessage();
 
     OpenAIMessageData generateUserMessage(String message);
+
+    String cleanUserMessage(String message);
 }

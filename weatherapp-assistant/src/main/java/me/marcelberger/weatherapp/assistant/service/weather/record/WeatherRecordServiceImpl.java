@@ -1,7 +1,6 @@
 package me.marcelberger.weatherapp.assistant.service.weather.record;
 
-import me.marcelberger.weatherapp.assistant.data.weather.WeatherRecordData;
-import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherAggregationEnum;
+import me.marcelberger.weatherapp.assistant.data.weather.record.WeatherRecordData;
 import me.marcelberger.weatherapp.assistant.enumeration.weather.WeatherRecordEnum;
 import me.marcelberger.weatherapp.core.data.station.StationData;
 import me.marcelberger.weatherapp.core.data.summary.WeatherSummaryData;
@@ -12,10 +11,10 @@ import me.marcelberger.weatherapp.core.entity.summary.day.WeatherDaySummaryEntit
 import me.marcelberger.weatherapp.core.entity.summary.month.WeatherMonthSummaryEntity;
 import me.marcelberger.weatherapp.core.entity.summary.year.WeatherYearSummaryEntity;
 import me.marcelberger.weatherapp.core.enumeration.sort.WeatherSortEnum;
-import me.marcelberger.weatherapp.core.facade.station.StationFacade;
 import me.marcelberger.weatherapp.core.facade.summary.day.DaySummaryFacade;
 import me.marcelberger.weatherapp.core.facade.summary.month.MonthSummaryFacade;
 import me.marcelberger.weatherapp.core.facade.summary.year.YearSummaryFacade;
+import me.marcelberger.weatherapp.core.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
     private YearSummaryFacade<WeatherYearSummaryEntity, WeatherYearSummaryData, WeatherSortEnum> yearSummaryFacade;
 
     @Autowired
-    private StationFacade stationFacade;
+    private Mapper<WeatherSummaryData, WeatherRecordData> weatherSummaryDataWeatherTimeDataMapper;
 
     @Override
     public WeatherRecordData getWeatherDayOrNull(WeatherRecordEnum type, StationData station) {
@@ -42,7 +41,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return data != null ? buildWeatherRecordData(data.getDay(), WeatherAggregationEnum.DAY, data) : null;
+        return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return data != null ? buildWeatherRecordData(data.getDay(), WeatherAggregationEnum.DAY, data) : null;
+        return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
@@ -64,10 +63,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return data != null
-                ? buildWeatherRecordData(
-                String.format("%s-%s-01", data.getYear(), data.getMonth()), WeatherAggregationEnum.MONTH, data)
-                : null;
+        return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
@@ -78,10 +74,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return data != null
-                ? buildWeatherRecordData(
-                String.format("%s-%s-01", data.getYear(), data.getMonth()), WeatherAggregationEnum.MONTH, data)
-                : null;
+        return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
@@ -92,9 +85,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return data != null
-                ? buildWeatherRecordData(String.format("%s-01-01", data.getYear()), WeatherAggregationEnum.YEAR, data)
-                : null;
+        return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     @Override
@@ -105,9 +96,7 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        return data != null
-                ? buildWeatherRecordData(String.format("%s-01-01", data.getYear()), WeatherAggregationEnum.YEAR, data)
-                : null;
+        return data != null ? weatherSummaryDataWeatherTimeDataMapper.map(data) : null;
     }
 
     private WeatherSortEnum determineWeatherSort(WeatherRecordEnum type) {
@@ -117,20 +106,5 @@ public class WeatherRecordServiceImpl implements WeatherRecordService {
             case MOST_RAIN -> WeatherSortEnum.MOST_RAIN;
             case STRONGEST_WIND -> WeatherSortEnum.STRONGEST_WIND;
         };
-    }
-
-    private WeatherRecordData buildWeatherRecordData(String date,
-                                                     WeatherAggregationEnum type,
-                                                     WeatherSummaryData summaryData) {
-        StationData data = stationFacade.getByIdOrNull(summaryData.getStationId());
-        return WeatherRecordData.builder()
-                .date(date)
-                .temperatureMax(summaryData.getTemperatureMax())
-                .temperatureMin(summaryData.getTemperatureMin())
-                .rainTotal(summaryData.getRainTotal())
-                .windMax(summaryData.getWindMax())
-                .type(type)
-                .station(data != null ? data.getName() : "Unknown")
-                .build();
     }
 }
