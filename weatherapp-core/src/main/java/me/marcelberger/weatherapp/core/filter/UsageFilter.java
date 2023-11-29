@@ -43,29 +43,33 @@ public abstract class UsageFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request,
                                     @NotNull HttpServletResponse response,
                                     @NotNull FilterChain filterChain) throws ServletException, IOException {
-        String ipAddress = getRealIPAddressOrNull(request);
-        if (ipAddress == null) {
-            writeCoreErrorResponse(
-                    ErrorData.<CoreError.Code>builder()
-                            .code(CoreError.Code.CORE00002)
-                            .message("Can not determine IP address")
-                            .build(),
-                    response,
-                    400);
+        if ("OPTIONS".equals(request.getMethod())) {
+            filterChain.doFilter(request, response);
         } else {
-            UsageModuleNameEnum moduleName = getModuleName();
-            usageService.updateUsageForIPAddressAndModuleName(ipAddress, moduleName);
-            if (isRateLimitExceeded(ipAddress)) {
+            String ipAddress = getRealIPAddressOrNull(request);
+            if (ipAddress == null) {
                 writeCoreErrorResponse(
                         ErrorData.<CoreError.Code>builder()
-                                .code(CoreError.Code.CORE00003)
-                                .message(String.format("Too many requests for IP address %s", ipAddress))
+                                .code(CoreError.Code.CORE00002)
+                                .message("Can not determine IP address")
                                 .build(),
                         response,
-                        429);
+                        400);
             } else {
-                incrementRateLimit(ipAddress);
-                filterChain.doFilter(request, response);
+                UsageModuleNameEnum moduleName = getModuleName();
+                usageService.updateUsageForIPAddressAndModuleName(ipAddress, moduleName);
+                if (isRateLimitExceeded(ipAddress)) {
+                    writeCoreErrorResponse(
+                            ErrorData.<CoreError.Code>builder()
+                                    .code(CoreError.Code.CORE00003)
+                                    .message(String.format("Too many requests for IP address %s", ipAddress))
+                                    .build(),
+                            response,
+                            429);
+                } else {
+                    incrementRateLimit(ipAddress);
+                    filterChain.doFilter(request, response);
+                }
             }
         }
     }
@@ -123,7 +127,7 @@ public abstract class UsageFilter extends OncePerRequestFilter {
      * @param response HttpServletResponse
      * @param status   HTTP-Status code
      */
-    private void writeCoreErrorResponse(
+    protected void writeCoreErrorResponse(
             ErrorData<CoreError.Code> error,
             HttpServletResponse response,
             Integer status) throws IOException {

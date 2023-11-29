@@ -13,5 +13,5 @@ public class WeatherTimeData {
     Double rainTotal;
     String date;
     String station;
-    WeatherAggregationEnum type;
+    WeatherAggregationEnum aggregation;
 }

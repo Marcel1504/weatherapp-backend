@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionCallData;
 import me.marcelberger.weatherapp.assistant.data.openai.OpenAIFunctionResultData;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
-import me.marcelberger.weatherapp.assistant.exception.AssistantException;
+import me.marcelberger.weatherapp.assistant.error.AssistantError;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class OpenAIFunctionService<DATA> {
@@ -18,7 +18,9 @@ public abstract class OpenAIFunctionService<DATA> {
             DATA data = objectMapper.readValue(functionCall.getArguments(), getFunctionCallDataClass());
             return executeByFunctionCalData(data);
         } catch (JsonProcessingException exception) {
-            throw new AssistantException("Can not map OpenAI function call arguments");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Can not process function call data provided by OpenAI");
         }
     }
 
@@ -33,7 +35,7 @@ public abstract class OpenAIFunctionService<DATA> {
         try {
             return objectMapper.writeValueAsString(data);
         } catch (JsonProcessingException e) {
-            throw new AssistantException("Can not process data");
+            throw new AssistantError(AssistantError.Code.ASSISTANT00002, "Can not process data");
         }
     }
 

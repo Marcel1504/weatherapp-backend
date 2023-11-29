@@ -17,13 +17,20 @@ public class CoreError extends RuntimeException {
     @Getter
     @AllArgsConstructor
     public enum Code {
-        CORE00001("Validation of request failed"),
-        CORE00002("Authentication of request failed"),
-        CORE00003("Too many requests"),
-        CORE00200("Station not found"),
-        CORE00300("Station media not found"),
-        CORE00400("Weather data not found"),
-        CORE00500("Soil data not found");
+        // Validation of request failed
+        CORE00001("CORE00001"),
+        // Authentication of request failed
+        CORE00002("CORE00002"),
+        // Too many requests
+        CORE00003("CORE00003"),
+        // Station not found
+        CORE00200("CORE00200"),
+        // Station media not found
+        CORE00300("CORE00300"),
+        // Weather data not found
+        CORE00400("CORE00400"),
+        // Soil data not found
+        CORE00500("CORE00500");
         private final String value;
     }
 }

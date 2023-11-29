@@ -2,7 +2,7 @@ package me.marcelberger.weatherapp.assistant.service.chat;
 
 import me.marcelberger.weatherapp.assistant.entity.ChatEntity;
 import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
-import me.marcelberger.weatherapp.assistant.exception.AssistantException;
+import me.marcelberger.weatherapp.assistant.error.AssistantError;
 import me.marcelberger.weatherapp.assistant.repository.ChatMessageRepository;
 import me.marcelberger.weatherapp.assistant.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,9 @@ public class ChatServiceImpl implements ChatService {
     public ChatEntity getChatById(Long id) {
         ChatEntity chat = getChatByIdOrNull(id);
         if (chat == null) {
-            throw new AssistantException("No chat found for the provided ID");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Chat(id=%s) not found", String.valueOf(id));
         }
         return chat;
     }
@@ -55,10 +57,14 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatEntity saveChatMessageToChatById(ChatEntity chat, ChatMessageEntity chatMessage) {
         if (chat == null || chat.getId() == null) {
-            throw new AssistantException("No chat provided to save chat messages");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Not chat provided to save chat messages");
         }
         if (chatMessage == null) {
-            throw new AssistantException("No chat messages provided that can be saved");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "No chat messages provided that can be saved to Chat(id=%s)", String.valueOf(chat.getId()));
         }
         chatMessage.setChat(chat);
         chat.getMessages().add(chatMessageRepository.save(chatMessage));
@@ -68,7 +74,9 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatEntity updateTokensForChat(ChatEntity chat, Long tokens) {
         if (chat == null || chat.getId() == null) {
-            throw new AssistantException("No chat provided to update total tokens");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Not chat provided to update total tokens");
         }
         if (tokens == null) {
             tokens = 0L;

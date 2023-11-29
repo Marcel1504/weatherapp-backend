@@ -11,7 +11,7 @@ import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFinishReasonEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIFunctionEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
-import me.marcelberger.weatherapp.assistant.exception.AssistantException;
+import me.marcelberger.weatherapp.assistant.error.AssistantError;
 import me.marcelberger.weatherapp.assistant.service.chat.ChatService;
 import me.marcelberger.weatherapp.assistant.service.openai.function.OpenAIFunctionService;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
@@ -82,7 +82,9 @@ public class OpenAIChatExecutor {
         if (userMessage == null || userMessage.isBlank()
                 || chat == null || chat.getMessages() == null
                 || contextStation == null || contextStation.getName() == null) {
-            throw new AssistantException("Could not execute OpenAI chat: Validation failed");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Could not execute OpenAI chat: Validation failed");
         }
     }
 
@@ -91,7 +93,9 @@ public class OpenAIChatExecutor {
                 || response.getChoices() == null
                 || response.getChoices().get(0) == null
                 || response.getUsage() == null) {
-            throw new AssistantException("Response from OpenAI is invalid");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Response from OpenAI is invalid");
         }
     }
 

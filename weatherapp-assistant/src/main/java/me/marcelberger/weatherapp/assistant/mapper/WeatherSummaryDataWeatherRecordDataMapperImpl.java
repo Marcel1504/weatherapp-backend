@@ -21,7 +21,8 @@ public class WeatherSummaryDataWeatherRecordDataMapperImpl implements Mapper<Wea
                 .rainTotal(object.getRainTotal())
                 .windMax(object.getWindMax())
                 .station(object.getStationName())
-                .type(determineType(object))
+                .aggregation(determineAggregation(object))
+                .type(null)
                 .build();
     }
 
@@ -38,7 +39,7 @@ public class WeatherSummaryDataWeatherRecordDataMapperImpl implements Mapper<Wea
         return null;
     }
 
-    private WeatherAggregationEnum determineType(WeatherSummaryData summary) {
+    private WeatherAggregationEnum determineAggregation(WeatherSummaryData summary) {
         if (summary instanceof WeatherDaySummaryData) {
             return WeatherAggregationEnum.DAY;
         }

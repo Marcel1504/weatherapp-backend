@@ -65,6 +65,7 @@ public class OpenAIWeatherRecordFunctionServiceImpl extends OpenAIFunctionServic
         };
         messageShort += data.getStation() != null ? String.format(",station:%s", data.getStation()) : "";
         messageShort += data.getDate() != null ? String.format(",%s", data.getDate()) : "";
+        data.setType(type);
         return OpenAIFunctionResultData.builder()
                 .resultShort(messageShort)
                 .resultLong(writeDataAsString(data))

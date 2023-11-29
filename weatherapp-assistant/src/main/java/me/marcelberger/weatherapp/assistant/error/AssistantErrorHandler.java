@@ -1,4 +1,4 @@
-package me.marcelberger.weatherapp.assistant.exception;
+package me.marcelberger.weatherapp.assistant.error;
 
 import me.marcelberger.weatherapp.assistant.data.chat.ChatMessageData;
 import me.marcelberger.weatherapp.assistant.dto.response.chat.ChatResponseDto;
@@ -7,31 +7,61 @@ import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatTypeEnum;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.net.SocketTimeoutException;
 import java.util.List;
 
 @ControllerAdvice
-public class AssistantExceptionHandler {
+public class AssistantErrorHandler {
 
-    @ExceptionHandler(AssistantException.class)
-    public ResponseEntity<ChatResponseDto> handleAssistantException(AssistantException e) {
+    /**
+     * Handle AssistantError
+     *
+     * @param e AssistantError
+     * @return ChatResponseDto
+     */
+    @ExceptionHandler(AssistantError.class)
+    public ResponseEntity<ChatResponseDto> handleAssistantError(AssistantError e) {
         ChatMessageData messageData = ChatMessageData.builder()
                 .role(ChatRoleEnum.ASSISTANT)
                 .type(ChatTypeEnum.ERROR)
-                .content(e.getMessage())
+                .content(e.getCode().getValue())
                 .build();
         return ResponseEntity.ok(ChatResponseDto.builder()
                 .messages(List.of(messageData))
                 .build());
     }
 
+    /**
+     * Handle timeouts from OpenAI-API
+     * @param e SocketTimeoutException
+     * @return ChatResponseDto
+     */
     @ExceptionHandler(SocketTimeoutException.class)
     public ResponseEntity<ChatResponseDto> handleSocketTimeoutException(SocketTimeoutException e) {
         ChatMessageData messageData = ChatMessageData.builder()
                 .role(ChatRoleEnum.ASSISTANT)
                 .type(ChatTypeEnum.ERROR)
-                .content("OpenAI-API timeout")
+                .content(AssistantError.Code.ASSISTANT00001.getValue())
+                .build();
+        return ResponseEntity.ok(ChatResponseDto.builder()
+                .messages(List.of(messageData))
+                .build());
+    }
+
+    /**
+     * Handle HTTP error responses from OpenAI-API
+     *
+     * @param e HttpStatusCodeException
+     * @return ChatResponseDto
+     */
+    @ExceptionHandler(HttpStatusCodeException.class)
+    public ResponseEntity<ChatResponseDto> handleHttpStatusCodeException(HttpStatusCodeException e) {
+        ChatMessageData messageData = ChatMessageData.builder()
+                .role(ChatRoleEnum.ASSISTANT)
+                .type(ChatTypeEnum.ERROR)
+                .content(AssistantError.Code.ASSISTANT00003.getValue())
                 .build();
         return ResponseEntity.ok(ChatResponseDto.builder()
                 .messages(List.of(messageData))

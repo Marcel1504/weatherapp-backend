@@ -34,7 +34,7 @@ spring:
 
 weatherapp:
   usage:
-    requestsPerMinute: 3
+    requestsPerMinute: 2
   media:
     directory: S:/weatherapp/media
   station:
@@ -54,4 +54,4 @@ weatherapp:
       user: '{message}. Do not answer if context of this message is not about weather.'
     functions:
       filePattern: classpath:openai/function_{name}.json
-      available: weather_media, weather_record, weather_time
+      available: weather_record, weather_time

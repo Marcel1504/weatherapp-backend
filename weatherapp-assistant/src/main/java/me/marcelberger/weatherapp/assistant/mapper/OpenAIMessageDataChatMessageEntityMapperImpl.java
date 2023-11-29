@@ -7,7 +7,7 @@ import me.marcelberger.weatherapp.assistant.entity.ChatMessageEntity;
 import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatRoleEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatTypeEnum;
 import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
-import me.marcelberger.weatherapp.assistant.exception.AssistantException;
+import me.marcelberger.weatherapp.assistant.error.AssistantError;
 import me.marcelberger.weatherapp.assistant.service.openai.property.OpenAIPropertyService;
 import me.marcelberger.weatherapp.core.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,9 @@ public class OpenAIMessageDataChatMessageEntityMapperImpl implements Mapper<Open
                     .openAIMessage(objectMapper.writeValueAsString(object))
                     .build();
         } catch (JsonProcessingException e) {
-            throw new AssistantException("Can not map OpenAI data to chat message");
+            throw new AssistantError(
+                    AssistantError.Code.ASSISTANT00002,
+                    "Can not map OpenAI message data to chat message");
         }
     }
 
