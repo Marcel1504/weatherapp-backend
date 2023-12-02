@@ -3,11 +3,6 @@ logging:
     root: WARN
     me:
       marcelberger: INFO
-    org:
-      springframework:
-        web:
-          client:
-            RestTemplate: DEBUG
 spring:
   datasource:
     driverClassName: 'org.mariadb.jdbc.Driver'
