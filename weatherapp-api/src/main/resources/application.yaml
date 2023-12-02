@@ -33,7 +33,7 @@ weatherapp:
   export:
     directory: ${weatherapp.media.directory}/export
   media:
-    directory: S:/weatherapp/media
+    directory: V:/weatherapp-media
   station:
     media:
       latestKey: LATEST

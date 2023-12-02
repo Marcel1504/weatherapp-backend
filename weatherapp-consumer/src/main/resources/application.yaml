@@ -29,7 +29,7 @@ weatherapp:
   usage:
     requestsPerMinute: 3
   media:
-    directory: S:/weatherapp/media
+    directory: V:/weatherapp-media
   station:
     diagnosis:
       adminMail: 'admin@test'
