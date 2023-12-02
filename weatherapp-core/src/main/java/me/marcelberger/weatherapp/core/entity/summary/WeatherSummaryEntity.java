@@ -50,30 +50,22 @@ public abstract class WeatherSummaryEntity {
 
     @Column(name = "wind_max")
     protected Double windMax;
-
-    @Column(name = "wind_direction_cluster")
-    @Enumerated(EnumType.STRING)
-    private WeatherWindDirectionEnum windDirectionCluster;
-
     @Column(name = "pressure_avg")
     protected Double pressureAvg;
-
     @Column(name = "pressure_min")
     protected Double pressureMin;
-
     @Column(name = "pressure_max")
     protected Double pressureMax;
-
     @Column(name = "solar_radiation_avg")
     protected Double solarRadiationAvg;
-
     @Column(name = "solar_radiation_min")
     protected Double solarRadiationMin;
-
     @Column(name = "solar_radiation_max")
     protected Double solarRadiationMax;
-
     @ManyToOne
     @JoinColumn(name = "station_id")
     protected StationEntity station;
+    @Column(name = "wind_direction_cluster")
+    @Enumerated(EnumType.STRING)
+    private WeatherWindDirectionEnum windDirectionCluster;
 }

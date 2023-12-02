@@ -20,20 +20,15 @@ public class SoilSingleSummaryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected Long id;
-
-    @Column(name = "temperature50cm")
-    private Double temperature50cm;
-
-    @Column(name = "temperature100cm")
-    private Double temperature100cm;
-
-    @Column(name = "temperature200cm")
-    private Double temperature200cm;
-
-    @Column(name = "timestamp")
-    private LocalDateTime timestamp;
-
     @ManyToOne
     @JoinColumn(name = "station_id")
     protected StationEntity station;
+    @Column(name = "temperature50cm")
+    private Double temperature50cm;
+    @Column(name = "temperature100cm")
+    private Double temperature100cm;
+    @Column(name = "temperature200cm")
+    private Double temperature200cm;
+    @Column(name = "timestamp")
+    private LocalDateTime timestamp;
 }

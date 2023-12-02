@@ -10,5 +10,6 @@ public interface SingleSummaryRepository<ENTITY> {
                                                     Long stationId,
                                                     String timestampStart,
                                                     String timestampEnd);
+
     ENTITY save(ENTITY s);
 }

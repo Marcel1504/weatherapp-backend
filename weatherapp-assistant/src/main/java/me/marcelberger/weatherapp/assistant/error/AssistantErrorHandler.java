@@ -35,6 +35,7 @@ public class AssistantErrorHandler {
 
     /**
      * Handle timeouts from OpenAI-API
+     *
      * @param e SocketTimeoutException
      * @return ChatResponseDto
      */

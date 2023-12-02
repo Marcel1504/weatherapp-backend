@@ -15,10 +15,9 @@ import java.util.function.Function;
 
 public abstract class AggregationService<SOURCE, TARGET> {
 
+    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private SingleSummaryRepository<SOURCE> dataRepository;
-
-    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public void aggregate(CalendarParameter timestampBase, StationEntity station) {
         boolean hasMore = true;

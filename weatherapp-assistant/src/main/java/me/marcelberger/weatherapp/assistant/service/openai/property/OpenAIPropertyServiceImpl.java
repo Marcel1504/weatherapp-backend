@@ -8,13 +8,13 @@ import me.marcelberger.weatherapp.assistant.enumeration.openai.OpenAIRoleEnum;
 import me.marcelberger.weatherapp.core.data.station.StationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -49,8 +49,8 @@ public class OpenAIPropertyServiceImpl implements OpenAIPropertyService {
         List<OpenAIFunctionData> functions = new ArrayList<>();
         for (String name : openAIFunctionsAvailable) {
             try {
-                String filePath = openAIFunctionsFilePattern.replace("{name}", name);
-                String fileContent = Files.readString(Path.of(ResourceUtils.getFile(filePath).toURI()));
+                Resource fileResource = new ClassPathResource(openAIFunctionsFilePattern.replace("{name}", name));
+                String fileContent = new String(fileResource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
                 fileContent = fileContent.replace("{station}", contextStation.getName());
                 OpenAIFunctionData function = objectMapper.readValue(fileContent, OpenAIFunctionData.class);
                 functions.add(function);

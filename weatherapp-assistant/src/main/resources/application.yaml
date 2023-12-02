@@ -48,5 +48,5 @@ weatherapp:
       system: 'You are a weather app assistant. Time is {time}.'
       user: '{message}. Do not answer if context of this message is not about weather.'
     functions:
-      filePattern: classpath:openai/function_{name}.json
+      filePattern: openai/function_{name}.json
       available: weather_record, weather_time

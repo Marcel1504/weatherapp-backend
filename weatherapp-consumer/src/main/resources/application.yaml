@@ -38,8 +38,8 @@ weatherapp:
     media:
       latestKey: LATEST
       baseUrl: "http://localhost:8080/station/media?station={station}&name={name}"
-      directory: ${weatherapp.media.directory}/station/source
-      directorySource: ${weatherapp.media.directory}/station/source
+      directory: ${weatherapp.media.directory}/station
+      directorySource: ${weatherapp.media.directory}/source
       cronjob:
         latest: '0 0/1 * * * *'
         review: '30 30 12 * * *'
