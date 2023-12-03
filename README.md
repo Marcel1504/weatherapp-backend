@@ -28,7 +28,7 @@ Core library of weather backend application modules
 
 | Release | Date       | Description                                                                                                   |
 |---------|------------|---------------------------------------------------------------------------------------------------------------|
-| 3.1.0   | 2023-12-02 | Introduces WeatherApp-Assistant                                                                               |
+| 3.1.0   | 2023-12-03 | Introduces WeatherApp-Assistant                                                                               |
 | 3.0.0   | 2023-08-08 | Combine the old backend and consumer application into a single project and add the new aggregator application |
 
 ## Releases of legacy applications
