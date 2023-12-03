@@ -1,5 +1,6 @@
 package me.marcelberger.weatherapp.assistant.error;
 
+import lombok.extern.slf4j.Slf4j;
 import me.marcelberger.weatherapp.assistant.data.chat.ChatMessageData;
 import me.marcelberger.weatherapp.assistant.dto.response.chat.ChatResponseDto;
 import me.marcelberger.weatherapp.assistant.enumeration.chat.ChatRoleEnum;
@@ -13,6 +14,7 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 
 @ControllerAdvice
+@Slf4j
 public class AssistantErrorHandler {
 
     /**
@@ -23,6 +25,7 @@ public class AssistantErrorHandler {
      */
     @ExceptionHandler(AssistantError.class)
     public ResponseEntity<ChatResponseDto> handleAssistantError(AssistantError e) {
+        log.warn("AssistantError(code={}): {}", e.getCode().getValue(), e.getMessage());
         ChatMessageData messageData = ChatMessageData.builder()
                 .role(ChatRoleEnum.ASSISTANT)
                 .type(ChatTypeEnum.ERROR)
@@ -41,6 +44,7 @@ public class AssistantErrorHandler {
      */
     @ExceptionHandler(SocketTimeoutException.class)
     public ResponseEntity<ChatResponseDto> handleSocketTimeoutException(SocketTimeoutException e) {
+        log.warn("AssistantError(code={}): {}", AssistantError.Code.ASSISTANT00001.getValue(), e.getMessage());
         ChatMessageData messageData = ChatMessageData.builder()
                 .role(ChatRoleEnum.ASSISTANT)
                 .type(ChatTypeEnum.ERROR)
@@ -59,6 +63,7 @@ public class AssistantErrorHandler {
      */
     @ExceptionHandler(HttpStatusCodeException.class)
     public ResponseEntity<ChatResponseDto> handleHttpStatusCodeException(HttpStatusCodeException e) {
+        log.warn("AssistantError(code={}): {}", AssistantError.Code.ASSISTANT00003.getValue(), e.getMessage());
         ChatMessageData messageData = ChatMessageData.builder()
                 .role(ChatRoleEnum.ASSISTANT)
                 .type(ChatTypeEnum.ERROR)

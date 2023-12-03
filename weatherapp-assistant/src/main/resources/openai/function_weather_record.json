@@ -7,7 +7,7 @@
     "properties": {
       "station": {
         "type": "string",
-        "description": "Weather data station. Null if station is unknown"
+        "description": "Weather data station or location. Null if unknown"
       },
       "type": {
         "type": "string",

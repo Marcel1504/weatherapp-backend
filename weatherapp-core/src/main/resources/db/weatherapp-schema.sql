@@ -58,7 +58,7 @@ CREATE TABLE cn_station_parameter (
 DROP TABLE IF EXISTS cn_usage;
 CREATE TABLE cn_usage (
   id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  ip_address varchar(40) NOT NULL,
+  ip_address TEXT NOT NULL,
   module_name varchar(20) NOT NULL,
   last_activity timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   total_requests BIGINT NOT NULL DEFAULT 0

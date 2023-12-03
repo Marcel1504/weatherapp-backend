@@ -56,6 +56,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatEntity saveChatMessageToChatById(ChatEntity chat, ChatMessageEntity chatMessage) {
+        LocalDateTime lastActivity = LocalDateTime.now();
         if (chat == null || chat.getId() == null) {
             throw new AssistantError(
                     AssistantError.Code.ASSISTANT00002,
@@ -67,6 +68,8 @@ public class ChatServiceImpl implements ChatService {
                     "No chat messages provided that can be saved to Chat(id=%s)", String.valueOf(chat.getId()));
         }
         chatMessage.setChat(chat);
+        chatMessage.setTimestamp(lastActivity);
+        chat.setLastActivity(lastActivity);
         chat.getMessages().add(chatMessageRepository.save(chatMessage));
         return chat;
     }

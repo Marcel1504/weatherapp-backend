@@ -7,7 +7,7 @@
     "properties": {
       "station": {
         "type": "string",
-        "description": "Weather data station. Default is {station}"
+        "description": "Weather data station or location. Default is {station}"
       },
       "date": {
         "type": "string",
